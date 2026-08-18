@@ -1,0 +1,98 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual Environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Sensitive/Proprietary Files
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+secrets/
+.aws/
+.gcp/
+credentials/
+
+# Logs & Temp Files
+*.log
+logs/
+tmp/
+temp/
+.tmp/
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build Artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+dist/
+build/
+
+# Node (if applicable)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Documentation Builds
+docs/_build/
+docs/.doctrees/
+
+# Project-Specific Exclusions
+sanitized/
+output/
+*.audit.json
+audit_logs/
