@@ -12,7 +12,7 @@ pydantic==2.5.0
 
 # Hashing & cryptography
 hashlib  # Built-in, included for reference
-cryptography==41.0.7
+cryptography==50.0.0
 
 # Logging & auditing
 python-json-logger==2.0.7
