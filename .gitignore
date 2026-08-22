@@ -1,98 +1,55 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-pip-log.txt
-pip-delete-this-directory.txt
+# Build and Release Folders
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
 
-# Virtual Environments
-venv/
-ENV/
-env/
-.venv
+# Other files and folders
+.settings/
 
-# IDE & Editor
-.vscode/
-.idea/
+# Executables
+*.swf
+*.air
+*.ipa
+*.apk
+
+# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
+# should NOT be excluded as they contain compiler settings and other important
+# information for Eclipse / Flash Builder.
+# Sensitive Temporary Files
+*.tmp
+*.temp
+*.draft
 *.swp
 *.swo
 *~
-.DS_Store
+
+# Local Configuration & Secrets
+.env
+.config
+local_settings.py
+credentials.json
+*.key
+*.pem
+
+# IDE & Editor Metadata
+.vscode/
+.idea/
 *.sublime-project
 *.sublime-workspace
 
-# Testing & Coverage
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-.hypothesis/
-
-# Environment Variables
-.env
-.env.local
-.env.*.local
-
-# Sensitive/Proprietary Files
-*.key
-*.pem
-*.p12
-*.pfx
-*.jks
-secrets/
-.aws/
-.gcp/
-credentials/
-
-# Logs & Temp Files
-*.log
-logs/
-tmp/
-temp/
-.tmp/
-
-# OS Files
+# OS Generated Files
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Build Artifacts
-*.exe
-*.dll
-*.so
-*.dylib
-dist/
-build/
+# Build Artifacts (if applicable to your Flutter/Legal tools)
+/build/
+/dist/
+*.apk
+*.aab
+*.ipa
 
-# Node (if applicable)
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# Documentation Builds
-docs/_build/
-docs/.doctrees/
-
-# Project-Specific Exclusions
-sanitized/
-output/
-*.audit.json
-audit_logs/
+# Evidence Processing Logs (Keep raw logs local until verified)
+/logs/
+*.log
