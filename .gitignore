@@ -1,55 +1,24 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
 
-# Other files and folders
-.settings/
+# === Clean Hands Clean Money FAM - Git Ignore Rules ===
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
-# Sensitive Temporary Files
-*.tmp
-*.temp
-*.draft
-*.swp
-*.swo
-*~
-
-# Local Configuration & Secrets
-.env
-.config
-local_settings.py
-credentials.json
-*.key
+# 🔒 SECURITY & SECRETS (Never upload these!)
+config.json
+*.env
 *.pem
+*.key
+credentials/
 
-# IDE & Editor Metadata
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-
-# OS Generated Files
+# 🛠️ SYSTEM ENVIRONMENT & DEPENDENCIES
+__pycache__/
+*.pyc
+.venv/
+env/
+node_modules/
 .DS_Store
-Thumbs.db
-desktop.ini
 
-# Build Artifacts (if applicable to your Flutter/Legal tools)
-/build/
-/dist/
-*.apk
-*.aab
-*.ipa
-
-# Evidence Processing Logs (Keep raw logs local until verified)
-/logs/
-*.log
+# 📦 TEMPORARY BUILD & ZIP OUTPUTS
+*.zip
+*.tar.gz
+build/
+dist/
+Evidence_Packages/
