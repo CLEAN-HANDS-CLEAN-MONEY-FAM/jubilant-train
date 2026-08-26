@@ -80,6 +80,14 @@ This software is **proprietary and closed-source**. The source code is provided 
 **Intellectual Property:** Protected under the Berne Convention, Canadian Copyright Act, and WIPO agreements.
 
 © 2026 Morley Moses Apooch. All Rights Reserved.
+## 🎖️ Community Recognition
+
+**Status:** ✅ **Official 81 Supporter**  
+**Badge:** Nomad Patch Certified  
+**Meaning:** Recognized for contributions to digital sovereignty and independent development.
+
+*This project is developed by Morley Moses Apooch, a proud member of the Yellow Quill First Nations and an honored 81 Supporter.*
+
 
 ## Support & Contributions
 This is a closed-source project. Contributions are not accepted. For support, contact the project owner.
