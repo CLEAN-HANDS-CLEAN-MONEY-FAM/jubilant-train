@@ -620,6 +620,7 @@ You now have a fully organized, legally sound, and blockchain-anchored commercia
 
 1 file
 Conversation encrypted
+orginize properly blue ocean and my sleeping giant 
 
 Ask anything to Lumo
 --------------------
