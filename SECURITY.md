@@ -29,4 +29,6 @@ all is managed by morley moses apooch in this soft ware funds stocks and bond ev
 https://www.canada.ca/en/correctional-service.html
 https://en.wikipedia.org/wiki/Scott_Moe   
 no woman and children being hurt i dont care if your in power ill feed you to the wolfs 
-
+https://acrobat.adobe.com/dc-chrome-extension/index.html#/whats-new
+https://manus.im/
+no stealing code and familys number one rule is never mess with another mans family 
