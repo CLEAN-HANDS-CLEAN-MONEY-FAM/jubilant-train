@@ -2279,3 +2279,4 @@ CONTRIBUTING.md	Guidelines (even if no contributors expected)
 CHANGELOG.md	Detailed version history
 EVIDENCE_GUIDE.md	Step-by-step evidence collection instructions
 COMPENSATION_CLAIM_TEMPLATE.pdf	Ready-to-use claim form
+also all tactics of war and theft fruad are being used to infringe morley moses apooch work i have a south side above my eyes and a 306 tattoo on my face
