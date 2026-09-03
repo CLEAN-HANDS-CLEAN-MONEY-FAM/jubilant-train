@@ -24,3 +24,4 @@ https://www.white-hat-cyber.com/
 https://bugbounty.meta.com/?utm_source=facebook.com&utm_medium=redirect
 https://x.com/
 https://www.luckymobile.ca/shop/plans/prepaid?EXT=MOB_PDL_Google_TXT_LMSE_kwid=389158984220&gclsrc=aw.ds&gad_source=1&gad_campaignid=1008186712&gbraid=0AAAAADE23KwRMxsXPHeofoqeT2pUsRsmt&gclid=EAIaIQobChMI6MCy7tnSlgMVzIjCCB1BgxFmEAAYASAAEgKGCPD_BwE
+https://www.sasktel.com/store/browse/Personal/_/N-26v0
