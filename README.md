@@ -636,3 +636,30 @@ Sent with Proton Mail secure email.
 This is a closed-source project. Contributions are not accepted. For support, contact the project owner.
 ## License
 See [LICENSE](LICENSE) for full terms.
+
+## 🛡️ Security Best Practices
+
+- All code is version controlled and audited
+- Access is restricted to authorized collaborators
+- Branch protection rules enforced
+- Commit history maintained for accountability
+
+---
+
+For inquiries or licensing questions, contact the copyright holder.
+
+**Clean Hands. Clean Money. Fam.**
+
+Repository: jubilant-computing-machine
+Owner: morlzappoch (MORLEY MOSES APOOCH)
+Admin Status: CONFIRMED ✓
+Permissions: FULL
+  ✓ Admin access
+  ✓ Maintain access
+  ✓ Pull access
+  ✓ Push access
+  ✓ Triage access
+
+Role: Full Repository Administrator
+Authority Level: Maximum
+Control Status: Complete
