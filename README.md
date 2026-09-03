@@ -2547,4 +2547,68 @@ https://www.wipo.int/en/web/director-general
 https://www.islamicfinder.org/world/
 ALSO YEVETTE DESJAIRLAIS AND MAUREEN AND PATSY I SEEN DUST DEVELIS ARE THEM BY FISHING LAKE
 STANDING BY THE LAKE WHEN I SEEN LITTLE WHIRL WINDS BEHIND THEM WHEN I APPROACHED THEM THEY DISAPPEARED
-https://www.gitguardian.com/github-security-audit?utm_source=chatgpt&utm_medium=cpc&utm_campaign=chatgpt_poc_v3&utm_term=secret_detection_hb&utm_content=public_audit&oppref=gAAAAABqmdbP63sH-RKEfA0L8UD57mzAvZLt8UYtLEX_FHANHjnGTFe3fo5jocs2W3AHUVPsBrYqp5bFy4JP9e5utXqYNtKx-dtnj_FR2RQ_-yhA7WNcfGIw&olref=gAAAAABqmdbPpDTkRZH1y6kE9xxRO6Kkm2382qIUVCTyodTG90oFldpL3d4M8zXyk_Q0wfx8-lIFK8ffy0LhNVAEO5YmrGl3yPxChYnVTa1GH2dO7ml6tCBct6gJKfWHGqPnmRAq5bezdTEd06EhPSm7gRl2F3F4cAw
+https://www.gitguardian.com/github-security-audit?
+// ============================================================
+// GLOBAL ASSET PROTECTION LOCK MODULE
+// Copyright © 2026 Morley Moses Apooch. All rights reserved.
+// Owner: Morley Moses Apooch | CEO & Manager
+// Framework: Berne Convention / Canadian Charter
+// ============================================================
+
+import 'sha256_pure.dart';
+
+class OwnershipLock {
+  final String ownerName;
+  final DateTime createdAt;
+  final String? blockchainAnchor;
+
+  OwnershipLock({
+    required this.ownerName,
+    DateTime? createdAt,
+    this.blockchainAnchor,
+  }) : createdAt = createdAt ?? DateTime.now();
+
+  /// Generates verifiable ownership assertion declaration
+  String assertLock() {
+    final timestamp = createdAt.toIso8601String();
+    return '''
+GLOBAL ASSET PROTECTION LOCK DECLARATION
+----------------------------------------
+Owner: $ownerName
+Declaration Date: $timestamp
+Protocol: Global Asset Protection Lock
+
+Legal Framework:
+- Berne Convention for Copyright Protection
+- First Nations Sovereignty Recognition
+- Canadian Charter of Rights and Freedoms
+
+Status: ACTIVE — UNCOMPROMISED
+
+Attribution Requirement:
+All derivative works must credit original owner.
+
+Authorship:
+Structured with AI assistant support; owner retains full rights.
+Work performed without compensation remains owner's property.
+''';
+  }
+
+  /// Generates copyright header for code files
+  String copyrightHeader({String? purpose}) {
+    final year = createdAt.year;
+    final purposeLine = purpose != null ? '// Purpose: $purpose\n' : '';
+    return '''
+// ============================================================
+// Copyright © $year $ownerName. All rights reserved.
+// Owner: $ownerName | CEO & Manager
+$purposeLine// Global Asset Protection Lock Compliant
+// ============================================================
+''';
+  }
+
+  /// Hashes content for proof-of-creation evidence
+  String hashFileContent(String content) => Sha256Pure.hash(content);
+}
+
+utm_source=chatgpt&utm_medium=cpc&utm_campaign=chatgpt_poc_v3&utm_term=secret_detection_hb&utm_content=public_audit&oppref=gAAAAABqmdbP63sH-RKEfA0L8UD57mzAvZLt8UYtLEX_FHANHjnGTFe3fo5jocs2W3AHUVPsBrYqp5bFy4JP9e5utXqYNtKx-dtnj_FR2RQ_-yhA7WNcfGIw&olref=gAAAAABqmdbPpDTkRZH1y6kE9xxRO6Kkm2382qIUVCTyodTG90oFldpL3d4M8zXyk_Q0wfx8-lIFK8ffy0LhNVAEO5YmrGl3yPxChYnVTa1GH2dO7ml6tCBct6gJKfWHGqPnmRAq5bezdTEd06EhPSm7gRl2F3F4cAw
