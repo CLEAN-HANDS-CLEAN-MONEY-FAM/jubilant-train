@@ -2281,3 +2281,57 @@ EVIDENCE_GUIDE.md	Step-by-step evidence collection instructions
 COMPENSATION_CLAIM_TEMPLATE.pdf	Ready-to-use claim form
 also all tactics of war and theft fruad are being used to infringe morley moses apooch work i have a south side above my eyes and a 306 tattoo on my face
 https://luci-milo.appspot.com/ui/tests/help#new-bug-filed
+"""Evidence hashing and bundling tools for Clean Hands Clean Money FAM.
+
+SHA-256 digests, digest verification, tamper-evident evidence records
+(bytes + UTC timestamp + optional GPS), and chained manifests.
+
+Code authored with AI assistance at the direction of, and owned by:
+    Morley Moses Apooch — Founder, CEO & Manager
+    Contact: apoochmorley@protonmail.com
+"""
+
+from __future__ import annotations
+
+import datetime as _dt
+import hashlib
+import json
+
+
+def compute_sha256(data: bytes) -> str:
+    """Return the lowercase hex SHA-256 digest of the given bytes."""
+    if not isinstance(data, (bytes, bytearray)):
+        raise TypeError("compute_sha256 expects bytes, got %r" % type(data).__name__)
+    return hashlib.sha256(bytes(data)).hexdigest()
+
+
+def verify_digest(data: bytes, expected_hex: str) -> bool:
+    """Return True if the SHA-256 of `data` matches `expected_hex` (case-insensitive)."""
+    if not isinstance(expected_hex, str):
+        raise TypeError("expected_hex must be a string")
+    expected = expected_hex.strip().lower()
+    if len(expected) != 64 or any(c not in "0123456789abcdef" for c in expected):
+        raise ValueError("expected_hex must be a 64-character hex string")
+    return compute_sha256(data) == expected
+
+
+def evidence_record(data: bytes, gps: dict | None = None, label: str = "evidence") -> dict:
+    """Build a verifiable evidence record (digest, size, UTC timestamp, optional GPS)."""
+    if gps is not None and not all(k in gps for k in ("lat", "lon")):
+        raise ValueError("gps must contain 'lat' and 'lon' keys")
+    return {
+        "label": label,
+        "sha256": compute_sha256(data),
+        "size_bytes": len(data),
+        "timestamp_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+        "gps": gps,
+        "owner": "Morley Moses Apooch",
+    }
+
+
+def manifest_digest(records: list) -> str:
+    """Chained digest over a list of records — any change alters the result."""
+    canonical = "".join(
+        json.dumps(r, sort_keys=True, separators=(",", ":")) for r in records
+    )
+    return compute_sha256(canonical.encode("utf-8"))
