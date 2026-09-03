@@ -12,4 +12,12 @@ Strictly Prohibited Actions:
 
 Any unauthorized duplication, modification, or deployment of this repository 
 will result in immediate legal action under international copyright treaties.
+# Clone repo locally
+git clone https://github.com/morlzappoch/jubilant-computing-machine.git
+cd jubilant-computing-machine
+
+# Add all files I've prepared
+git add .
+git commit -m "Deploy full production system with documentation"
+git push origin main
 
