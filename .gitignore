@@ -145,5 +145,17 @@ cd jubilant-computing-machine
 # Install dependencies
 npm install
 CLEANMONEY FAM
+# Check modified files and repository status
+git status
+
+# Stage all changes
+git add .
+
+# Commit your changes
+git commit -m "Fix gitignore rules and update deployment guide"
+
+# Push to your GitHub repository
+git push origin main
+
 CHCMF
 2026 MORLEY APOOCH
