@@ -2421,3 +2421,125 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main(sys.argv[1:]))
+"""Tests for the evidence hashing tools."""
+
+import pytest
+
+from src.hash_tools import compute_sha256, evidence_record, manifest_digest, verify_digest
+
+EMPTY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ABC_SHA256 = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+
+
+class TestComputeSha256:
+    def test_empty_input(self):
+        assert compute_sha256(b"") == EMPTY_SHA256
+
+    def test_known_vector(self):
+        assert compute_sha256(b"abc") == ABC_SHA256
+
+    def test_rejects_non_bytes(self):
+        with pytest.raises(TypeError):
+            compute_sha256("not bytes")
+
+
+class TestVerifyDigest:
+    def test_match(self):
+        assert verify_digest(b"abc", ABC_SHA256)
+
+    def test_match_case_insensitive(self):
+        assert verify_digest(b"abc", ABC_SHA256.upper())
+
+    def test_mismatch(self):
+        assert verify_digest(b"abc", EMPTY_SHA256) is False
+
+    def test_rejects_bad_format(self):
+        with pytest.raises(ValueError):
+            verify_digest(b"abc", "deadbeef")
+
+
+class TestEvidenceRecord:
+    def test_record_fields(self):
+        rec = evidence_record(b"abc", label="receipt")
+        assert rec["label"] == "receipt"
+        assert rec["sha256"] == ABC_SHA256
+        assert rec["size_bytes"] == 3
+        assert "timestamp_utc" in rec
+        assert rec["gps"] is None
+
+    def test_record_with_gps(self):
+        rec = evidence_record(b"abc", gps={"lat": 51.2, "lon": -102.5})
+        assert rec["gps"] == {"lat": 51.2, "lon": -102.5}
+
+    def test_invalid_gps_rejected(self):
+        with pytest.raises(ValueError):
+            evidence_record(b"abc", gps={"lat": 51.0})
+
+
+class TestManifestDigest:
+    def test_manifest_changes_when_record_changes(self):
+        a = evidence_record(b"one", label="a")
+        b = evidence_record(b"two", label="b")
+        d1 = manifest_digest([a, b])
+        b["label"] = "tampered"
+        d2 = manifest_digest([a, b])
+        assert d1 != d2
+
+    def test_manifest_deterministic(self):
+        a = evidence_record(b"x", label="a")
+        assert manifest_digest([a]) == manifest_digest([dict(a)])
+"""End-to-end tests for the CLI entry point."""
+
+import json
+
+from src import cli
+
+ABC_SHA256 = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+
+
+def _sample(tmp_path, data=b"abc", name="evidence.bin"):
+    p = tmp_path / name
+    p.write_bytes(data)
+    return str(p)
+
+
+class TestRecord:
+    def test_record_output(self, tmp_path, capsys):
+        f = _sample(tmp_path)
+        assert cli.main(["record", f, "--label", "photo"]) == 0
+        rec = json.loads(capsys.readouterr().out)
+        assert rec["label"] == "photo"
+        assert rec["sha256"] == ABC_SHA256
+        assert rec["gps"] is None
+
+    def test_record_with_gps(self, tmp_path, capsys):
+        f = _sample(tmp_path)
+        assert cli.main(["record", f, "--lat", "51.2", "--lon", "-102.5"]) == 0
+        rec = json.loads(capsys.readouterr().out)
+        assert rec["gps"] == {"lat": 51.2, "lon": -102.5}
+
+
+class TestVerify:
+    def test_verify_ok(self, tmp_path):
+        f = _sample(tmp_path)
+        assert cli.main(["verify", f, ABC_SHA256]) == 0
+
+    def test_verify_mismatch(self, tmp_path):
+        f = _sample(tmp_path)
+        assert cli.main(["verify", f, "0" * 64]) == 1
+
+
+class TestManifest:
+    def test_manifest_two_files(self, tmp_path, capsys):
+        f1 = _sample(tmp_path, b"one", "a.bin")
+        f2 = _sample(tmp_path, b"two", "b.bin")
+        assert cli.main(["manifest", f1, f2]) == 0
+        out = json.loads(capsys.readouterr().out)
+        assert len(out["records"]) == 2
+        assert len(out["manifest_sha256"]) == 64
+[flake8]
+max-line-length = 127
+exclude = .git,__pycache__,build,dist,venv
+
+[tool:pytest]
+testpaths = tests
