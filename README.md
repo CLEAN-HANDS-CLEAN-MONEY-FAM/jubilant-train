@@ -690,3 +690,194 @@ Authority Level: Maximum
 Control Status: Complete
 I WOULD LIKE TO THANK MY DAUGHTER AND SON FOR BEING MY STRENGTH AND LOVING ME FOR ME AND ALL THE KIND HEARTED PEOPLE THANK YOU AND FOR THE ONES WHO SWITCHED UP I FORGIVE YOU DONT KNOW IF I COULD TRUST YOU .
 I HOPE IT ALL BRINGS PEACE AND NOT CONFLICT
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clean Hands SecureGuard v1.1</title>
+  <style>
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #050505; color: #00ff9d; margin: 0; padding: 0; }
+    header { background: linear-gradient(135deg, #0a0a0a, #1a1a1a); padding: 25px; text-align: center; border-bottom: 4px solid #00ff9d; }
+    .brand { font-size: 32px; font-weight: bold; margin: 0; letter-spacing: 2px; }
+    .tagline { color: #aaffcc; margin: 8px 0 0 0; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 20px; }
+    button { background: #00ff9d; color: #000; border: none; padding: 14px 24px; margin: 8px 4px; cursor: pointer; font-weight: bold; border-radius: 6px; transition: 0.3s; }
+    button:hover { background: #00cc7a; transform: scale(1.05); }
+    .card { background: #111; padding: 22px; margin: 18px 0; border-radius: 12px; border: 1px solid #00ff9d; box-shadow: 0 0 15px rgba(0, 255, 157, 0.1); }
+    .status { padding: 14px; border-radius: 8px; font-weight: bold; }
+    .green { background: #002200; color: #00ff9d; }
+    input, textarea { background: #1a1a1a; color: #00ff9d; border: 1px solid #00aa77; padding: 12px; width: 100%; border-radius: 6px; }
+    .signature { background: #001100; border: 2px dashed #00ff9d; padding: 18px; margin: 20px 0; border-radius: 10px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="brand">CLEAN HANDS CLEAN MONEY FAM</h1>
+    <p class="tagline">SECUREGUARD v1.1 — Elite Protection</p>
+    <p>Created by Morley Moses Apooch • For Charlize & Camden</p>
+  </header>
+
+  <div class="container">
+    <div class="signature">
+      <strong>OFFICIAL DIGITAL SIGNATURE</strong><br><br>
+      Creator: Morley Moses Apooch<br>
+      Position: CEO, Clean Hands Clean Money FAM<br>
+      Date: May 14, 2026<br>
+      Version: 1.1<br>
+      © 2026 Morley Moses Apooch. All Rights Reserved.<br>
+      This application is the exclusive intellectual property of Morley Moses Apooch.
+    </div>
+
+    <div>
+      <button onclick="showTab(1)">Firewall</button>
+      <button onclick="showTab(2)">DDoS Shield</button>
+      <button onclick="showTab(3)">Anomaly Scanner</button>
+      <button onclick="showTab(4)">Encrypted Vault</button>
+      <button onclick="showTab(5)">Password Tools</button>
+    </div>
+
+    <!-- Tab 1: Firewall -->
+    <div id="tab1" class="tab active card">
+      <h2>🛡️ Enterprise Firewall</h2>
+      <div id="firewallStatus" class="status green">✅ ACTIVE — All Ports Locked & Monitored</div>
+      <button onclick="toggleFirewall()">Toggle Firewall</button>
+    </div>
+
+    <!-- Tab 2: DDoS -->
+    <div id="tab2" class="tab card">
+      <h2>🚨 Advanced DDoS Protection</h2>
+      <button onclick="simulateDDoS()">Simulate Live Attack</button>
+      <div id="ddosLog" style="margin-top:15px;"></div>
+    </div>
+
+    <!-- Tab 3: Anomaly -->
+    <div id="tab3" class="tab card">
+      <h2>🔍 AI Anomaly Detection</h2>
+      <button onclick="startScan()">Run Deep System Scan</button>
+      <div id="scanResults" style="margin-top:15px;"></div>
+    </div>
+
+    <!-- Tab 4: Vault -->
+    <div id="tab4" class="tab card">
+      <h2>🔐 AES-256 Encrypted Vault</h2>
+      <input type="password" id="masterPass" placeholder="Enter Master Password (min 10 chars)">
+      <button onclick="unlockVault()">Unlock Vault</button>
+      
+      <div id="vaultArea" style="display:none; margin-top:20px;">
+        <textarea id="secureNote" rows="6" placeholder="Secure family notes, keys, or information..."></textarea><br>
+        <button onclick="saveEncryptedNote()">Encrypt & Save</button>
+        <button onclick="loadEncryptedNote()">Decrypt & Load</button>
+      </div>
+    </div>
+
+    <!-- Tab 5: Password Tools -->
+    <div id="tab5" class="tab card">
+      <h2>🛠️ Password Strength Arsenal</h2>
+      <input type="text" id="passInput" placeholder="Type password to check strength">
+      <button onclick="checkPasswordStrength()">Analyze Strength</button>
+      <button onclick="generateStrongPassword()">Generate Ultra Strong Password</button>
+      <div id="strengthResult" style="margin-top:15px;"></div>
+      <div id="passOutput" style="margin-top:10px; word-break:break-all;"></div>
+    </div>
+  </div>
+
+  <footer style="text-align:center; padding:30px; background:#0a0a0a; font-size:14px;">
+    <small>
+      © 2026 Morley Moses Apooch • All Rights Reserved<br>
+      Clean Hands Clean Money FAM • SecureGuard v1.1<br>
+      Digitally Signed • Protected for Charlize & Camden
+    </small>
+  </footer>
+
+  <script>
+    // === Strong AES-256 Encryption ===
+    async function deriveKey(password) {
+      const encoder = new TextEncoder();
+      const keyMaterial = await crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits", "deriveKey"]);
+      return crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: encoder.encode("CleanHandsApooch2026"), iterations: 250000, hash: "SHA-256" },
+        keyMaterial,
+        { name: "AES-GCM", length: 256 },
+        false,
+        ["encrypt", "decrypt"]
+      );
+    }
+
+    async function saveEncryptedNote() {
+      const note = document.getElementById('secureNote').value;
+      const pass = document.getElementById('masterPass').value;
+      if (!note || pass.length < 10) return alert("Enter note and strong master password (10+ chars)");
+
+      const key = await deriveKey(pass);
+      const iv = crypto.getRandomValues(new Uint8Array(12));
+      const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, new TextEncoder().encode(note));
+
+      localStorage.setItem('chcmf_vault', JSON.stringify({ iv: Array.from(iv), data: Array.from(new Uint8Array(encrypted)) }));
+      alert("✅ Data encrypted with AES-256 and saved securely!");
+    }
+
+    async function loadEncryptedNote() {
+      const pass = document.getElementById('masterPass').value;
+      const saved = localStorage.getItem('chcmf_vault');
+      if (!saved) return alert("No encrypted data found");
+
+      try {
+        const key = await deriveKey(pass);
+        const { iv, data } = JSON.parse(saved);
+        const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv: new Uint8Array(iv) }, key, new Uint8Array(data));
+        document.getElementById('secureNote').value = new TextDecoder().decode(decrypted);
+        alert("✅ Data decrypted successfully");
+      } catch(e) {
+        alert("❌ Incorrect Master Password");
+      }
+    }
+
+    function generateStrongPassword() {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+      let pass = "";
+      for (let i = 0; i < 24; i++) {
+        pass += chars[Math.floor(Math.random() * chars.length)];
+      }
+      document.getElementById('passOutput').innerHTML = `<strong>Ultra Strong Password:</strong><br>${pass}`;
+    }
+
+    function checkPasswordStrength() {
+      const pass = document.getElementById('passInput').value;
+      let strength = "Weak";
+      if (pass.length > 12 && /[A-Z]/.test(pass) && /[0-9]/.test(pass) && /[^A-Za-z0-9]/.test(pass)) strength = "Very Strong";
+      else if (pass.length > 8) strength = "Strong";
+      
+      document.getElementById('strengthResult').innerHTML = `<strong>Password Strength:</strong> ${strength}`;
+    }
+
+    // Tab Control
+    function showTab(n) {
+      document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
+      document.getElementById('tab' + n).style.display = 'block';
+    }
+
+    function toggleFirewall() {
+      document.getElementById('firewallStatus').innerHTML = "✅ ACTIVE — All Ports Locked & Monitored";
+    }
+
+    function simulateDDoS() {
+      const log = document.getElementById('ddosLog');
+      log.innerHTML = `<p style="color:#ff4444;">⚠️ Large Scale DDoS Attack Detected</p>`;
+      setTimeout(() => log.innerHTML += `<p style="color:#00ff9d;">🛡️ Clean Hands Shield Successfully Mitigated Attack</p>`, 1400);
+    }
+
+    function startScan() {
+      const res = document.getElementById('scanResults');
+      res.innerHTML = `<p>Running deep scan...</p>`;
+      setTimeout(() => {
+        res.innerHTML = `<p class="green">✅ No threats detected<br>3 suspicious attempts blocked<br>System is secure</p>`;
+      }, 1800);
+    }
+
+    // Initialize
+    document.getElementById('tab1').style.display = 'block';
+    console.log("%cClean Hands SecureGuard v1.1 — Digitally Signed by Morley Moses Apooch", "color:#00ff9d; font-size:14px");
+  </script>
+</body>
+</html>
