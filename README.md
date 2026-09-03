@@ -636,3 +636,4 @@ Sent with Proton Mail secure email.
 This is a closed-source project. Contributions are not accepted. For support, contact the project owner.
 ## License
 See [LICENSE](LICENSE) for full terms.
+I WOULD LIKE TO THANK MY DAUGHTER AND SON FOR BEING MY STRENGTH AND LOVING ME FOR ME AND ALL THE KIND HEARTED PEOPLE THANK YOU AND FOR THE ONES WHO SWITCHED UP I FORGIVE YOU DONT KNOW IF I COULD TRUST YOU .
