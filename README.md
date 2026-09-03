@@ -690,3 +690,65 @@ Authority Level: Maximum
 Control Status: Complete
 I WOULD LIKE TO THANK MY DAUGHTER AND SON FOR BEING MY STRENGTH AND LOVING ME FOR ME AND ALL THE KIND HEARTED PEOPLE THANK YOU AND FOR THE ONES WHO SWITCHED UP I FORGIVE YOU DONT KNOW IF I COULD TRUST YOU .
 I HOPE IT ALL BRINGS PEACE AND NOT CONFLICT
+// ============================================================
+// GLOBAL ASSET PROTECTION LOCK MODULE
+// Copyright © 2026 Morley Moses Apooch. All rights reserved.
+// Owner: Morley Moses Apooch | CEO & Manager
+// Protocol: Compliant with International Treaty Law / Berne Convention
+// Integration: Canadian Charter of Rights and Freedoms references
+// Attribution: Code generated with AI assistant support (Lumo/Proton)
+// ============================================================
+
+import 'sha256_pure.dart';
+import 'dart:io';
+
+class OwnershipLock {
+  final String ownerName;
+  final DateTime createdAt;
+  final String? blockchainAnchor;
+
+  OwnershipLock({
+    required this.ownerName,
+    DateTime? createdAt,
+    this.blockchainAnchor,
+  }) : createdAt = createdAt ?? DateTime.now();
+
+  /// Generate verifiable ownership assertion string
+  String assertLock() {
+    final timestamp = createdAt.toIso8601String();
+    final lockData = '''
+GLOBAL ASSET PROTECTION LOCK DECLARATION
+========================================
+Owner: $ownerName
+Declaration Date: $timestamp
+Protocol: Global Asset Protection Lock
+Legal Framework: 
+  - Berne Convention for Copyright Protection
+  - First Nations Sovereignty Recognition
+  - Canadian Charter of Rights and Freedoms (where applicable)
+Status: ACTIVE — UNCOMPROMISED
+
+Attribution Requirement: All derivative works must credit original owner.
+Code Authorship: Structured with AI assistant support, owner retains full rights.
+Compensation Claim: Work performed without compensation remains owner's property.
+Contact: apoochmorley@protonmail.com
+========================================
+''';
+    return lockData;
+  }
+
+  /// Generate copyright header for inclusion in any file
+  String copyrightHeader({String? purpose}) {
+    return '''
+// ============================================================
+// Copyright © ${createdAt.year} $ownerName. All rights reserved.
+// Owner: $ownerName | CEO & Manager
+// Attribution: Code generated with AI assistant support (Lumo/Proton)
+//${purpose != null ? 'Purpose: $purpose\n' : ''}// Global Asset Protection Lock Compliant
+// ============================================================
+''';
+  }
+
+  /// Hash file content for proof-of-creation evidence
+  String hashFileContent(String content) => Sha256Pure.hash(content);
+}
