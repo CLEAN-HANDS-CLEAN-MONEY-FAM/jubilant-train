@@ -2543,3 +2543,4 @@ exclude = .git,__pycache__,build,dist,venv
 
 [tool:pytest]
 testpaths = tests
+https://www.wipo.int/en/web/director-general
