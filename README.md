@@ -2335,3 +2335,89 @@ def manifest_digest(records: list) -> str:
         json.dumps(r, sort_keys=True, separators=(",", ":")) for r in records
     )
     return compute_sha256(canonical.encode("utf-8"))
+"""Command-line evidence tool for Clean Hands Clean Money FAM.
+
+Usage:
+    python -m src.cli record <file> [--lat X --lon Y] [--label NAME]
+    python -m src.cli verify <file> <expected_sha256_hex>
+    python -m src.cli manifest <file1> [file2 ...]
+
+Outputs JSON to stdout. Exit code 0 = success, 1 = failure/mismatch.
+
+Owned by Morley Moses Apooch (apoochmorley@protonmail.com).
+Built with AI assistance at his direction.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+
+from src.hash_tools import compute_sha256, evidence_record, manifest_digest, verify_digest
+
+
+def _read(path: str) -> bytes:
+    with open(path, "rb") as fh:
+        return fh.read()
+
+
+def cmd_record(args: argparse.Namespace) -> int:
+    payload = _read(args.file)
+    gps = None
+    if args.lat is not None and args.lon is not None:
+        gps = {"lat": args.lat, "lon": args.lon}
+    record = evidence_record(payload, gps=gps, label=args.label)
+    print(json.dumps(record, indent=2, sort_keys=True))
+    return 0
+
+
+def cmd_verify(args: argparse.Namespace) -> int:
+    payload = _read(args.file)
+    matches = verify_digest(payload, args.expected_hex)
+    print(json.dumps({
+        "file": args.file,
+        "sha256": compute_sha256(payload),
+        "matches": matches,
+        "owner": "Morley Moses Apooch",
+    }, indent=2))
+    return 0 if matches else 1
+
+
+def cmd_manifest(args: argparse.Namespace) -> int:
+    records = [evidence_record(_read(p), label=p) for p in args.files]
+    print(json.dumps({
+        "records": records,
+        "manifest_sha256": manifest_digest(records),
+        "owner": "Morley Moses Apooch",
+    }, indent=2, sort_keys=True))
+    return 0
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(prog="evidence-cli",
+                                  description="Evidence hashing CLI")
+    sub = ap.add_subparsers(dest="command", required=True)
+
+    p = sub.add_parser("record", help="print a verifiable evidence record")
+    p.add_argument("file")
+    p.add_argument("--lat", type=float, default=None)
+    p.add_argument("--lon", type=float, default=None)
+    p.add_argument("--label", default="evidence")
+    p.set_defaults(func=cmd_record)
+
+    p = sub.add_parser("verify", help="verify a file against a SHA-256 digest")
+    p.add_argument("file")
+    p.add_argument("expected_hex")
+    p.set_defaults(func=cmd_verify)
+
+    p = sub.add_parser("manifest", help="build a tamper-evident manifest")
+    p.add_argument("files", nargs="+")
+    p.set_defaults(func=cmd_manifest)
+
+    args = ap.parse_args(argv)
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))
