@@ -2544,3 +2544,5 @@ exclude = .git,__pycache__,build,dist,venv
 [tool:pytest]
 testpaths = tests
 https://www.wipo.int/en/web/director-general
+https://www.islamicfinder.org/world/
+ALSO YEVETTE DESJAIRLAIS AND MAUREEN AND PATSY I SEEN DUST DEVELIS ARE THEM BY FISHING LAKE
