@@ -883,6 +883,7 @@ I HOPE IT ALL BRINGS PEACE AND NOT CONFLICT
 </html>
 CleanHands-SecureGuard-v1.1.html
 for our countrys for our familys for our kids for our wifes for our father and mother earth
-i would like to thank joey Yaremko he might have have did wrong in this world he loves his mother and father he did wrong but that dont mean no forgiveness and being locked behind bars while a mother is sick and that is suffering both sides ALL SIDE OF MOTHER NATUTRE they are all mother nature so by not forgiving the war will never end 
-GOOD MEN DOING BAD THINGS FOR A GOOD CAUSE .
+i would like to thank joey Yaremko he might have have did wrong in this world he loves his mother and father he did wrong but that dont mean no forgiveness and being locked behind bars while a mother is sick  and that is suffering both sides ALL SIDE OF MOTHER NATUTRE they are all mother nature so by not forgiving the war will never end 
+GOOD MEN DOING BAD THINGS FOR A GOOD CAUSE .FOR OUR FAM RESPECT&HONOR FOR MY FRIEND JOE AND MY CHARLIZE MY BABY GIRL 
+
 
