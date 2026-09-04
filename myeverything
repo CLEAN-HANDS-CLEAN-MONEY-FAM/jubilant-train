@@ -2640,3 +2640,77 @@ flutter build apk --obfuscate --split-debug-info=./out/symbols
 1. 要写什么功能？（比如某个页面、某个工具函数、还是后端接口）
 2. 用 Flutter 还是 React Native？
 3. 代码跑在哪个端？（移动端 / Render 云服务 / 节点通信）
+Clean Hands Clean Money FAM
+Все права защищены © 2026 Морли Мозес Апуч (Morley Moses Apooch).
+
+📋 Обзор проекта
+Поле	Значение
+Название проекта	Clean Hands Clean Money FAM
+Версия	1.0.0
+Владелец	Морли Мозес Апуч (Morley Moses Apooch)
+Должность	Генеральный директор и управляющий (CEO & Manager)
+Контактный email	apoochmorley@protonmail.com
+Протокол	Соответствует протоколу Global Asset Protection Lock
+Платформа	Flutter (iOS и Android)
+Зависимости	Отсутствуют (нуль сторонних библиотек)
+⚖️ Декларация о праве собственности
+Основной владелец
+Имя: Морли Мозес Апуч (Morley Moses Apooch)
+
+Роль: Генеральный директор и управляющий (CEO & Manager)
+
+Представительство: Pro Se (самопредставительство во всех юридических вопросах)
+
+Email: apoochmorley@protonmail.com
+
+Аффилированность и признание
+Категория	Статус	Назначение
+Первые нации Йеллоу-Квилл (Yellow Quill First Nations)	Список избирателей для ратификации	Признание суверенитета
+Канадская хартия прав и свобод	Применяется там, где это уместно	Конституционная интеграция
+Бернская конвенция	Соблюдение международных договоров	Защита авторских прав
+📜 Уведомление об интеллектуальной собственности
+Исключительное право собственности
+Данное программное обеспечение и вся сопутствующая документация являются исключительной собственностью Морли Мозеса Апуча. Структура кода была разработана при поддержке ИИ-ассистента, однако:
+
+Творческое руководство: Исходило исключительно от владельца.
+
+Определение требований: Устанавливалось исключительно владельцем.
+
+Право принятия решений: Принадлежит исключительно владельцу.
+
+Контроль реализации: Осуществлялся под руководством владельца.
+
+Правовая основа владения
+Согласно Бернской конвенции об охране литературных и художественных произведений, авторство принадлежит создателю-человеку, который руководил работой и воплощал её в жизнь. Компоненты, сгенерированные ИИ и не внесенные независимо, не умаляют прав создателя-человека.
+
+Требование об указании авторства
+Все производные работы, репродукции или модификации должны содержать следующее указание авторства:
+
+«Структура кода разработана под руководством Морли Мозеса Апуча (Morley Moses Apooch). Вклад ИИ-ассистента признан в соответствии со спецификацией разработчика. Все права защищены.»
+
+Несоблюдение требований об указании авторства является нарушением авторских прав.
+
+🔐 Протокол Global Asset Protection Lock
+Компоненты протокола
+Компонент	Реализация	Статус
+Хеширование SHA-256	Чистый Dart (lib/core/sha256_pure.dart)	Активно
+GPS-метки времени	Модуль сбора доказательств	Активно
+Заглушки QR-кодов	Подготовлено для привязки к блокчейну	Готово
+Экспорт доказательств	Фреймворк генерации PDF	Готово
+Подтверждение блокировки прав	lib/core/ownership_lock.dart	Активно
+🛠️ Команды сборки
+Bash
+# Сборка APK для Android (с обфускацией)
+flutter build apk --obfuscate --split-debug-info=build/debug
+
+# Сборка пакета для iOS (с обфускацией)
+flutter build ios --obfuscate --split-debug-info=build/debug
+📞 Контактная информация
+Владелец: Морли Мозес Апуч (Morley Moses Apooch)
+
+Должность: CEO & Manager
+
+Email: apoochmorley@protonmail.com
+
+Все права защищены © 2026 Морли Мозес Апуч (Morley Moses Apooch).
+Mathematical Model and Cryptographic Relations1. Data Integrity and Hashing (SHA-256)To ensure the immutability of records and anchor copyright status, the SHA-256 cryptographic hash function is used. Let $M$ represent a data block (source code, metadata, or owner legal declaration). The hash function $H$ generates a unique digest:$$h = H(M) \in \{0, 1\}^{256}$$Any unauthorized modification of the content ($M' \neq M$) results in a drastic change to the hash value with a probability approaching 1 (the avalanche effect):$$H(M') \neq H(M)$$2. Timestamp and Geolocation Anchoring (GPS Proof)Each audit event or rights-anchoring action is signed with an evidence vector $E$, which includes a timestamp $t$ and geographic coordinates $G = (lat, lon, alt)$:$$E = (h, t, G)$$To establish an immutable sequence of events, a hash chain is created where each subsequent block incorporates the hash of the preceding one:$$h_{n} = H(h_{n-1} \parallel E_n \parallel t_n)$$where $\parallel$ denotes the data concatenation operation.3. Formalization of Ownership RightsLet $\mathcal{A}$ be the set of all created artifacts (source code, UI components), and $U$ be the rights subject (author and owner). The exclusive ownership relation $\mathcal{R}_{own}$ is defined as a predicate:$$\forall a \in \mathcal{A}, \quad \mathcal{R}_{own}(u, a) = \begin{cases}  1, & \text{if } u = \text{Morley Moses Apooch} \land H(a) \in \Omega_{\text{valid}} \\  0, & \text{otherwise}  \end{cases}$$where $\Omega_{\text{valid}}$ is the set of legitimate hash sums registered under the asset protection lock protocol.
