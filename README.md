@@ -2613,3 +2613,30 @@ $purposeLine// Global Asset Protection Lock Compliant
 
 utm_source=chatgpt&utm_medium=cpc&utm_campaign=chatgpt_poc_v3&utm_term=secret_detection_hb&utm_content=public_audit&oppref=gAAAAABqmdbP63sH-RKEfA0L8UD57mzAvZLt8UYtLEX_FHANHjnGTFe3fo5jocs2W3AHUVPsBrYqp5bFy4JP9e5utXqYNtKx-dtnj_FR2RQ_-yhA7WNcfGIw&olref=gAAAAABqmdbPpDTkRZH1y6kE9xxRO6Kkm2382qIUVCTyodTG90oFldpL3d4M8zXyk_Q0wfx8-lIFK8ffy0LhNVAEO5YmrGl3yPxChYnVTa1GH2dO7ml6tCBct6gJKfWHGqPnmRAq5bezdTEd06EhPSm7gRl2F3F4cAw
 ASSERTION OF OWNERSHIP & LEGAL SIGNATUREDeclared By: Morley Moses ApoochTitle: CEO & ManagerDate: September 3, 2026Location: Yorkton, Saskatchewan, CanadaLegal Framework & Claims:Copyright & Ownership: Protected under the Berne Convention for the Protection of Literary and Artistic Works and the Copyright Act of Canada. Full rights retained for all software architectures, core modules, algorithms, and documentation associated with Clean Hands Clean Money FAM and related projects.Sovereignty & Rights: Asserted under the Canadian Charter of Rights and Freedoms and recognized Indigenous sovereignty frameworks.Work & Attribution: All system designs and core structures executed or directed by Morley Moses Apooch remain sole legal property regardless of uncompensated labor or external interference.Signed:Morley Moses ApoochMorley Moses ApoochCEO & Manager
+你提到的“为工作写代码”需求还比较宽泛，我目前掌握到的信息里，能对应上的是你之前做 Flutter{id="entity_1"} 和 React Native{id="entity_2"} 移动端开发，并且偏好零第三方依赖的独立函数、重视 IP保护{id="entity_3"} 和代码署名。要直接给你可运行的代码，还需要你先明确具体要做什么功能。
+
+不过，可以先把和你开发习惯相关的几块基础信息梳理清楚：
+
+🧩 独立函数设计
+你要求“零第三方依赖”，这很符合你正在做的 Clean Hands Clean Money FAM 这类主权网格节点项目。独立函数建议按纯 Dart/TypeScript 模块编写，只依赖标准库，输入输出用 JSON 序列化，方便后续在 Flutter 和 React Native 间复用。目前公开资料里没有现成可直接用的函数代码，需要按具体功能来写。
+
+🔐 Flutter 混淆配置
+构建 release 版时用这两个参数就能开启混淆：
+```bash
+flutter build apk --obfuscate --split-debug-info=./out/symbols
+```
+`--obfuscate` 启用混淆，`--split-debug-info` 指定符号映射表输出位置，⚠️ 符号文件一定要妥善保存，否则线上报错堆栈无法还原。
+
+🧠 Release 版异常排查
+有个容易踩的坑：release 版异常默认不打印日志，出了问题只会显示灰屏，看起来像“没报错”，其实是异常被吞掉了。建议在 `ErrorWidget.builder` 和 `FlutterError.onError` 里做全局捕获，把异常信息输出到日志或上报服务，不然线上问题很难定位。
+
+⚖️ 权利与署名
+你要求集成 加拿大权利与自由宪章{id="entity_4"} 相关法律条款，这块公开资料只提供了宪章的背景和条文解读，没有现成的代码实现。 如果需要把宪章条款嵌入应用逻辑，需要先明确是展示用途、合规声明，还是某种校验机制，才能动手写。至于 AI 生成代码的署名，目前没有统一标准，建议在项目 LICENSE 和文件头注释里写明生成方式和归属。
+
+---
+
+要往下推进，直接告诉我这几点就行：
+
+1. 要写什么功能？（比如某个页面、某个工具函数、还是后端接口）
+2. 用 Flutter 还是 React Native？
+3. 代码跑在哪个端？（移动端 / Render 云服务 / 节点通信）
