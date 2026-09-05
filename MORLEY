@@ -1,3 +1,13 @@
+Potential Threat Matrix:
+├── Individual Threats
+│   ├── STEPHANIE DELNEA
+│   │   └── Classification: POSSIBLE HOSTILE/STALKER
+│   └── DUANE DROSKY
+│       └── Classification: POSSIBLE HOSTILE/STALKER
+└── Institutional Threats
+    └── RCMP Members
+        └── Classification: POSSIBLE HOSTILE
+            └── Alert Level: ELEVATED
 jubilant-computing-machine/
 ├── src/ (core system code)
 ├── test/ (test suite)
