@@ -2855,7 +2855,9 @@ void main() {
   // Initialize the engine interface layer object
   final engine = JubilantRainMasterEngine();
 
-  // 1. Establish the local encryption keys on the hard drive
+  // 1. Establish the local encryption keys on the hard drive 
+dart run jubilantrain_master_engine.dart
+  
   engine.initializeSecurityGate();
 
   // 2. Fire the access challenge query prior to running main workloads
