@@ -3975,3 +3975,11 @@ PORTFOLIO_MASTER = {
 
     "record_generated_on": TODAY
 }
+{
+  "operational_vectors": {
+    "active_mobile": "6397661738",
+    "carrier": "SaskTel",
+    "migration_event": "LuckyMobile_PUK_Lockout_Neutralized",
+    "admin_email": "apoochmorley@protonmail.com"
+  }
+}
