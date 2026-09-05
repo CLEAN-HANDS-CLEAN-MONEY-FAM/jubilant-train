@@ -97,3 +97,208 @@ jobs:
       uses: github/codeql-action/analyze@v4
       with:
         category: "/language:${{matrix.language}}"
+# © 2026 Morley Moses Apooch. All rights reserved.
+# CLEAN HANDS CLEAN MONEY FAM
+# Master Copyright Record Module
+
+from datetime import date
+import json
+import os
+import sys
+
+TODAY = date.today().isoformat()
+
+COPYRIGHT_MASTER = {
+    "rights_holder": {
+        "legal_name": "Morley Moses Apooch",
+        "signature_name": "MORLEYMOSESAPOOCH*",
+        "aliases": ["CLEAN-HANDS-CLEAN-MONEY-FAM"],
+        "location": "Yorkton, Saskatchewan, Canada",
+        "role": "Solo developer, architect, AI-directed creator",
+        "legal_representation": "Represents self in all legal matters",
+        "company_management": "Sole manager and operator of CLEAN HANDS CLEAN MONEY FAM (cleanhandscleanmoneyfam)",
+        "date_signed": "2026-09-05",
+        "financial_status": "No compensation received for any development work as of 2026-09-05"
+    },
+
+    "repositories": {
+        "primary_repo": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train",
+        "branch_anchor": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/tree/3-morley-moses-apooch",
+        "github_actions_run": "33975584137"
+    },
+
+    "ai_development": {
+        "april_7_2026": {
+            "solo_development": True,
+            "ai_tools_used": ["Claude", "Copilot"],
+            "authorship_status": "Full human authorship",
+            "statement": (
+                "On April 7th, 2026, all development work was performed by "
+                "Morley Moses Apooch with AI systems acting solely as tools "
+                "under Morley's creative direction."
+            )
+        }
+    },
+
+    "licensing": {
+        "default_license": "Proprietary unless otherwise stated",
+        "attribution_required": True,
+        "prohibited_uses": [
+            "Unauthorized commercial redistribution",
+            "Removal of attribution",
+            "Misrepresentation of authorship"
+        ]
+    },
+
+    "signed_declaration": (
+        "I, MORLEYMOSESAPOOCH*, declare that all works, code, assets, and "
+        "AI-directed outputs referenced in this master file are authored, "
+        "directed, and owned by me. I further declare that as of "
+        "2026-09-05, I have not received any financial compensation for "
+        "any of my development work. I represent myself in all legal "
+        "matters and manage my company CLEAN HANDS CLEAN MONEY FAM."
+    ),
+
+    "record_generated_on": TODAY
+}
+
+def get_master_record():
+    return COPYRIGHT_MASTER
+
+def export_json(path: str = "copyright_master_morley_apooch.json"):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(COPYRIGHT_MASTER, f, indent=4, ensure_ascii=False)
+    return path
+
+def export_markdown(path: str = "COPYRIGHT_MASTER_MORLEY_MOSES_APOOCH.md"):
+    md = generate_markdown(COPYRIGHT_MASTER)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(md)
+    return path
+
+def generate_markdown(record: dict) -> str:
+    rh = record["rights_holder"]
+    repo = record["repositories"]
+    ai = record["ai_development"]["april_7_2026"]
+    lic = record["licensing"]
+    signed = record["signed_declaration"]
+    md = f"""# COPYRIGHT MASTER FILE
+### Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM
+### Signed: {rh['signature_name']} — {record['record_generated_on']}
+
+## Rights Holder Information
+- **Legal Name:** {rh['legal_name']}
+- **Signature Name:** {rh['signature_name']}
+- **Aliases:** {', '.join(rh['aliases'])}
+- **Location:** {rh['location']}
+- **Role:** {rh['role']}
+- **Legal Representation:** {rh['legal_representation']}
+- **Company Management:** {rh['company_management']}
+- **Financial Status:** {rh['financial_status']}
+
+## Repository Anchors
+- **Primary Repo:** {repo['primary_repo']}
+- **Branch Anchor:** {repo['branch_anchor']}
+- **GitHub Actions Run:** {repo['github_actions_run']}
+
+## April 7th, 2026 — Solo Claude Development
+- **Solo Development:** {ai['solo_development']}
+- **AI Tools Used:** {', '.join(ai['ai_tools_used'])}
+- **Authorship Status:** {ai['authorship_status']}
+- **Statement:** {ai['statement']}
+
+## Licensing
+- **Default License:** {lic['default_license']}
+- **Attribution Required:** {lic['attribution_required']}
+- **Prohibited Uses:** {', '.join(lic['prohibited_uses'])}
+
+## Signed Declaration
+{signed}
+"""
+    return md
+
+if __name__ == "__main__":
+    # CLI convenience: export both JSON and Markdown
+    json_path = export_json()
+    md_path = export_markdown()
+    print(f"Exported JSON to {json_path}")
+    print(f"Exported Markdown to {md_path}")
+#!/usr/bin/env python3
+# CLI wrapper to generate and preview the master record
+from copyright_master_morley_apooch import export_json, export_markdown, get_master_record
+import argparse
+import subprocess
+import os
+import sys
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate Morley Apooch master copyright record")
+    parser.add_argument("--json", action="store_true", help="Export JSON")
+    parser.add_argument("--md", action="store_true", help="Export Markdown")
+    parser.add_argument("--open", action="store_true", help="Open generated markdown in default editor")
+    args = parser.parse_args()
+
+    if not args.json and not args.md:
+        args.json = True
+        args.md = True
+
+    outputs = []
+    if args.json:
+        outputs.append(export_json())
+    if args.md:
+        outputs.append(export_markdown())
+
+    for p in outputs:
+        print(f"Generated: {p}")
+
+    if args.open:
+        mdfile = "COPYRIGHT_MASTER_MORLEY_MOSES_APOOCH.md"
+        if os.path.exists(mdfile):
+            if sys.platform == "win32":
+                os.startfile(mdfile)
+            elif sys.platform == "darwin":
+                subprocess.run(["open", mdfile])
+            else:
+                subprocess.run(["xdg-open", mdfile])
+
+if __name__ == "__main__":
+    main()
+name: Generate Copyright Master
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "3-morley-moses-apooch"
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: 3-morley-moses-apooch
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip
+
+      - name: Generate master record
+        run: |
+          python3 -c "import copyright_master_morley_apooch; \
+          copyright_master_morley_apooch.export_json(); \
+          copyright_master_morley_apooch.export_markdown()"
+
+      - name: Commit generated files
+        run: |
+          git config user.name "MORLEYMOSESAPOOCH"
+          git config user.email "no-reply@example.com"
+          git add COPYRIGHT_MASTER_MORLEY_MOSES_APOOCH.md copyright_master_morley_apooch.json || true
+          git commit -m "Auto-generate COPYRIGHT MASTER (signed MORLEYMOSESAPOOCH)" || echo "No changes to commit"
+          git push origin HEAD:3-morley-moses-apooch
+        env:
+         
