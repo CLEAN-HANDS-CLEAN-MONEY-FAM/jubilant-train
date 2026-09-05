@@ -3947,3 +3947,31 @@ def main():
 
 if __name__ == "__main__":
     main()
+PORTFOLIO_MASTER = {
+    "owner": {
+        "legal_name": "Morley Moses Apooch",
+        "signature_name": "MORLEYMOSESAPOOCH*",
+        "role": "Owner, Manager, Developer",
+        "representation": "Self-represented"
+    },
+
+    "assets": {
+        "repositories": [],
+        "documents": [],
+        "evidence_links": [],
+        "media": []
+    },
+
+    "protection": {
+        "copyright_status": "Protected © 2026",
+        "owner": "Morley Moses Apooch",
+        "license": "Proprietary",
+        "restrictions": [
+            "No redistribution",
+            "No modification",
+            "No commercial use without permission"
+        ]
+    },
+
+    "record_generated_on": TODAY
+}
