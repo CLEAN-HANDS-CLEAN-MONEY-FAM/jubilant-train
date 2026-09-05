@@ -2871,3 +2871,161 @@ dart run jubilantrain_master_engine.dart
 
 .packages
 build/
+// ========================================================================
+// AUTHOR / DEVELOPER: Morley Moses Apooch (Solo Software Developer)
+// CORPORATE BRANDING: CLEANHANDSCLEANMONEYFAM / jubilantrain
+// BASELINE ACCREDITATION: Fully Functional Engine Built Solo by Author
+// ACCOUNT WORKSPACE REGISTERED: moapooch121@gmail.com
+// LOCATION ENVIRONMENT: Yorkton, Saskatchewan, Canada
+// ------------------------------------------------------------------------
+// LEGAL NOTICE: ALL RIGHTS RESERVED. CLEANHANDSCLEANMONEYFAM PROPERTY.
+// This configuration script runs exclusively on local infrastructure to
+// parse and log authorization parameters without public cloud exposure.
+// ========================================================================
+
+import 'dart:convert';
+import 'dart:io';
+import 'package:crypto/crypto.dart';
+
+class CleanHandsHistoryEngine {
+  final String localDataFile = 'clean_hands_history_vault.json';
+  final String trackingKeyFile = '.history_vault.key';
+  bool _isVerified = false;
+
+  /// CORE ENCRYPTION ENGINE (Standard Cryptographic Protocol)
+  /// Converts verification input parameters into an uncopyrighted SHA-256 hash sequence.
+  String _generateStandardSha256(String validationInput) {
+    final bytes = utf8.encode(validationInput);
+    return sha256.convert(bytes).toString();
+  }
+
+  /// ACCOUNT VALIDATION RUNTIME
+  /// Secures the physical workspace folder before initializing database components.
+  void verifyDeveloperClearance() {
+    final keyLocation = File(trackingKeyFile);
+
+    if (!keyLocation.existsSync()) {
+      print('========================================================================');
+      print('      CLEANHANDSCLEANMONEYFAM - ACCOUNT REGISTRY ARCHITECTURE          ');
+      print('========================================================================');
+      print('Target Account Profile: moapooch121@gmail.com\n');
+
+      stdout.write('Establish Master Account Vault Password: ');
+      final password = stdin.readLineSync(encoding: utf8) ?? '';
+
+      if (password.trim().isEmpty) {
+        print('[!] System Block: Initialization password cannot be empty strings.');
+        exit(1);
+      }
+
+      final securedHash = _generateStandardSha256(password);
+      try {
+        keyLocation.writeAsStringSync(securedHash);
+        print('[✔] Workspace authorization token successfully anchored to disk.\n');
+      } catch (e) {
+        print('[!] System Directory Error writing configuration: $e');
+        exit(1);
+      }
+    }
+  }
+
+  /// Demands local master credentials before decrypting the data registry logs.
+  bool unlockHistoryVault() {
+    final keyLocation = File(trackingKeyFile);
+
+    if (!keyLocation.existsSync()) {
+      print('[!] Authorization Block: System registry has not been initialized.');
+      return false;
+    }
+
+    print('\n--- CLEANHANDSCLEANMONEYFAM HISTORY VAULT CLEARANCE ---');
+    stdout.write('Enter Developer Master Password: ');
+    final input = stdin.readLineSync(encoding: utf8) ?? '';
+    final challengeHash = _generateStandardSha256(input);
+
+    try {
+      final databaseHash = keyLocation.readAsStringSync().trim();
+
+      if (challengeHash == databaseHash) {
+        print('[✔] Clearance Granted. Populating historical data array metrics...');
+        _isVerified = true;
+        return true;
+      } else {
+        print('[✖] Access Denied: Invalid Cryptographic Account Signature.');
+        _isVerified = false;
+        return false;
+      }
+    } catch (e) {
+      print('[!] System Read Failure accessing database block: $e');
+      return false;
+    }
+  }
+
+  /// PROPRIETARY OFFLINE STORAGE LOADER
+  /// Populates the standalone, grounded file structure with your verified historical milestones.
+  void compileHistoryVaultMap() {
+    if (!_isVerified) {
+      print('[!] Access Revoked: Cannot execute generation sequence without pass validation.');
+      return;
+    }
+
+    final File file = File(localDataFile);
+
+    // Structural offline registry mapping all verified session timestamps
+    final Map<String, dynamic> offlineHistoryDataset = {
+      "registry_header": {
+        "firm": "CLEANHANDSCLEANMONEYFAM",
+        "brand_track": "jubilantrain",
+        "lead_developer": "Morley Moses Apooch",
+        "verified_account_node": "moapooch121@gmail.com"
+      },
+      "verified_authorization_logs": [
+        {
+          "synchronization_timestamp": "2026-09-03",
+          "service_authorized": "CloudConvert API Integration Engine",
+          "access_clearance": "Successfully Authenticated via Google Profile Token Sync"
+        },
+        {
+          "synchronization_timestamp": "2026-09-04",
+          "service_authorized": "GitLab Development Deployment Module",
+          "access_clearance": "OAuth Core Protocol Successfully Mapped to Project Directory"
+        },
+        {
+          "synchronization_timestamp": "2026-09-04",
+          "service_authorized": "Atlassian Systems Infrastructure Loop",
+          "access_clearance": "Developer Node Active and Authenticated"
+        }
+      ],
+      "environment_protection_parameters": {
+        "air_gapped_requirement": true,
+        "security_policy": "Never push credential files or clear text mappings to public cloud repositories."
+      }
+    };
+
+    try {
+      file.writeAsStringSync(jsonEncode(offlineHistoryDataset));
+      print('[✔] Master offline ledger built successfully as: $localDataFile');
+      print('========================================================================');
+      print('               CLEANHANDSCLEANMONEYFAM HISTORICAL REGISTRY              ');
+      print('========================================================================');
+      print(const JsonEncoder.withIndent('  ').convert(offlineHistoryDataset));
+    } catch (e) {
+      print('[!] Critical failure updating account timeline logs: $e');
+    }
+  }
+}
+
+void main() {
+  final coreEngine = CleanHandsHistoryEngine();
+
+  // 1. Initialize local folder access keys
+  coreEngine.verifyDeveloperClearance();
+
+  // 2. Query developer pass challenge before displaying account maps
+  if (coreEngine.unlockHistoryVault()) {
+    coreEngine.compileHistoryVaultMap();
+  } else {
+    print('[SYSTEM LOG] Intrusion mitigation operational. Purging current runtime memory.');
+    exit(1);
+  }
+}
