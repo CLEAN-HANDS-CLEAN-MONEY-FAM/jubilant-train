@@ -1,0 +1,24 @@
+name: Code coverage AI findings
+
+on:
+  pull_request:
+  - # Trigger configuration
+
+jobs:
+  code-coverage-agent:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run GitHub Copilot Code Coverage Agent
+        uses: github/copilot-developer-action@main
+        with:
+          # Explicitly set a universally supported model target to prevent CAPI 400 errors
+          model: 'claude-3.5-sonnet'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COPILOT_AGENT_MODEL: 'claude-3.5-sonnet'
