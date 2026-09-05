@@ -2753,4 +2753,43 @@ if __name__ == "__main__":
     engine.load_license_metadata()
     
     # 2. Run core system services
-    engine.run_main_process()
+    # Morley Moses Apooch Style Registry Dashboard
+Master structural catalog logging configuration details, asset identifiers, and localized market valuations.
+
+## System Manifest
+* **docket_id**: `MMA-OUTFIT-REG-2026-004`
+* **status**: Permanent System Registry Record
+* **location**: Yorkton, Saskatchewan, Canada
+
+## Data Schematics
+The registry processes infrastructure across three key component layers:
+1. **Footwear Engine**: Handles configuration metrics for the Nike Air Jordan 7 Retro 'Chambray' variant (`CU9307-004`).
+2. **Outerwear Shell**: Tracks the functional components of The North Face Antora utility rain suite.
+3. **Base Text Matrix**: Holds complete transcription arrays of raw graphic branding components.
+
+## Local Execution
+To deploy the dashboard application environment locally on your terminal device, execute:
+
+```bash
+python app.py
+```
+Once initialized, visit `http://localhost:8080` inside any web browser framework.
+name: jubilantrain_security_core
+description: Proprietary Anomaly Containment Master Security Gate.
+version: 1.0.0
+homepage: https://github.com
+author: Morley Moses Apooch (Solo Software Developer)
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  crypto: ^3.0.3 # Standard public hashing protocol engine
+# CLEANHANDSCLEANMONEYFAM Offline Protection Map
+# Ignore local cryptographic master password verification keys
+.clean_hands_master.key
+
+# Ignore local system build tracking caches
+.dart_tool/
+.packages
+build/
