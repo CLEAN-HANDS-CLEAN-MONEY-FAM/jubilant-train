@@ -3029,3 +3029,921 @@ void main() {
     exit(1);
   }
 }
+#!/usr/bin/env python3
+# CLI для генерации мастер‑записи
+
+from copyright_master_morley_apooch import export_json, export_markdown, load_sensitive_from_env, load_sensitive_from_decrypted_file
+import argparse
+import os
+import subprocess
+import sys
+
+def main():
+    parser = argparse.ArgumentParser(description="Генерация мастер‑записи авторских прав Morley Apooch")
+    parser.add_argument("--json", action="store_true", help="Экспорт JSON")
+    parser.add_argument("--md", action="store_true", help="Экспорт Markdown")
+    parser.add_argument("--open", action="store_true", help="Открыть Markdown в редакторе")
+    parser.add_argument("--use-env", action="store_true", help="Попытаться загрузить чувствительные данные из окружения (не печатать)")
+    parser.add_argument("--use-decrypted-file", metavar="PATH", help="Попытаться загрузить чувствительные данные из расшифрованного локального файла (не печатать)")
+    args = parser.parse_args()
+
+    if not args.json and not args.md:
+        args.json = True
+        args.md = True
+
+    if args.use_env:
+        _ = load_sensitive_from_env()
+    if args.use_decrypted_file:
+        _ = load_sensitive_from_decrypted_file(args.use_decrypted_file)
+
+    outputs = []
+    if args.json:
+        outputs.append(export_json())
+    if args.md:
+        outputs.append(export_markdown())
+
+    for p in outputs:
+        print(f"Сгенерировано: {p}")
+
+    if args.open:
+        mdfile = "COPYRIGHT_MASTER_MORLEY_MOSES_APOOCH.md"
+        if os.path.exists(mdfile):
+            if sys.platform == "win32":
+                os.startfile(mdfile)
+            elif sys.platform == "darwin":
+                subprocess.run(["open", mdfile])
+            else:
+                subprocess.run(["xdg-open", mdfile])
+
+if __name__ == "__main__":
+    main()
+git clone https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train.git
+cd jubilant-train
+git fetch origin
+git checkout -b morlzappoch-patch-5 origin/morlzappoch-patch-5
+```python
+#!/usr/bin/env python3
+# © 2026 Morley Moses Apooch. All rights reserved.
+# CLEAN HANDS CLEAN MONEY FAM
+# Multilingual Master Copyright Record Generator
+# Languages: English (en), Russian (ru), Chinese Simplified (zh), Old English (oe)
+# NOTE: This file intentionally does NOT include raw sensitive identifiers.
+# Store treaty/ID/validation numbers securely (env vars or encrypted local file).
+
+from datetime import date
+import json
+import os
+from pathlib import Path
+import argparse
+import sys
+
+TODAY = date.today().isoformat()
+
+# -------------------------
+# Multilingual templates
+# -------------------------
+TEMPLATES = {
+    "en": {
+        "title": "COPYRIGHT MASTER FILE",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Signed: MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "Legal Name",
+            "signature_name": "Signature Name",
+            "aliases": "Aliases",
+            "location": "Location",
+            "role": "Role",
+            "legal_representation": "Legal Representation",
+            "company_management": "Company Management",
+            "financial_status": "Financial Status"
+        },
+        "repositories": {
+            "primary_repo": "Primary Repo",
+            "branch_anchor": "Branch Anchor",
+            "compare_url": "Compare URL",
+            "github_actions_runs": "GitHub Actions Runs",
+            "photo_note": "Photo Visibility Note"
+        },
+        "ai_development": {
+            "heading": "April 7th, 2026 — Solo Claude Development",
+            "solo_development": "Solo Development",
+            "ai_tools_used": "AI Tools Used",
+            "authorship_status": "Authorship Status",
+            "statement": "Statement",
+            "time_window": "Approximate Local Time Window"
+        },
+        "sensitive": {
+            "heading": "Sensitive Identifiers (redacted)",
+            "treaty_present": "Treaty Number Present",
+            "sask_present": "Saskatchewan ID Present",
+            "validation_present": "Validation Number Present",
+            "note": "Note: Sensitive identifiers exist and are stored securely by the rights holder. They are not published in this repository. Treaty information may be verified via Indigenous Services Canada."
+        },
+        "licensing": {
+            "heading": "Licensing",
+            "default_license": "Default License",
+            "attribution_required": "Attribution Required",
+            "prohibited_uses": "Prohibited Uses"
+        },
+        "signed_declaration": (
+            "I, MORLEYMOSESAPOOCH*, declare that all works, code, assets, and "
+            "AI-directed outputs referenced in this master file are authored, "
+            "directed, and owned by me. I further declare that as of {date}, I have not "
+            "received any financial compensation for any of my development work. I represent "
+            "myself in all legal matters and manage my company CLEAN HANDS CLEAN MONEY FAM. "
+            "This record is anchored to GitHub Actions runs {runs}. "
+            "Note: GitHub currently prevents display of my personal photo in the repository UI; "
+            "the photo remains part of my evidence bundle but is not shown on GitHub."
+        )
+    },
+
+    "ru": {
+        "title": "МАСТЕР‑ЗАПИСЬ АВТОРСКИХ ПРАВ",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Подписано: MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "Юридическое имя",
+            "signature_name": "Имя подписи",
+            "aliases": "Псевдонимы",
+            "location": "Местоположение",
+            "role": "Роль",
+            "legal_representation": "Юридическое представление",
+            "company_management": "Управление компанией",
+            "financial_status": "Финансовый статус"
+        },
+        "repositories": {
+            "primary_repo": "Основной репозиторий",
+            "branch_anchor": "Ветка‑якорь",
+            "compare_url": "Ссылка сравнения",
+            "github_actions_runs": "GitHub Actions Runs",
+            "photo_note": "Примечание о фото"
+        },
+        "ai_development": {
+            "heading": "7 апреля 2026 — Соло разработка с Claude",
+            "solo_development": "Соло‑разработка",
+            "ai_tools_used": "Использованные AI",
+            "authorship_status": "Статус авторства",
+            "statement": "Заявление",
+            "time_window": "Примерное местное время"
+        },
+        "sensitive": {
+            "heading": "Чувствительные идентификаторы (редактировано)",
+            "treaty_present": "Наличие номера договора",
+            "sask_present": "Наличие провинциального ID",
+            "validation_present": "Наличие номера валидации",
+            "note": "Примечание: Чувствительные идентификаторы существуют и хранятся безопасно у правообладателя. Они не публикуются в репозитории. Информацию о договоре можно проверить через Indigenous Services Canada."
+        },
+        "licensing": {
+            "heading": "Лицензирование",
+            "default_license": "Лицензия по умолчанию",
+            "attribution_required": "Требуется указание авторства",
+            "prohibited_uses": "Запрещенные использования"
+        },
+        "signed_declaration": (
+            "Я, MORLEYMOSESAPOOCH*, заявляю, что все работы, код, материалы и результаты, "
+            "созданные с использованием AI, перечисленные в этом документе, являются моими. "
+            "По состоянию на {date} я не получал финансовой компенсации за указанную разработку. "
+            "Я представляю себя в юридических вопросах и управляю компанией CLEAN HANDS CLEAN MONEY FAM. "
+            "Запись привязана к GitHub Actions runs {runs}. "
+            "Примечание: GitHub не позволяет отображать мою личную фотографию в UI репозитория; "
+            "фото хранится в доказательной базе, но не показано на GitHub."
+        )
+    },
+
+    "zh": {
+        "title": "版权主记录",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "签署：MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "法定姓名",
+            "signature_name": "签名名称",
+            "aliases": "别名",
+            "location": "所在地",
+            "role": "角色",
+            "legal_representation": "法律代表",
+            "company_management": "公司管理",
+            "financial_status": "财务状况"
+        },
+        "repositories": {
+            "primary_repo": "主仓库",
+            "branch_anchor": "分支锚点",
+            "compare_url": "比较链接",
+            "github_actions_runs": "GitHub Actions 运行",
+            "photo_note": "照片可见性说明"
+        },
+        "ai_development": {
+            "heading": "2026年4月7日 — 单人 Claude 开发记录",
+            "solo_development": "单人开发",
+            "ai_tools_used": "使用的 AI 工具",
+            "authorship_status": "著作权状态",
+            "statement": "声明",
+            "time_window": "大致本地时间范围"
+        },
+        "sensitive": {
+            "heading": "敏感标识（已编辑）",
+            "treaty_present": "存在条约编号",
+            "sask_present": "存在萨斯喀彻温省身份证",
+            "validation_present": "存在验证编号",
+            "note": "说明：敏感标识存在并由权利人安全保存。它们不会在此仓库中公开。条约信息可通过加拿大原住民事务部（Indigenous Services Canada）核实。"
+        },
+        "licensing": {
+            "heading": "许可",
+            "default_license": "默认许可",
+            "attribution_required": "需要署名",
+            "prohibited_uses": "禁止使用"
+        },
+        "signed_declaration": (
+            "我，MORLEYMOSESAPOOCH*，声明本主记录中列示的所有作品、代码、资产和由 AI 协助生成的输出均由我创作、指导并归我所有。"
+            "截至 {date}，我尚未就任何开发工作获得任何经济补偿。我在所有法律事务中代表自己，并管理我的公司 CLEAN HANDS CLEAN MONEY FAM。"
+            "本记录锚定于 GitHub Actions 运行 {runs}。"
+            "注意：GitHub 当前阻止在仓库界面显示我的个人照片；照片仍作为证据保留，但不在 GitHub 上显示。"
+        )
+    },
+
+    "oe": {
+        # Old English (approximate, modernized for clarity)
+        "title": "COPYRIGHT MASTER BOC",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Signed: MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "Nama",
+            "signature_name": "Sigel Nama",
+            "aliases": "Earmena / Byname",
+            "location": "Stow",
+            "role": "Weorcwyrhta, Heafodcræft",
+            "legal_representation": "Ic sylf min agen bewerend",
+            "company_management": "Anraedend of CLEAN HANDS CLEAN MONEY FAM",
+            "financial_status": "No feoh receiv'd for þis weorc as of {date}"
+        },
+        "repositories": {
+            "primary_repo": "Heafod Hord (Repo)",
+            "branch_anchor": "Tref (Branch) Anchor",
+            "compare_url": "Gemæne Linc (Compare URL)",
+            "github_actions_runs": "GitHub Actions Runa",
+            "photo_note": "GitHub ne læt me sceawian min ansyne on þære repo gesihð; se foto is onbunden to minum beþeodnessum ac ne is gesewen on GitHub."
+        },
+        "ai_development": {
+            "heading": "7 Aprill, 2026 — Anes weorc mid Claude",
+            "solo_development": "Anes weorc",
+            "ai_tools_used": "AI Tæcna",
+            "authorship_status": "Mannlic full gewrit",
+            "statement": "Beþeod",
+            "time_window": "Ymb 10:30–11:30 on þære morgen on 7 Aprill, 2026 (local tid)"
+        },
+        "sensitive": {
+            "heading": "Dyrne Tæcna (forworpen)",
+            "treaty_present": "Treaht Number hæfð",
+            "sask_present": "Saskatchewan ID hæfð",
+            "validation_present": "Validation Number hæfð",
+            "note": "Dyrne tæcna beoð gehealden and ne beoð awriten on þis repo. Treaht info mæg beon gecweden æt Indigenous Services Canada."
+        },
+        "licensing": {
+            "heading": "Liceans",
+            "default_license": "Eallra rihte beheald (Proprietary unless stated)",
+            "attribution_required": "Nead to cweðan þæt Morley is se wyrhta",
+            "prohibited_uses": "Forboden brucan: unrihtlic ceap, forwyrcean cwide, and miscuðing of wyrht"
+        },
+        "signed_declaration": (
+            "Ic, MORLEYMOSESAPOOCH*, secge þæt ealle min weorca, codas, and AI‑gecynded þingas beon mine. "
+            "As of {date} ic næfde nan feoh for þas weorca. Ic me sylf representie and ic healde and ricsie minne scip CLEAN HANDS CLEAN MONEY FAM. "
+            "Þis boc is geancorod to GitHub Actions runa {runs}. GitHub ne læt min ansyne beon gesewen on þære repo."
+        )
+    }
+}
+
+# -------------------------
+# Core structured record (language-neutral fields)
+# -------------------------
+CORE_RECORD = {
+    "rights_holder": {
+        "legal_name": "Morley Moses Apooch",
+        "signature_name": "MORLEYMOSESAPOOCH*",
+        "aliases": ["CLEAN-HANDS-CLEAN-MONEY-FAM"],
+        "location": "Yorkton, Saskatchewan, Canada",
+        "role": "Solo developer, architect, AI-directed creator",
+        "legal_representation": "Represents self in all legal matters",
+        "company_management": "Sole manager and operator of CLEAN HANDS CLEAN MONEY FAM",
+        "date_signed": "2026-09-05",
+        "financial_status": "No compensation received for any development work as of 2026-09-05"
+    },
+    "repositories": {
+        "primary_repo": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train",
+        "branch_anchor": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/tree/3-morley-moses-apooch",
+        "compare_url": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/compare/morlzappoch-patch-5...morlzappoch-patch-7?quick_pull=1",
+        "github_actions_runs": ["33975584137", "33978583430"],
+        "note_photo_visibility": "GitHub currently prevents display of the author's personal photo in the repository UI; the photo is part of the evidence bundle but not shown on GitHub."
+    },
+    "ai_development": {
+        "april_7_2026": {
+            "solo_development": True,
+            "ai_tools_used": ["Claude", "Copilot"],
+            "authorship_status": "Full human authorship",
+            "statement": "On April 7th, 2026, all development work was performed by Morley Moses Apooch with AI systems acting solely as tools under Morley's creative direction.",
+            "approx_time_window_local": "Approximately 10:30 AM to 11:30 AM (local time) on April 7, 2026"
+        }
+    },
+    "sensitive_identifiers": {
+        "treaty_number_present": True,
+        "saskatchewan_id_present": True,
+        "validation_number_present": True,
+        "note": "Sensitive identifiers exist and are stored securely by the rights holder. They are not published in this repository. Treaty information may be verified via Indigenous Services Canada."
+    },
+    "licensing": {
+        "default_license": "Proprietary unless otherwise stated",
+        "attribution_required": True,
+        "prohibited_uses": [
+            "Unauthorized commercial redistribution",
+            "Removal of attribution",
+            "Misrepresentation of authorship"
+        ]
+    },
+    "record_generated_on": TODAY
+}
+
+# -------------------------
+# Secure loaders (do NOT print or commit sensitive values)
+# -------------------------
+def load_sensitive_from_env():
+    treaty = os.getenv("MORLEY_TREATY_NUMBER")
+    sask = os.getenv("MORLEY_SASK_ID")
+    val = os.getenv("MORLEY_VALIDATION_NUMBER")
+    if not any([treaty, sask, val]):
+        return None
+    return {"treaty_number": treaty, "saskatchewan_id": sask, "validation_number": val}
+
+def load_sensitive_from_decrypted_file(path: str = "sensitive_ids.json"):
+    p = Path(path)
+    if not p.exists():
+        return None
+    try:
+        with p.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        return {
+            "treaty_number": data.get("treaty_number"),
+            "saskatchewan_id": data.get("saskatchewan_id"),
+            "validation_number": data.get("validation_number")
+        }
+    except Exception:
+        return None
+
+# -------------------------
+# Generation helpers
+# -------------------------
+def build_language_record(lang: str):
+    tpl = TEMPLATES.get(lang)
+    if not tpl:
+        raise ValueError("Unsupported language")
+    record = {
+        "meta": {
+            "language": lang,
+            "generated_on": CORE_RECORD["record_generated_on"]
+        },
+        "content": {
+            "title": tpl["title"],
+            "subtitle": tpl["subtitle"],
+            "signed": tpl["signed"].format(date=CORE_RECORD["record_generated_on"])
+        },
+        "rights_holder": CORE_RECORD["rights_holder"],
+        "repositories": CORE_RECORD["repositories"],
+        "ai_development": CORE_RECORD["ai_development"],
+        "sensitive_identifiers": CORE_RECORD["sensitive_identifiers"],
+        "licensing": CORE_RECORD["licensing"],
+        "signed_declaration": tpl["signed_declaration"].format(date=CORE_RECORD["record_generated_on"], runs=", ".join(CORE_RECORD["repositories"]["github_actions_runs"]))
+    }
+    return record
+
+def export_json(record: dict, path: str):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(record, f, indent=4, ensure_ascii=False)
+    return path
+
+def export_markdown_lang(lang: str, path: str):
+    tpl = TEMPLATES[lang]
+    rh = CORE_RECORD["rights_holder"]
+    repo = CORE_RECORD["repositories"]
+    ai = CORE_RECORD["ai_development"]["april_7_2026"]
+    lic = CORE_RECORD["licensing"]
+    sensitive = CORE_RECORD["sensitive_identifiers"]
+    md_lines = []
+    md_lines.append(f"# {tpl['title']}")
+    md_lines.append(f"### {tpl['subtitle']}")
+    md_lines.append("")
+    md_lines.append(tpl["signed"].format(date=CORE_RECORD["record_generated_on"]))
+    md_lines.append("")
+    md_lines.append("## " + (tpl["rights_holder"].get("legal_name", "Rights Holder")))
+    md_lines.append(f"- **{tpl['rights_holder']['legal_name']}:** {rh['legal_name']}")
+    md_lines.append(f"- **{tpl['rights_holder']['signature_name']}:** {rh['signature_name']}")
+    md_lines.append(f"- **{tpl['rights_holder']['aliases']}:** {', '.join(rh['aliases'])}")
+    md_lines.append(f"- **{tpl['rights_holder']['location']}:** {rh['location']}")
+    md_lines.append(f"- **{tpl['rights_holder']['role']}:** {rh['role']}")
+    md_lines.append(f"- **{tpl['rights_holder']['legal_representation']}:** {rh['legal_representation']}")
+    md_lines.append(f"- **{tpl['rights_holder']['company_management']}:** {rh['company_management']}")
+    md_lines.append(f"- **{tpl['rights_holder']['financial_status']}:** {rh['financial_status']}")
+    md_lines.append("")
+    md_lines.append("## " + tpl["repositories"]["primary_repo"])
+    md_lines.append(f"- **{tpl['repositories']['primary_repo']}:** {repo['primary_repo']}")
+    md_lines.append(f"- **{tpl['repositories']['branch_anchor']}:** {repo['branch_anchor']}")
+    md_lines.append(f"- **{tpl['repositories']['compare_url']}:** {repo['compare_url']}")
+    md_lines.append(f"- **{tpl['repositories']['github_actions_runs']}:** {', '.join(repo['github_actions_runs'])}")
+    md_lines.append(f"- **{tpl['repositories']['photo_note']}:** {repo['note_photo_visibility']}")
+    md_lines.append("")
+    md_lines.append("## " + tpl["ai_development"]["heading"])
+    md_lines.append(f"- **{tpl['ai_development']['solo_development']}:** {ai['solo_development']}")
+    md_lines.append(f"- **{tpl['ai_development']['ai_tools_used']}:** {', '.join(ai['ai_tools_used'])}")
+    md_lines.append(f"- **{tpl['ai_development']['authorship_status']}:** {ai['authorship_status']}")
+    md_lines.append(f"- **{tpl['ai_development']['statement']}:** {ai['statement']}")
+    md_lines.append(f"- **{tpl['ai_development']['time_window']}:** {ai['approx_time_window_local']}")
+    md_lines.append("")
+    md_lines.append("## " + tpl["sensitive"]["heading"])
+    md_lines.append(f"- **{tpl['sensitive']['treaty_present']}:** {sensitive['treaty_number_present']}")
+    md_lines.append(f"- **{tpl['sensitive']['sask_present']}:** {sensitive['saskatchewan_id_present']}")
+    md_lines.append(f"- **{tpl['sensitive']['validation_present']}:** {sensitive['validation_number_present']}")
+    md_lines.append(f"- {tpl['sensitive']['note']}")
+    md_lines.append("")
+    md_lines.append("## " + tpl["licensing"]["heading"])
+    md_lines.append(f"- **{tpl['licensing']['default_license']}:** {lic['default_license']}")
+    md_lines.append(f"- **{tpl['licensing']['attribution_required']}:** {lic['attribution_required']}")
+    md_lines.append(f"- **{tpl['licensing']['prohibited_uses']}:** {', '.join(lic['prohibited_uses'])}")
+    md_lines.append("")
+    md_lines.append("## Signed Declaration")
+    md_lines.append("")
+    md_lines.append(tpl["signed_declaration"].format(date=CORE_RECORD["record_generated_on"], runs=", ".join(repo["github_actions_runs"])))
+    md_text = "\n".join(md_lines)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(md_text)
+    return path
+
+# -------------------------
+# CLI
+# -------------------------
+def main():
+    parser = argparse.ArgumentParser(description="Generate multilingual master copyright record (en/ru/zh/oe)")
+    parser.add_argument("--langs", nargs="+", choices=["en", "ru", "zh", "oe", "all"], default=["all"], help="Languages to generate")
+    parser.add_argument("--json-dir", default="multilingual_json", help="Directory to write JSON files")
+    parser.add_argument("--md-dir", default="multilingual_md", help="Directory to write Markdown files")
+    parser.add_argument("--use-env", action="store_true", help="Attempt to load sensitive IDs from environment (no printing)")
+    parser.add_argument("--use-decrypted-file", metavar="PATH", help="Attempt to load sensitive IDs from decrypted local file (no printing)")
+    args = parser.parse_args()
+
+    # Attempt secure loads (values are not printed or committed)
+    if args.use_env:
+        _ = load_sensitive_from_env()
+    if args.use_decrypted_file:
+        _ = load_sensitive_from_decrypted_file(args.use_decrypted_file)
+
+    langs = ["en", "ru", "zh", "oe"] if "all" in args.langs else args.langs
+
+    json_dir = Path(args.json_dir)
+    md_dir = Path(args.md_dir)
+    json_dir.mkdir(parents=True, exist_ok=True)
+    md_dir.mkdir(parents=True, exist_ok=True)
+
+    for lang in langs:
+        rec = build_language_record(lang)
+        json_path = json_dir / f"copyright_master_{lang}.json"
+        md_path = md_dir / f"COPYRIGHT_MASTER_{lang}.md"
+        export_json(rec, str(json_path))
+        export_markdown_lang(lang, str(md_path))
+        print(f"Generated: {json_path}  {md_path}")
+
+    # Combined multilingual bundle
+    bundle = {lang: build_language_record(lang) for lang in langs}
+    bundle_path = json_dir / "copyright_master_multilingual_bundle.json"
+    export_json(bundle, str(bundle_path))
+    print(f"Generated multilingual bundle: {bundle_path}")
+
+if __name__ == "__main__":
+    main()
+```
+#!/usr/bin/env python3
+# © 2026 Morley Moses Apooch. All rights reserved.
+# CLEAN HANDS CLEAN MONEY FAM
+# Multilingual Master Copyright Record Generator
+# Languages: English (en), Russian (ru), Chinese Simplified (zh), Old English (oe)
+# NOTE: This file intentionally does NOT include raw sensitive identifiers.
+# Store treaty/ID/validation numbers securely (env vars or encrypted local file).
+
+from datetime import date
+import json
+import os
+from pathlib import Path
+import argparse
+import sys
+
+TODAY = date.today().isoformat()
+
+# -------------------------
+# Multilingual templates
+# -------------------------
+TEMPLATES = {
+    "en": {
+        "title": "COPYRIGHT MASTER FILE",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Signed: MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "Legal Name",
+            "signature_name": "Signature Name",
+            "aliases": "Aliases",
+            "location": "Location",
+            "role": "Role",
+            "legal_representation": "Legal Representation",
+            "company_management": "Company Management",
+            "financial_status": "Financial Status"
+        },
+        "repositories": {
+            "primary_repo": "Primary Repo",
+            "branch_anchor": "Branch Anchor",
+            "compare_url": "Compare URL",
+            "github_actions_runs": "GitHub Actions Runs",
+            "photo_note": "Photo Visibility Note"
+        },
+        "ai_development": {
+            "heading": "April 7th, 2026 — Solo Claude Development",
+            "solo_development": "Solo Development",
+            "ai_tools_used": "AI Tools Used",
+            "authorship_status": "Authorship Status",
+            "statement": "Statement",
+            "time_window": "Approximate Local Time Window"
+        },
+        "sensitive": {
+            "heading": "Sensitive Identifiers (redacted)",
+            "treaty_present": "Treaty Number Present",
+            "sask_present": "Saskatchewan ID Present",
+            "validation_present": "Validation Number Present",
+            "note": "Note: Sensitive identifiers exist and are stored securely by the rights holder. They are not published in this repository. Treaty information may be verified via Indigenous Services Canada."
+        },
+        "licensing": {
+            "heading": "Licensing",
+            "default_license": "Default License",
+            "attribution_required": "Attribution Required",
+            "prohibited_uses": "Prohibited Uses"
+        },
+        "signed_declaration": (
+            "I, MORLEYMOSESAPOOCH*, declare that all works, code, assets, and "
+            "AI-directed outputs referenced in this master file are authored, "
+            "directed, and owned by me. I further declare that as of {date}, I have not "
+            "received any financial compensation for any of my development work. I represent "
+            "myself in all legal matters and manage my company CLEAN HANDS CLEAN MONEY FAM. "
+            "This record is anchored to GitHub Actions runs {runs}. "
+            "Note: GitHub currently prevents display of my personal photo in the repository UI; "
+            "the photo remains part of my evidence bundle but is not shown on GitHub."
+        )
+    },
+
+    "ru": {
+        "title": "МАСТЕР‑ЗАПИСЬ АВТОРСКИХ ПРАВ",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Подписано: MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "Юридическое имя",
+            "signature_name": "Имя подписи",
+            "aliases": "Псевдонимы",
+            "location": "Местоположение",
+            "role": "Роль",
+            "legal_representation": "Юридическое представление",
+            "company_management": "Управление компанией",
+            "financial_status": "Финансовый статус"
+        },
+        "repositories": {
+            "primary_repo": "Основной репозиторий",
+            "branch_anchor": "Ветка‑якорь",
+            "compare_url": "Ссылка сравнения",
+            "github_actions_runs": "GitHub Actions Runs",
+            "photo_note": "Примечание о фото"
+        },
+        "ai_development": {
+            "heading": "7 апреля 2026 — Соло разработка с Claude",
+            "solo_development": "Соло‑разработка",
+            "ai_tools_used": "Использованные AI",
+            "authorship_status": "Статус авторства",
+            "statement": "Заявление",
+            "time_window": "Примерное местное время"
+        },
+        "sensitive": {
+            "heading": "Чувствительные идентификаторы (редактировано)",
+            "treaty_present": "Наличие номера договора",
+            "sask_present": "Наличие провинциального ID",
+            "validation_present": "Наличие номера валидации",
+            "note": "Примечание: Чувствительные идентификаторы существуют и хранятся безопасно у правообладателя. Они не публикуются в репозитории. Информацию о договоре можно проверить через Indigenous Services Canada."
+        },
+        "licensing": {
+            "heading": "Лицензирование",
+            "default_license": "Лицензия по умолчанию",
+            "attribution_required": "Требуется указание авторства",
+            "prohibited_uses": "Запрещенные использования"
+        },
+        "signed_declaration": (
+            "Я, MORLEYMOSESAPOOCH*, заявляю, что все работы, код, материалы и результаты, "
+            "созданные с использованием AI, перечисленные в этом документе, являются моими. "
+            "По состоянию на {date} я не получал финансовой компенсации за указанную разработку. "
+            "Я представляю себя в юридических вопросах и управляю компанией CLEAN HANDS CLEAN MONEY FAM. "
+            "Запись привязана к GitHub Actions runs {runs}. "
+            "Примечание: GitHub не позволяет отображать мою личную фотографию в UI репозитория; "
+            "фото хранится в доказательной базе, но не показано на GitHub."
+        )
+    },
+
+    "zh": {
+        "title": "版权主记录",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "签署：MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "法定姓名",
+            "signature_name": "签名名称",
+            "aliases": "别名",
+            "location": "所在地",
+            "role": "角色",
+            "legal_representation": "法律代表",
+            "company_management": "公司管理",
+            "financial_status": "财务状况"
+        },
+        "repositories": {
+            "primary_repo": "主仓库",
+            "branch_anchor": "分支锚点",
+            "compare_url": "比较链接",
+            "github_actions_runs": "GitHub Actions 运行",
+            "photo_note": "照片可见性说明"
+        },
+        "ai_development": {
+            "heading": "2026年4月7日 — 单人 Claude 开发记录",
+            "solo_development": "单人开发",
+            "ai_tools_used": "使用的 AI 工具",
+            "authorship_status": "著作权状态",
+            "statement": "声明",
+            "time_window": "大致本地时间范围"
+        },
+        "sensitive": {
+            "heading": "敏感标识（已编辑）",
+            "treaty_present": "存在条约编号",
+            "sask_present": "存在萨斯喀彻温省身份证",
+            "validation_present": "存在验证编号",
+            "note": "说明：敏感标识存在并由权利人安全保存。它们不会在此仓库中公开。条约信息可通过加拿大原住民事务部（Indigenous Services Canada）核实。"
+        },
+        "licensing": {
+            "heading": "许可",
+            "default_license": "默认许可",
+            "attribution_required": "需要署名",
+            "prohibited_uses": "禁止使用"
+        },
+        "signed_declaration": (
+            "我，MORLEYMOSESAPOOCH*，声明本主记录中列示的所有作品、代码、资产和由 AI 协助生成的输出均由我创作、指导并归我所有。"
+            "截至 {date}，我尚未就任何开发工作获得任何经济补偿。我在所有法律事务中代表自己，并管理我的公司 CLEAN HANDS CLEAN MONEY FAM。"
+            "本记录锚定于 GitHub Actions 运行 {runs}。"
+            "注意：GitHub 当前阻止在仓库界面显示我的个人照片；照片仍作为证据保留，但不在 GitHub 上显示。"
+        )
+    },
+
+    "oe": {
+        # Old English (approximate, modernized for clarity)
+        "title": "COPYRIGHT MASTER BOC",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Signed: MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "Nama",
+            "signature_name": "Sigel Nama",
+            "aliases": "Earmena / Byname",
+            "location": "Stow",
+            "role": "Weorcwyrhta, Heafodcræft",
+            "legal_representation": "Ic sylf min agen bewerend",
+            "company_management": "Anraedend of CLEAN HANDS CLEAN MONEY FAM",
+            "financial_status": "No feoh receiv'd for þis weorc as of {date}"
+        },
+        "repositories": {
+            "primary_repo": "Heafod Hord (Repo)",
+            "branch_anchor": "Tref (Branch) Anchor",
+            "compare_url": "Gemæne Linc (Compare URL)",
+            "github_actions_runs": "GitHub Actions Runa",
+            "photo_note": "GitHub ne læt me sceawian min ansyne on þære repo gesihð; se foto is onbunden to minum beþeodnessum ac ne is gesewen on GitHub."
+        },
+        "ai_development": {
+            "heading": "7 Aprill, 2026 — Anes weorc mid Claude",
+            "solo_development": "Anes weorc",
+            "ai_tools_used": "AI Tæcna",
+            "authorship_status": "Mannlic full gewrit",
+            "statement": "Beþeod",
+            "time_window": "Ymb 10:30–11:30 on þære morgen on 7 Aprill, 2026 (local tid)"
+        },
+        "sensitive": {
+            "heading": "Dyrne Tæcna (forworpen)",
+            "treaty_present": "Treaht Number hæfð",
+            "sask_present": "Saskatchewan ID hæfð",
+            "validation_present": "Validation Number hæfð",
+            "note": "Dyrne tæcna beoð gehealden and ne beoð awriten on þis repo. Treaht info mæg beon gecweden æt Indigenous Services Canada."
+        },
+        "licensing": {
+            "heading": "Liceans",
+            "default_license": "Eallra rihte beheald (Proprietary unless stated)",
+            "attribution_required": "Nead to cweðan þæt Morley is se wyrhta",
+            "prohibited_uses": "Forboden brucan: unrihtlic ceap, forwyrcean cwide, and miscuðing of wyrht"
+        },
+        "signed_declaration": (
+            "Ic, MORLEYMOSESAPOOCH*, secge þæt ealle min weorca, codas, and AI‑gecynded þingas beon mine. "
+            "As of {date} ic næfde nan feoh for þas weorca. Ic me sylf representie and ic healde and ricsie minne scip CLEAN HANDS CLEAN MONEY FAM. "
+            "Þis boc is geancorod to GitHub Actions runa {runs}. GitHub ne læt min ansyne beon gesewen on þære repo."
+        )
+    }
+}
+
+# -------------------------
+# Core structured record (language-neutral fields)
+# -------------------------
+CORE_RECORD = {
+    "rights_holder": {
+        "legal_name": "Morley Moses Apooch",
+        "signature_name": "MORLEYMOSESAPOOCH*",
+        "aliases": ["CLEAN-HANDS-CLEAN-MONEY-FAM"],
+        "location": "Yorkton, Saskatchewan, Canada",
+        "role": "Solo developer, architect, AI-directed creator",
+        "legal_representation": "Represents self in all legal matters",
+        "company_management": "Sole manager and operator of CLEAN HANDS CLEAN MONEY FAM",
+        "date_signed": "2026-09-05",
+        "financial_status": "No compensation received for any development work as of 2026-09-05"
+    },
+    "repositories": {
+        "primary_repo": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train",
+        "branch_anchor": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/tree/3-morley-moses-apooch",
+        "compare_url": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/compare/morlzappoch-patch-5...morlzappoch-patch-7?quick_pull=1",
+        "github_actions_runs": ["33975584137", "33978583430"],
+        "note_photo_visibility": "GitHub currently prevents display of the author's personal photo in the repository UI; the photo is part of the evidence bundle but not shown on GitHub."
+    },
+    "ai_development": {
+        "april_7_2026": {
+            "solo_development": True,
+            "ai_tools_used": ["Claude", "Copilot"],
+            "authorship_status": "Full human authorship",
+            "statement": "On April 7th, 2026, all development work was performed by Morley Moses Apooch with AI systems acting solely as tools under Morley's creative direction.",
+            "approx_time_window_local": "Approximately 10:30 AM to 11:30 AM (local time) on April 7, 2026"
+        }
+    },
+    "sensitive_identifiers": {
+        "treaty_number_present": True,
+        "saskatchewan_id_present": True,
+        "validation_number_present": True,
+        "note": "Sensitive identifiers exist and are stored securely by the rights holder. They are not published in this repository. Treaty information may be verified via Indigenous Services Canada."
+    },
+    "licensing": {
+        "default_license": "Proprietary unless otherwise stated",
+        "attribution_required": True,
+        "prohibited_uses": [
+            "Unauthorized commercial redistribution",
+            "Removal of attribution",
+            "Misrepresentation of authorship"
+        ]
+    },
+    "record_generated_on": TODAY
+}
+
+# -------------------------
+# Secure loaders (do NOT print or commit sensitive values)
+# -------------------------
+def load_sensitive_from_env():
+    treaty = os.getenv("MORLEY_TREATY_NUMBER")
+    sask = os.getenv("MORLEY_SASK_ID")
+    val = os.getenv("MORLEY_VALIDATION_NUMBER")
+    if not any([treaty, sask, val]):
+        return None
+    return {"treaty_number": treaty, "saskatchewan_id": sask, "validation_number": val}
+
+def load_sensitive_from_decrypted_file(path: str = "sensitive_ids.json"):
+    p = Path(path)
+    if not p.exists():
+        return None
+    try:
+        with p.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        return {
+            "treaty_number": data.get("treaty_number"),
+            "saskatchewan_id": data.get("saskatchewan_id"),
+            "validation_number": data.get("validation_number")
+        }
+    except Exception:
+        return None
+
+# -------------------------
+# Generation helpers
+# -------------------------
+def build_language_record(lang: str):
+    tpl = TEMPLATES.get(lang)
+    if not tpl:
+        raise ValueError("Unsupported language")
+    record = {
+        "meta": {
+            "language": lang,
+            "generated_on": CORE_RECORD["record_generated_on"]
+        },
+        "content": {
+            "title": tpl["title"],
+            "subtitle": tpl["subtitle"],
+            "signed": tpl["signed"].format(date=CORE_RECORD["record_generated_on"])
+        },
+        "rights_holder": CORE_RECORD["rights_holder"],
+        "repositories": CORE_RECORD["repositories"],
+        "ai_development": CORE_RECORD["ai_development"],
+        "sensitive_identifiers": CORE_RECORD["sensitive_identifiers"],
+        "licensing": CORE_RECORD["licensing"],
+        "signed_declaration": tpl["signed_declaration"].format(date=CORE_RECORD["record_generated_on"], runs=", ".join(CORE_RECORD["repositories"]["github_actions_runs"]))
+    }
+    return record
+
+def export_json(record: dict, path: str):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(record, f, indent=4, ensure_ascii=False)
+    return path
+
+def export_markdown_lang(lang: str, path: str):
+    tpl = TEMPLATES[lang]
+    rh = CORE_RECORD["rights_holder"]
+    repo = CORE_RECORD["repositories"]
+    ai = CORE_RECORD["ai_development"]["april_7_2026"]
+    lic = CORE_RECORD["licensing"]
+    sensitive = CORE_RECORD["sensitive_identifiers"]
+    md_lines = []
+    md_lines.append(f"# {tpl['title']}")
+    md_lines.append(f"### {tpl['subtitle']}")
+    md_lines.append("")
+    md_lines.append(tpl["signed"].format(date=CORE_RECORD["record_generated_on"]))
+    md_lines.append("")
+    md_lines.append("## " + (tpl["rights_holder"].get("legal_name", "Rights Holder")))
+    md_lines.append(f"- **{tpl['rights_holder']['legal_name']}:** {rh['legal_name']}")
+    md_lines.append(f"- **{tpl['rights_holder']['signature_name']}:** {rh['signature_name']}")
+    md_lines.append(f"- **{tpl['rights_holder']['aliases']}:** {', '.join(rh['aliases'])}")
+    md_lines.append(f"- **{tpl['rights_holder']['location']}:** {rh['location']}")
+    md_lines.append(f"- **{tpl['rights_holder']['role']}:** {rh['role']}")
+    md_lines.append(f"- **{tpl['rights_holder']['legal_representation']}:** {rh['legal_representation']}")
+    md_lines.append(f"- **{tpl['rights_holder']['company_management']}:** {rh['company_management']}")
+    md_lines.append(f"- **{tpl['rights_holder']['financial_status']}:** {rh['financial_status']}")
+    md_lines.append("")
+    md_lines.append("## " + tpl["repositories"]["primary_repo"])
+    md_lines.append(f"- **{tpl['repositories']['primary_repo']}:** {repo['primary_repo']}")
+    md_lines.append(f"- **{tpl['repositories']['branch_anchor']}:** {repo['branch_anchor']}")
+    md_lines.append(f"- **{tpl['repositories']['compare_url']}:** {repo['compare_url']}")
+    md_lines.append(f"- **{tpl['repositories']['github_actions_runs']}:** {', '.join(repo['github_actions_runs'])}")
+    md_lines.append(f"- **{tpl['repositories']['photo_note']}:** {repo['note_photo_visibility']}")
+    md_lines.append("")
+    md_lines.append("## " + tpl["ai_development"]["heading"])
+    md_lines.append(f"- **{tpl['ai_development']['solo_development']}:** {ai['solo_development']}")
+    md_lines.append(f"- **{tpl['ai_development']['ai_tools_used']}:** {', '.join(ai['ai_tools_used'])}")
+    md_lines.append(f"- **{tpl['ai_development']['authorship_status']}:** {ai['authorship_status']}")
+    md_lines.append(f"- **{tpl['ai_development']['statement']}:** {ai['statement']}")
+    md_lines.append(f"- **{tpl['ai_development']['time_window']}:** {ai['approx_time_window_local']}")
+    md_lines.append("")
+    md_lines.append("## " + tpl["sensitive"]["heading"])
+    md_lines.append(f"- **{tpl['sensitive']['treaty_present']}:** {sensitive['treaty_number_present']}")
+    md_lines.append(f"- **{tpl['sensitive']['sask_present']}:** {sensitive['saskatchewan_id_present']}")
+    md_lines.append(f"- **{tpl['sensitive']['validation_present']}:** {sensitive['validation_number_present']}")
+    md_lines.append(f"- {tpl['sensitive']['note']}")
+    md_lines.append("")
+    md_lines.append("## " + tpl["licensing"]["heading"])
+    md_lines.append(f"- **{tpl['licensing']['default_license']}:** {lic['default_license']}")
+    md_lines.append(f"- **{tpl['licensing']['attribution_required']}:** {lic['attribution_required']}")
+    md_lines.append(f"- **{tpl['licensing']['prohibited_uses']}:** {', '.join(lic['prohibited_uses'])}")
+    md_lines.append("")
+    md_lines.append("## Signed Declaration")
+    md_lines.append("")
+    md_lines.append(tpl["signed_declaration"].format(date=CORE_RECORD["record_generated_on"], runs=", ".join(repo["github_actions_runs"])))
+    md_text = "\n".join(md_lines)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(md_text)
+    return path
+
+# -------------------------
+# CLI
+# -------------------------
+def main():
+    parser = argparse.ArgumentParser(description="Generate multilingual master copyright record (en/ru/zh/oe)")
+    parser.add_argument("--langs", nargs="+", choices=["en", "ru", "zh", "oe", "all"], default=["all"], help="Languages to generate")
+    parser.add_argument("--json-dir", default="multilingual_json", help="Directory to write JSON files")
+    parser.add_argument("--md-dir", default="multilingual_md", help="Directory to write Markdown files")
+    parser.add_argument("--use-env", action="store_true", help="Attempt to load sensitive IDs from environment (no printing)")
+    parser.add_argument("--use-decrypted-file", metavar="PATH", help="Attempt to load sensitive IDs from decrypted local file (no printing)")
+    args = parser.parse_args()
+
+    # Attempt secure loads (values are not printed or committed)
+    if args.use_env:
+        _ = load_sensitive_from_env()
+    if args.use_decrypted_file:
+        _ = load_sensitive_from_decrypted_file(args.use_decrypted_file)
+
+    langs = ["en", "ru", "zh", "oe"] if "all" in args.langs else args.langs
+
+    json_dir = Path(args.json_dir)
+    md_dir = Path(args.md_dir)
+    json_dir.mkdir(parents=True, exist_ok=True)
+    md_dir.mkdir(parents=True, exist_ok=True)
+
+    for lang in langs:
+        rec = build_language_record(lang)
+        json_path = json_dir / f"copyright_master_{lang}.json"
+        md_path = md_dir / f"COPYRIGHT_MASTER_{lang}.md"
+        export_json(rec, str(json_path))
+        export_markdown_lang(lang, str(md_path))
+        print(f"Generated: {json_path}  {md_path}")
+
+    # Combined multilingual bundle
+    bundle = {lang: build_language_record(lang) for lang in langs}
+    bundle_path = json_dir / "copyright_master_multilingual_bundle.json"
+    export_json(bundle, str(bundle_path))
+    print(f"Generated multilingual bundle: {bundle_path}")
+
+if __name__ == "__main__":
+    main()
