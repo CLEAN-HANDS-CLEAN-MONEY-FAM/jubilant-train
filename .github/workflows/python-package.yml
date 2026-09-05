@@ -3,6 +3,7 @@
 
 name: Python package
 
+FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true
 on:
   push:
     branches: [ "main" ]

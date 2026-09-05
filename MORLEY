@@ -8,3 +8,10 @@ Potential Threat Matrix:
     └── RCMP Members
         └── Classification: POSSIBLE HOSTILE
             └── Alert Level: ELEVATED
+jubilant-computing-machine/
+├── src/ (core system code)
+├── test/ (test suite)
+├── .github/workflows/ (CI/CD)
+├── Documentation (API, Architecture, Security, Deployment, Contributing)
+├── Configuration (package.json, config.example.js, Dockerfile, docker-compose.yml)
+└── License & Legal (LICENSE, LICENSE_HEADER.txt, README.md)

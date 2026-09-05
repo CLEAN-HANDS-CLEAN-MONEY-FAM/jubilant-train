@@ -1,0 +1,132 @@
+# © 2026 Morley Moses Apooch. Все права защищены.
+# CLEAN HANDS CLEAN MONEY FAM
+# Мастер‑запись авторских прав (без открытых чувствительных идентификаторов)
+
+from datetime import date
+import json
+import os
+from pathlib import Path
+
+TODAY = date.today().isoformat()
+
+COPYRIGHT_MASTER = {
+    "rights_holder": {
+        "legal_name": "Morley Moses Apooch",
+        "signature_name": "MORLEYMOSESAPOOCH*",
+        "aliases": ["CLEAN-HANDS-CLEAN-MONEY-FAM"],
+        "location": "Yorkton, Saskatchewan, Canada",
+        "role": "Соло‑разработчик, архитектор, руководитель AI‑процессов",
+        "legal_representation": "Представляет себя во всех юридических вопросах",
+        "company_management": "Единственный управляющий компании CLEAN HANDS CLEAN MONEY FAM",
+        "date_signed": "2026-09-05",
+        "financial_status": "Не получал вознаграждения за разработку по состоянию на 2026-09-05"
+    },
+
+    "repositories": {
+        "primary_repo": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train",
+        "branch_anchor": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/tree/3-morley-moses-apooch",
+        "compare_url": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/compare/morlzappoch-patch-5...morlzappoch-patch-7?quick_pull=1",
+        "github_actions_runs": [
+            "33975584137",
+            "33978583430"
+        ],
+        "note_photo_visibility": "GitHub не позволяет отображать личную фотографию автора в UI репозитория; фото хранится в доказательной базе, но не показано на GitHub."
+    },
+
+    "ai_development": {
+        "april_7_2026": {
+            "solo_development": True,
+            "ai_tools_used": ["Claude", "Copilot"],
+            "authorship_status": "Полное авторство человека",
+            "statement": (
+                "7 апреля 2026 года вся разработка выполнена Morley Moses Apooch; "
+                "AI‑системы использовались исключительно как инструменты под руководством Morley."
+            ),
+            "approx_time_window_local": "Примерно 10:30–11:30 (местное время) 7 апреля 2026 года"
+        }
+    },
+
+    "sensitive_identifiers": {
+        "treaty_number_present": True,
+        "saskatchewan_id_present": True,
+        "validation_number_present": True,
+        "note": "Чувствительные идентификаторы существуют и хранятся безопасно у правообладателя. Они не публикуются в репозитории. Информацию о договоре можно проверить через Indigenous Services Canada."
+    },
+
+    "licensing": {
+        "default_license": "Проприетарная, если не указано иное",
+        "attribution_required": True,
+        "prohibited_uses": [
+            "Неавторизованное коммерческое распространение",
+            "Удаление указания авторства",
+            "Искажение авторства"
+        ]
+    },
+
+    "signed_declaration": (
+        "Я, MORLEYMOSESAPOOCH*, заявляю, что все работы, код, материалы и результаты, "
+        "созданные с использованием AI, перечисленные в этом документе, являются моими. "
+        "По состоянию на 05.09.2026 я не получал финансовой компенсации за указанную разработку. "
+        "Я представляю себя в юридических вопросах и управляю компанией CLEAN HANDS CLEAN MONEY FAM. "
+        "Запись привязана к GitHub Actions runs 33975584137 и 33978583430. "
+        "Примечание: GitHub не отображает мою личную фотографию в UI репозитория."
+    ),
+
+    "record_generated_on": TODAY
+}
+
+# Безопасные загрузчики (не выводят значения)
+def load_sensitive_from_env():
+    treaty = os.getenv("MORLEY_TREATY_NUMBER")
+    sask = os.getenv("MORLEY_SASK_ID")
+    val = os.getenv("MORLEY_VALIDATION_NUMBER")
+    if not any([treaty, sask, val]):
+        return None
+    return {"treaty_number": treaty, "saskatchewan_id": sask, "validation_number": val}
+
+def load_sensitive_from_decrypted_file(path: str = "sensitive_ids.json"):
+    p = Path(path)
+    if not p.exists():
+        return None
+    try:
+        with p.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        return {
+            "treaty_number": data.get("treaty_number"),
+            "saskatchewan_id": data.get("saskatchewan_id"),
+            "validation_number": data.get("validation_number")
+        }
+    except Exception:
+        return None
+
+# Экспорт helpers
+def get_master_record():
+    return COPYRIGHT_MASTER
+
+def export_json(path: str = "copyright_master_morley_apooch.json"):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(COPYRIGHT_MASTER, f, indent=4, ensure_ascii=False)
+    return path
+
+def generate_markdown(record: dict) -> str:
+    rh = record["rights_holder"]
+    repo = record["repositories"]
+    ai = record["ai_development"]["april_7_2026"]
+    lic = record["licensing"]
+    signed = record["signed_declaration"]
+    sensitive = record["sensitive_identifiers"]
+    md = f\"\"\"# МАСТЕР‑ЗАПИСЬ АВТОРСКИХ ПРАВ
+### Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM
+### Подписано: {rh['signature_name']} — {record['record_generated_on']}
+
+## Информация о правообладателе
+- **Юридическое имя:** {rh['legal_name']}
+- **Имя подписи:** {rh['signature_name']}
+- **Псевдонимы:** {', '.join(rh['aliases'])}
+- **Местоположение:** {rh['location']}
+- **Роль:** {rh['role']}
+- **Юридическое представление:** {rh['legal_representation']}
+- **Управление компанией:** {rh['company_management']}
+- **Финансовый статус:** {rh['financial_status']}
+
+## Якоря репозитория

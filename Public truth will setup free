@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+"""
+========================================================================
+PROPERTY OF: Morley Moses Apooch
+PROJECT: Private Security & Incident Logging Engine
+BUILD DATE: April 7, 2026 (Updated Current Session)
+LOCATION: Saskatchewan, Canada
+------------------------------------------------------------------------
+LEGAL NOTICE: ALL RIGHTS RESERVED. 
+This software tool runs exclusively on local infrastructure to safely
+document property breaches and protective boundary events.
+========================================================================
+"""
+
+import json
+import os
+import sys
+from datetime import datetime
+
+class SecurityIncidentLogger:
+    def __init__(self, storage_file="private_security_log.json"):
+        self.storage_file = storage_file
+        self.logs = []
+        self.load_existing_logs()
+
+    def load_existing_logs(self):
+        """Loads historical records from local storage if they exist."""
+        if os.path.exists(self.storage_file):
+            try:
+                with open(self.storage_file, 'r', encoding='utf-8') as f:
+                    self.logs = json.load(f)
+            except json.JSONDecodeError:
+                print("[!] Local log file found but format is corrupted. Starting fresh.")
+                self.logs = []
+        else:
+            self.logs = []
+
+    def create_incident_entry(self, date_str, category, individuals_involved, description):
+        """Structures and adds a timeline event to the local archive."""
+        entry = {
+            "timestamp_logged": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "event_date": date_str,
+            "category": category,
+            "individuals": individuals_involved,
+            "details": description
+        }
+        self.logs.append(entry)
+        self.save_logs()
+        print(f"[✔] Event successfully anchored to local timeline archive.")
+
+    def save_logs(self):
+        """Saves current logs back to disk safely."""
+        try:
+            with open(self.storage_file, 'w', encoding='utf-8') as f:
+                json.dump(self.logs, f, indent=4)
+        except IOError as e:
+            print(f"[!] Critical Error: Unable to save data locally. {e}")
+
+    def display_timeline(self):
+        """Prints a structured summary table of logged security events."""
+        if not self.logs:
+            print("\n--- No entries found in the private database. ---")
+            return
+
+        print("\n" + "="*80)
+        print("MASTER SECURITY TIMELINE AND INCIDENT REPOSITORY")
+        print("="*80)
+        for idx, item in enumerate(self.logs, 1):
+            print(f"\n[{idx}] DATE OF EVENT: {item['event_date']} | CATEGORY: {item['category']}")
+            print(f"    Individuals Named: {', '.join(item['individuals'])}")
+            print(f"    Grounded Narrative: {item['details']}")
+            print("-" * 60)
+
+if __name__ == "__main__":
+    logger = SecurityIncidentLogger()
+    
+    # Example Initialization Entries based entirely on your provided context:
+    # 1. Historical Protection Event
+    if not logger.logs:
+        logger.create_incident_entry(
+            date_str="Historical (Few Years Back)",
+            category="Family Protection / Boundary Breach",
+            individuals_involved=["Derek Desjarlais", "Stepdaughter"],
+            description="Discovered individual passed out inside household near stepdaughter. Reacted physically with a slap due to high protective survival instincts."
+        )
+
+        # 2. Intellectual Property Baseline
+        logger.create_incident_entry(
+            date_str="2026-04-07",
+            category="Intellectual Property Assets",
+            individuals_involved=["Morley Moses Apooch"],
+            description="Creation of fully functional application code and embedded copyright license signature."
+        )
+    
+    # Display the current layout
+    logger.display_timeline()

@@ -1,0 +1,137 @@
+# © 2026 Morley Moses Apooch. All rights reserved.
+# CLEAN HANDS CLEAN MONEY FAM
+# Master Copyright Record
+
+from datetime import date
+import json
+
+# ============================
+# MASTER COPYRIGHT RECORD DATA
+# ============================
+
+COPYRIGHT_MASTER = {
+    "rights_holder": {
+        "legal_name": "Morley Moses Apooch",
+        "signature_name": "MORLEYMOSESAPOOCH*",
+        "aliases": ["CLEAN-HANDS-CLEAN-MONEY-FAM"],
+        "location": "Yorkton, Saskatchewan, Canada",
+        "role": "Solo developer, architect, AI-directed creator",
+        "legal_representation": "Represents self in all legal matters",
+        "company_management": "Sole manager and operator of CLEAN HANDS CLEAN MONEY FAM (cleanhandscleanmoneyfam)",
+        "date_signed": "2026-09-05",
+        "financial_status": (
+            "No compensation received for any development work as of 2026-09-05"
+        )
+    },
+
+    "repositories": {
+        "primary_repo": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train",
+        "branch_anchor": (
+            "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/"
+            "jubilant-train/tree/3-morley-moses-apooch"
+        ),
+        "github_actions_run": "33975584137"
+    },
+
+    "ai_development": {
+        "april_7_2026": {
+            "solo_development": True,
+            "ai_tools_used": ["Claude", "Copilot"],
+            "authorship_status": "Full human authorship",
+            "statement": (
+                "On April 7th, 2026, all development work was performed by "
+                "Morley Moses Apooch with AI systems acting solely as tools "
+                "under Morley's creative direction."
+            )
+        }
+    },
+
+    "licensing": {
+        "default_license": "Proprietary unless otherwise stated",
+        "attribution_required": True,
+        "prohibited_uses": [
+            "Unauthorized commercial redistribution",
+            "Removal of attribution",
+            "Misrepresentation of authorship"
+        ]
+    },
+
+    "signed_declaration": (
+        "I, MORLEYMOSESAPOOCH*, declare that all works, code, assets, and "
+        "AI-directed outputs referenced in this master file are authored, "
+        "directed, and owned by me. I further declare that as of "
+        "2026-09-05, I have not received any financial compensation for "
+        "any of my development work. I represent myself in all legal "
+        "matters and manage my company CLEAN HANDS CLEAN MONEY FAM."
+    )
+}
+
+# ============================
+# ACCESSOR FUNCTIONS
+# ============================
+
+def get_master_record():
+    """Return the full copyright record."""
+    return COPYRIGHT_MASTER
+
+
+def export_json():
+    """Return the master record as JSON."""
+    return json.dumps(COPYRIGHT_MASTER, indent=4)
+
+
+# ============================
+# MARKDOWN GENERATOR
+# ============================
+
+def generate_markdown():
+    today = date.today().isoformat()
+
+    md = f"""
+# COPYRIGHT MASTER FILE  
+### Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM  
+### Signed: MORLEYMOSESAPOOCH — {today}
+
+## Rights Holder Information
+- Legal Name: Morley Moses Apooch
+- Signature Name: MORLEYMOSESAPOOCH*
+- Aliases: CLEAN-HANDS-CLEAN-MONEY-FAM
+- Location: Yorkton, Saskatchewan, Canada
+- Role: Solo developer, architect, AI-directed creator
+- Legal Representation: Represents self in all legal matters
+- Company Management: Sole manager and operator of CLEAN HANDS CLEAN MONEY FAM
+- Financial Status: I have not received a cent for my development work as of {today}
+
+## Repository Anchors
+- Primary Repo: https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train
+- Branch Anchor: https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/tree/3-morley-moses-apooch
+- GitHub Actions Run: 33975584137
+
+## April 7th, 2026 — Solo Claude Development
+On April 7th, 2026, all development work was performed by Morley Moses Apooch,
+with AI systems acting solely as tools under Morley's creative direction.
+
+## Licensing
+- Proprietary unless otherwise stated
+- Attribution required
+- Prohibited uses:
+  - Unauthorized commercial redistribution
+  - Removal of attribution
+  - Misrepresentation of authorship
+
+## Signed Declaration
+I, MORLEYMOSESAPOOCH*, declare that all works, code, assets, and AI-directed
+outputs referenced in this master file are authored, directed, and owned by me.
+I further declare that I have not received any financial compensation for any
+of my development work as of {today}. I represent myself legally and manage my
+company CLEAN HANDS CLEAN MONEY FAM.
+"""
+    return md
+
+
+# ============================
+# MAIN EXECUTION
+# ============================
+
+if __name__ == "__main__":
+    print(generate_markdown())
