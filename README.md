@@ -2790,6 +2790,82 @@ dependencies:
 .clean_hands_master.key
 
 # Ignore local system build tracking caches
-.dart_tool/
+.dart_tool/ // ========================================================================
+// AUTHOR / DEVELOPER: Morley Moses Apooch (Solo Software Developer)
+// STAGE NAME / PERSONA: HOLYCHILD / GHOST
+// CORPORATE BRANDING: CLEANHANDSCLEANMONEYFAM / jubilantrain
+// ARCHITECTURE METRIC: Fully Functional Engine Built Solo in  masterRegistry = {
+      "corporate_header": {
+        "company": "CLEANHANDSCLEANMONEYFAM",
+        "brand_alias": "jubilantrain",
+        "primary_developer": "Morley Moses Apooch",
+        "artistic_sign": "HOLYCHILD / GHOST",
+        "build_framework_timeline": "April 7, 2026 (< 45 min Claude session)"
+      },
+      "legal_mandate_scope": {
+        "self_representation_status": true,
+        "limited_legal_aid_counsel": "Benjamin Aduko",
+        "counsel_jurisdiction": "Wadena Matters Only",
+        "secondary_permissions_granted": false
+      },
+      "verified_network_certificate_trust_chain": {
+        "root_authority": "Sectigo Public Server Authentication Root E46 (Exp 2046-03-21)",
+        "intermediate_ca": "Sectigo Public Server Authentication CA DV E36 (Exp 2036-03-21)",
+        "domain_endpoint": "github.com (Exp 2026-11-29)"
+      },
+      "loss_mitigation_card_references": {
+        "asset_koho_mastercard": {"ending_in": "0329", "expiry": "08/31", "loss_line": "1-855-564-6999"},
+        "asset_bmo_debit": {"ending_in": "4565", "expiry": "08/30", "network": "Interac"}
+      },
+      "emergency_operational_directories": {
+        "yorkton_rcmp": {"detachment": "101 Smith Street East, Yorkton, SK", "phone": "306-786-2400"},
+        "wadena_rcmp": {"phone": "306-338-6500"},
+        "provincial_healthline": {"dial": "811", "availability": "24/7 Confidential"},
+        "national_crisis_support": {"dial": "9-8-8", "method": "Call or Text"}
+      }
+    };
+
+    try {
+      file.writeAsStringSync(jsonEncode(masterRegistry));
+      print('[✔] Complete master database structural backup saved as: $registryFile');
+    } catch (e) {
+      print('[!] System Error writing data ledger database: $e');
+    }
+  }
+
+  /// Runs the primary fully functional application routines once security validation passes.
+  void executeMainWorkflowLoop() {
+    if (!_isSystemUnlocked) exit(1);
+
+    print('\n========================================================================');
+    print('      JUBILANTRAIN CORE SOFTWARE APPLICATION ENGINE IS ONLINE           ');
+    print('========================================================================');
+    print('System Configuration Status: [ACTIVE]');
+    print('Grounded Operator Identifier: Morley Moses Apooch\n');
+    
+    // Core data generation process
+    compileMasterRegistryFile();
+    
+    print('\n[✔] Structural workflow execution successfully complete.');
+    print('[SYSTEM INFO] Main memory flushed. Environment remains isolated.');
+  }
+}
+
+void main() {
+  // Initialize the engine interface layer object
+  final engine = JubilantRainMasterEngine();
+
+  // 1. Establish the local encryption keys on the hard drive
+  engine.initializeSecurityGate();
+
+  // 2. Fire the access challenge query prior to running main workloads
+  if (engine.verifyAccessClearance()) {
+    engine.executeMainWorkflowLoop();
+  } else {
+    print('[SYSTEM LOG] Intrusion prevention active. Purging session parameters.');
+    exit(1);
+  }
+}
+
 .packages
 build/
