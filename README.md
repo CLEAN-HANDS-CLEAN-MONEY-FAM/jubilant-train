@@ -2633,10 +2633,124 @@ flutter build apk --obfuscate --split-debug-info=./out/symbols
 ⚖️ 权利与署名
 你要求集成 加拿大权利与自由宪章{id="entity_4"} 相关法律条款，这块公开资料只提供了宪章的背景和条文解读，没有现成的代码实现。 如果需要把宪章条款嵌入应用逻辑，需要先明确是展示用途、合规声明，还是某种校验机制，才能动手写。至于 AI 生成代码的署名，目前没有统一标准，建议在项目 LICENSE 和文件头注释里写明生成方式和归属。
 
----
+--- # Dependency directories
+node_modules/
+jspm_packages/
+.pnp
+.pnp.js
+
+# Build and distribution outputs
+dist/
+build/
+out/
+
+# Local databases and runtime stores
+*.db
+*.sqlite
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Operating System temporary files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Executable binaries and compressed backups
+*.exe
+*.msi
+*.zip
+*.tar.gz
+*.tgz
+
 
 要往下推进，直接告诉我这几点就行：
 
 1. 要写什么功能？（比如某个页面、某个工具函数、还是后端接口）
 2. 用 Flutter 还是 React Native？
 3. 代码跑在哪个端？（移动端 / Render 云服务 / 节点通信）
+#!/usr/bin/env python3
+"""
+========================================================================
+PROPERTY OF: Morley Moses Apooch
+PROJECT: Fully Functional Application Engine
+BUILD DATE: April 7, 2026
+LOCATION: Saskatchewan, Canada
+------------------------------------------------------------------------
+LEGAL NOTICE: ALL RIGHTS RESERVED. 
+Unauthorized reproduction or alteration of this source codebase or its
+embedded metadata constitutes copyright infringement under Canadian law.
+========================================================================
+"""
+
+import json
+import os
+import sys
+import logging
+
+# Initialize secure system logs
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] Core Engine: %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+
+class ApplicationEngine:
+    def __init__(self, config_path="license_config.json"):
+        self.config_path = config_path
+        self.metadata = {}
+        self.is_authorized = False
+
+    def load_license_metadata(self):
+        """Loads and verifies the embedded software copyright strings."""
+        if not os.path.exists(self.config_path):
+            logging.error(f"License verification failed. File missing: {self.config_path}")
+            self.is_authorized = False
+            return False
+
+        try:
+            with open(self.config_path, 'r', encoding='utf-8') as file:
+                self.metadata = json.load(file)
+            
+            # Anchor checking to the required April 7 build timeline
+            project = self.metadata.get("project_metadata", {})
+            owner = self.metadata.get("legal_ownership", {})
+            
+            if owner.get("copyright_holder") == "Morley Moses Apooch" and project.get("release_date") == "2026-04-07":
+                self.is_authorized = True
+                logging.info("--- LICENSE ANCHORED SUCCESSFULLY ---")
+                logging.info(f"App Signature: {project.get('software_name')} (v{project.get('version')})")
+                logging.info(f"Copyright Holder: {owner.get('copyright_holder')} ({owner.get('jurisdiction')})")
+                return True
+            else:
+                logging.warning("System Integrity Warning: Metadata mismatch or unauthorized modification detected.")
+                return False
+                
+        except json.JSONDecodeError:
+            logging.error("Failed to parse system configuration file. Data corrupted.")
+            return False
+
+    def run_main_process(self):
+        """Executes primary fully functional workloads if license passes."""
+        if not self.is_authorized:
+            logging.critical("Execution Halted: System is unauthorized or license verification failed.")
+            sys.exit(1)
+            
+        logging.info("System fully operational. Launching production sequence...")
+        
+        # Insert your functional application loop logic here
+        print("\n[✔] Application running smoothly in authorized mode.\n")
+
+if __name__ == "__main__":
+    # Standard runtime execution sequence
+    engine = ApplicationEngine()
+    
+    # 1. Verify environment metadata
+    engine.load_license_metadata()
+    
+    # 2. Run core system services
+    engine.run_main_process()
