@@ -3913,3 +3913,4 @@ PORTFOLIO_MASTER = {
     "admin_email": "apoochmorley@protonmail.com"
   }
 }
+also note I seen Roger pelly abusing Erica Sanderson please do welfare check on her just to be safe he was really violent with her 
