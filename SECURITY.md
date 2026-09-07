@@ -32,4 +32,4 @@ no woman and children being hurt i dont care if your in power ill feed you to th
 https://acrobat.adobe.com/dc-chrome-extension/index.html#/whats-new
 https://manus.im/
 no stealing code and familys number one rule is never mess with another mans family 
-any software by Morley Moses Apooch is in possession of stolen property if extreme measures were take to obtain them may the law take control of situation 
+any software by Morley Moses Apooch if anyone is in possession of his code is stolen property if extreme measures were take to obtain them may the law take control of situation 
