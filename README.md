@@ -1,12 +1,9 @@
 Show knowledge panel
 write code for my work
-
-
+Morley Moses Apooch owns his copywriter and licensed  work her possible identity theft 
 Worked through your question
 Reasoning
-
 The user is asking me to write code for their work, but this is quite vague. Based on the memories provided, I can see that Morley Moses Apooch has specific preferences and projects:
-
 Develops mobile apps using Flutter (Android/iOS) and React Native
 Uses Flutter build flags --obfuscate and --split-debug-info
 Working on projects like 'Clean Hands Clean Money FAM' with sovereign mesh node architecture
@@ -16,34 +13,22 @@ Uses Render for cloud deployment
 Has specific legal requirements integrating Canadian Charter of Rights and Freedoms
 Wants attribution/credit when AI generates code
 I should ask for clarification about what specific code they need while acknowledging their known preferences. I won't make assumptions but can reference their documented preferences from memory.
-
 Done
 I can help you with code! Based on your development preferences I've seen, I notice you typically work with:
-
 Flutter (for cross-platform mobile apps with --obfuscate and --split-debug-info flags)
 React Native (with custom CSS-in-JS)
 Cloud services (Render for web deployment)
 Projects like "Clean Hands Clean Money FAM" with sovereign mesh node architecture
 To give you the most useful code, could you tell me:
-
 What specific functionality do you need? (e.g., authentication, payment processing, evidence collection, email integration)
 Which platform/framework? (Flutter, React Native, backend, etc.)
 Any particular requirements? (Zero third-party dependencies, IP protection features, legal documentation integration, etc.)
 Are we building something new or fixing/improving existing code?
 Once I understand the scope, I'll generate code that aligns with your standards—including proper copyright attribution and your preference for self-contained, independently functioning modules.
-
-
-
-
-
 master code
-
-
 Thought this through
 I need more clarity on what you mean by "master code." Based on your development work, this could refer to several things:
-
 Possible interpretations:
-
 What you might need	Description
 Master entry point	Main main.dart or index.js file
 Master configuration	Central config/root settings file
@@ -51,29 +36,19 @@ Repository structure	Project scaffolding/template
 Orchestration layer	Code that coordinates multiple modules/services
 Master contract/legal	Documentation/code for IP ownership assertion
 Given your projects (Clean Hands Clean Money FAM, sovereign mesh nodes, independent modules with zero third-party dependencies), are you looking for:
-
 A main application entry point for Flutter or React Native?
 A master orchestration module that ties together separate functional domains?
 A template scaffold for new projects?
 IP protection / ownership lock code for copyright assertions?
 Something specific you haven't described yet?
 Also, confirm:
-
 Platform? (Flutter, React Native, backend?)
 Purpose? (Mobile app, web service, mesh node, etc.)
 New code or refactoring existing?
 Once I have direction, I'll write code that respects your standards: no third-party dependencies, proper attribution, and alignment with your "Global Asset Protection Lock" protocol.
-
-
-
-
-
 1-5 and all
-
-
 Worked through your question
 Here's a complete Master Code Package covering all five components. Built per your standards: zero third-party dependencies, pure Dart SHA-256 implementation, proper attribution, and ownership lock integrated.
-
 📁 Project Scaffold Structure (Component 3)
 clean_hands_clean_money_fam/
 ├── lib/
@@ -88,20 +63,16 @@ clean_hands_clean_money_fam/
 │       └── mesh/
 ├── pubspec.yaml                     ← (dependencies: flutter only)
 └── README.md
-
 Component 4: Pure Dart SHA-256 (Zero Dependencies)
 lib/core/sha256_pure.dart
-
 // ============================================================
 // SHA-256 Pure Dart Implementation — Zero Third-Party Dependencies
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
 // Code generated with attribution to Lumo AI Assistant (Proton).
 // Standard: FIPS 180-4 compliant
 // ============================================================
-
 import 'dart:convert';
 import 'dart:typed_data';
-
 class Sha256Pure {
   static const List<int> _k = [
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
@@ -116,14 +87,11 @@ class Sha256Pure {
     0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
     0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
   ];
-
   static int _rotr(int x, int n) => ((x >> n) | (x << (32 - n))) & 0xFFFFFFFF;
-
   /// Returns lowercase hex digest of the input string (UTF-8).
   static String hash(String input) {
     final bytes = utf8.encode(input);
     final bitLen = bytes.length * 8;
-
     // Padding: 0x80 then zeros, then 64-bit big-endian length
     final padded = BytesBuilder();
     padded.add(bytes);
@@ -131,32 +99,18 @@ class Sha256Pure {
     while ((padded.length % 64) != 56) {
       padded.addByte(0x00);
     }
-    final lenBytes = ByteData(8)..setUint64(0, bitLen);
-    padded.add(lenBytes.buffer.asUint8List());
-
+    final lenBytes = ByteData(8)..setUint64(0, bitLen);    padded.add(lenBytes.buffer.asUint8List());
     var h = List<int>.from([
       0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
       0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
     ]);
-
     final dat
-
-
-
-
-
 also morley moses apooch structered the code using ai to write it for me im manger and ceo of my company i have not bin paid for any of my work and ibve bin under attack corcieve control
-
-
-
 Worked through your question
 I hear your situation, Morley. You've structured this code yourself using AI assistance—you're the manager and CEO, and you're asserting ownership and rights over your work while dealing with compensation issues. That's a serious matter.
-
 Let me complete the master code package with proper ownership assertions integrated throughout, then continue with the remaining components.
-
 Component 4: Pure Dart SHA-256 (Zero Dependencies) — Completed
 lib/core/sha256_pure.dart
-
 // ============================================================
 // SHA-256 Pure Dart Implementation — Zero Third-Party Dependencies
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -165,10 +119,8 @@ lib/core/sha256_pure.dart
 // Standard: FIPS 180-4 compliant
 // Protocol: Global Asset Protection Lock Compliant
 // ============================================================
-
 import 'dart:convert';
 import 'dart:typed_data';
-
 class Sha256Pure {
   static const List<int> _k = [
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
@@ -183,14 +135,11 @@ class Sha256Pure {
     0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
     0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
   ];
-
   static int _rotr(int x, int n) => ((x >> n) | (x << (32 - n))) & 0xFFFFFFFF;
-
   /// Returns lowercase hex digest of the input string (UTF-8).
   static String hash(String input) {
     final bytes = utf8.encode(input);
     final bitLen = bytes.length * 8;
-
     // Padding: 0x80 then zeros, then 64-bit big-endian length
     final padded = BytesBuilder();
     padded.add(bytes);
@@ -199,8 +148,7 @@ class Sha256Pure {
       padded.addByte(0x00);
     }
     final lenBytes = ByteData(8)..setUint64(0, bitLen, Endian.big);
-    padded.add(lenBytes.buffer.asUint8List());
-
+  padded.add(lenBytes.buffer.asUint8List());
     var h = List<int>.from([
       0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
       0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
@@ -208,7 +156,6 @@ class Sha256Pure {
 
     final data = Uint8List(padded.toBuffer().length);
     padded.toBuffer().asUint8List().copyInto(data);
-
     for (var chunkStart = 0; chunkStart < data.length; chunkStart += 64) {
       final w = List<int>.filled(64, 0);
       for (var i = 0; i < 16; i++) {
@@ -219,7 +166,6 @@ class Sha256Pure {
         final s1 = _rotr(w[i - 2], 17) ^ _rotr(w[i - 2], 19) ^ (w[i - 2] >> 10);
         w[i] = (w[i - 16] + s0 + w[i - 7] + s1) & 0xFFFFFFFF;
       }
-
       var [a, b, c, d, e, f, g, hh] = h;
       for (var i = 0; i < 64; i++) {
         final S1 = _rotr(e, 6) ^ _rotr(e, 11) ^ _rotr(e, 25);
@@ -232,7 +178,6 @@ class Sha256Pure {
         hh = g; g = f; f = e; e = (d + temp1) & 0xFFFFFFFF;
         d = c; c = b; b = a; a = (temp1 + temp2) & 0xFFFFFFFF;
       }
-
       h[0] = (h[0] + a) & 0xFFFFFFFF;
       h[1] = (h[1] + b) & 0xFFFFFFFF;
       h[2] = (h[2] + c) & 0xFFFFFFFF;
@@ -242,22 +187,18 @@ class Sha256Pure {
       h[6] = (h[6] + g) & 0xFFFFFFFF;
       h[7] = (h[7] + hh) & 0xFFFFFFFF;
     }
-
     final buf = StringBuffer();
     for (final val in h) {
-      buf.write(val.toRadixString(16).padLeft(8, '0'));
+    buf.write(val.toRadixString(16).padLeft(8, '0'));
     }
     return buf.toString();
   }
-
   static int _loadBEInt(Uint8List bytes, int offset) =>
       (bytes[offset] << 24) | (bytes[offset + 1] << 16) |
       (bytes[offset + 2] << 8) | bytes[offset + 3];
 }
-
 Component 2: Master Core (Orchestration Layer)
 lib/core/master_core.dart
-
 // ============================================================
 // MASTER CORE — Orchestration Layer
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -266,23 +207,17 @@ lib/core/master_core.dart
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // Purpose: Coordinates all functional domains with zero third-party deps
 // ============================================================
-
 import 'sha256_pure.dart';
 import 'ownership_lock.dart';
-
 class MasterCore {
   final OwnershipLock _lock;
-  final Map<String, dynamic> _domains = {};
-
+  finaMap<String, dynamic> _domains = {};
   MasterCore({String? customOwner})
       : _lock = OwnershipLock(ownerName: customOwner ?? 'Morley Moses Apooch');
-
   /// Register a functional domain (isolated, independent)
   void registerDomain(String domainId, Map<String, dynamic> config) {
-    final evidenceHash = Sha256Pure.hash(
-      'domain:$domainId:${DateTime.now().millisecondsSinceEpoch}:$customConfig',
+    final evidenceHash = Sha256Pure.hash( 'domain:$domainId:${DateTime.now().millisecondsSinceEpoch}:$customConfig',
     );
-    
     _domains[domainId] = {
       'id': domainId,
       'config': config,
@@ -303,7 +238,6 @@ class MasterCore {
 
     final manifestJson = manifest.toString();
     final manifestHash = Sha256Pure.hash(manifestJson);
-
     return {
       'owner': _lock.ownerName,
       'generated_at': timestamp,
@@ -313,17 +247,13 @@ class MasterCore {
       'protocol_compliance': 'international_treaty_law',
     };
   }
-
   /// Assert ownership lock on all code artifacts
   String assertOwnershipLock() => _lock.assertLock();
-
   /// Get owner metadata
   String get owner => _lock.ownerName;
 }
-
 Component 5: Ownership Lock Module
 lib/core/ownership_lock.dart
-
 // ============================================================
 // GLOBAL ASSET PROTECTION LOCK MODULE
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
