@@ -1,111 +1,166 @@
-make it fully functional and copywrite and licence it Copyright (c) 2026 Morley Moses Apooch
-SPDX-License-Identifier: MIT
+РУССКИЙ / RUSSIAN VERSION
+=====================================================================
+ ОСНОВНОЙ ФАЙЛ — ФАКТИЧЕСКАЯ ЗАПИСЬ
+ ID документа: MFA-CIP-2026-001 | Составлено: 8 сентября 2026 г.
+ Помощь в составлении: Lumo AI (Proton). Составление и право
+ собственности: Морли Мозес Апоч (Morley Moses Apooch).
+=====================================================================
+РАЗДЕЛ 1 — ПРАВО СОБСТВЕННОСТИ (ФАКТЫ)
 
-# Ownership Schedule and Declaration of Assets
+Имя:                     Морли Мозес Апоч (Morley Moses Apooch)
+Дата рождения:           9 февраля 1988 г., Саскатун, Саскачеван
+Родители:                Марион Апоч и Мозес Апоч (отец записан под
+                         фамилией Сильверкуилл)
+Адрес:                   139 Dominion Ave, Йорктон, Саскачеван, Канада
+Место разработки:        Публичная библиотека Йорктона, Саскачеван
+Основной email:          apoochmorley@protonmail.com
+Дополнительный email:    moapooch121@gmail.com
+Юридическое положение:   Самостоятельное представительство (pro se)
+Статус разработчика (ФАКТ):
+- Единственный разработчик; работает независимо
+- Нет партнёров, сооснователей, совладельцев, инвесторов или сотрудников
+- Мобильные приложения на Flutter; один проект на React Native
+  с встроенным CSS-in-JS
+- Производственные сборки с флагами --obfuscate и --split-debug-info
+- Несколько отдельных приложений, классифицированных по функциональным
+  доменам; названия соответствуют буквальному назначению
+---------------------------------------------------------------------
+РАЗДЕЛ 2 — АКТИВНОСТЬ АККАУНТА (ДОКУМЕНТИРОВАННАЯ ЗАПИСЬ)
+Источник: Монитор аккаунта Proton, просмотрен 08.09.2026
+6 сентября 2026, 13:36 — одна ошибка входа (неверный пароль),
+затем успешный вход — IP 216.197.151.212
+6 сентября 2026, 18:53 — успешная аутентификация — 216.197.151.212
+6 сентября 2026, 19:47 — успешный вход VPN iOS — 204.83.233.64
+8 сентября 2026, 11:04 — неудачная попытка пароля — 204.83.233.64
+8 сентября 2026, 11:05 — 2 неудачные попытки пароля — 204.83.233.64
+8 сентября 2026, 11:05 — успешный вход — 204.83.233.64
+Зарегистрированные сессии: Proton Account (веб), Proton Mail (iOS),
+Proton VPN (iOS), настройки Proton VPN (веб).
+Наблюдение (анализ, не факт): все неудачи произошли с тех же
+IP-адресов, что и успешные сессии заявителя, и сразу за ними
+последовал успех — картина, характерная для опечаток в пароле.
+Proton Sentinel: НЕ ВКЛЮЧЁН (по состоянию на 08.09.2026)
+---------------------------------------------------------------------
+РАЗДЕЛ 3 — МЕРЫ ЗАЩИТЫ (ТЕКУЩИЙ СТАТУС)
+Факты:
+- Proton Sentinel: НЕ ВКЛЮЧЁН
+- 2FA на аккаунте Proton: [ПРОВЕРИТЬ — статус не виден в логах]
+- Десять активных сессий, все соответствуют устройствам заявителя
+- Сессии Proton истекают через 60 дней бездействия
+ОЖИДАЕМЫЕ ДЕЙСТВИЯ (рекомендовано, ещё не выполнено):
+- [ ] Включить Proton Sentinel (платные тарифы)
+- [ ] Включить 2FA (Настройки → Аккаунт и пароль → Пароли)
+- [ ] Отозвать неиспользуемые сессии
+- [ ] Вычислить SHA-256 хэши исходных файлов — НЕ ВЫПОЛНЕНО
+- [ ] Создать доказательства создания (GPS/время/QR) — НЕ ВЫПОЛНЕНО
+- [ ] Фиксация в блокчейне — НЕ ВЫПОЛНЕНО
+- [ ] Экспорт основного файла в PDF — НЕ ВЫПОЛНЕНО
+---------------------------------------------------------------------
+РАЗДЕЛ 4 — РЕЕСТР ПРОИЗВЕДЕНИЙ (ТОЛЬКО ДОКУМЕНТИРОВАННЫЕ ФАКТЫ)
+Каждое произведение вносится ТОЛЬКО с проверяемыми значениями:
+Название / Домен / Дата создания / SHA-256 / Git-репозиторий —
+ПОДЛЕЖИТ ЗАПОЛНЕНИЮ ВЛАДЕЛЬЦЕМ ПО ФАКТИЧЕСКИМ ФАЙЛАМ И ИСТОРИИ.
+Никакие вымышленные даты, хэши или утверждения в файл не вносятся.
+---------------------------------------------------------------------
+РАЗДЕЛ 5 — УТВЕРЖДЕНИЯ (НЕ ПОДТВЕРЖДЕНЫ — ВЫДЕЛЕНЫ ОТДЕЛЬНО)
+Следующее — заявленные убеждения заявителя, НЕ проверенные факты:
+- Заявитель полагает, что принимаются чрезвычайные меры для
+  нарушения авторских прав на его код и собственность.
+- Заявитель считает, что могут быть замешаны враждебные стороны.
+- Заявитель считает, что его работу крадут военными методами.
+Статус: НЕ ПОДТВЕРЖДЕНО — внешние доказательства не приложены.
+---------------------------------------------------------------------
+РАЗДЕЛ 6 — СЕРТИФИКАЦИЯ (ФАКТИЧЕСКАЯ ОСНОВА)
+Я, Морли Мозес Апоч, проживающий по адресу: 139 Dominion Ave,
+Йорктон, Саскачеван, заявляю, что Разделы 1–4 содержат
+документированные факты, насколько мне известно; ожидающие
+действия помечены как таковые; мои убеждения отделены от
+проверенных записей.
+Подпись: ____________________   Дата: ____________________
+         Морли Мозес Апоч
+=====================================================================
+中文版 / CHINESE VERSION
+=====================================================================
+ 主文件 — 事实记录
+ 文件编号：MFA-CIP-2026-001 | 编制日期：2026年9月8日
+ 起草协助：Lumo AI (Proton)。编制及所有权：Morley Moses Apooch
+ （莫利·摩西·阿普奇）。
+=====================================================================
+第1节 — 所有权记录（事实）
+姓名：                    Morley Moses Apooch（莫利·莫塞斯·阿普奇）
+出生：                    1988年2月9日，萨斯喀彻温省萨斯卡通市
+父母记录：                Marion Apooch 与 Moses Apooch
+                         （父亲登记姓氏改为 Silverquill）
+地址：                    139 Dominion Ave，约克顿市，                     萨斯喀彻温省，加拿大
+开发地点：                约克顿公共图书馆，萨斯喀彻温省
+主电子邮箱：              apoochmorley@protonmail.com
+备用电子邮箱：            moapooch121@gmail.com
+法律代理状态：            自行代理（pro se）
+开发者身份（事实）：
+- 独立开发者；独自工作
+- 无合伙人、无联合创始人、无共同所有人、无投资者、无雇员
+- 移动应用使用 Flutter 开发；一个项目使用 React Native
+  并内置自定义 CSS-in-JS
+- 生产版本使用 --obfuscate 和 --split-debug-info 标志构建
+- 多个独立应用，按功能域分类，名称与字面用途一致
+---------------------------------------------------------------------
+第2节 — 账户活动（记录在案）
+来源：Proton 账户监控器，查看于2026年9月8日
+2026年9月6日 13:36 — 登录失败一次（密码错误），随后登录成功
+— IP 216.197.151.212
+2026年9月6日 18:53 — 身份验证成功 — 216.197.151.212
+2026年9月6日 19:47 — VPN iOS 登录成功 — 204.83.233.64
+2026年9月8日 11:04 — 密码尝试失败 — 204.83.233.64
+2026年9月8日 11:05 — 密码失败两次 — 204.83.233.64
+2026年9月8日 11:05 — 登录成功 — 204.83.233.64
+记录的会话：Proton Account（网页版）、Proton Mail（iOS）、
+Proton VPN（iOS）、Proton VPN 设置（网页版）。
+观察（分析，非事实）：所有失败均发生在与申请人自身成功会话
+相同的 IP 上，且紧接成功登录 — 符合密码输入错误的模式。
+Proton Sentinel：未启用（截至2026年9月8日）
+---------------------------------------------------------------------
+第3节 — 保护措施（当前状态）
 
-Effective date: September 2, 2026
+事实：
+- Proton Sentinel：未启用
+- Proton 账户的2FA：[待核实 — 提供的日志中未显示]
+- 列出十个活跃会话，均与申请人设备相符
+- Proton 会话在不活动60天后过期
 
-Declarant
-- Name: Morley Moses Apooch
-- Date of birth / ID: February 9, 1988
-- Place of birth: Saskatoon, Royal University
-- Saskatchewan ID (masked): ****9843
-- Current address: [Street, City, State/Province, Postal code, Country]
-- Previous address (2005–2007): 429 Avenue C South
+待办事项（建议，尚未完成）：
+- [ ] 启用 Proton Sentinel（付费套餐）
+- [ ] 启用双因素认证（设置 → 账户和密码 → 密码）
+- [ ] 撤销未使用的会话
+- [ ] 计算源文件的 SHA-256 哈希值 — 尚未运行
+- [ ] 生成创作证据（GPS/时间戳/二维码）— 尚未完成
+- [ ] 区块链锚定 — 尚未执行
+- [ ] 主文件导出为 PDF — 尚未完成
+---------------------------------------------------------------------
+第4节 — 作品登记（仅记录已证实的价值）
+每项作品仅填写可验证的数值：
+标题 / 功能域 / 创作日期 / SHA-256 / Git 仓库 —
+由所有者根据实际文件和历史记录填写。
+本文件不记录任何虚构的日期、哈希值或声明。
+---------------------------------------------------------------------
+第5节 — 指控（未经证实 — 明确分离）
 
-Purpose
-- This Schedule records the Declarant’s ownership interests in assets as of the Effective Date, records provenance for AI‑assisted code, and directs ownership and disposition instructions for securities (stocks, bonds, ETFs, mutual funds and proceeds).
+以下是声称人的陈述信念，而非经验证的事实：
 
-Formal Declaration and Attestation
-I, Morley Moses Apooch (born February 9, 1988 in Saskatoon, Royal University), being of sound mind and legal capacity, declare under penalty of perjury under the laws of [Jurisdiction] that the statements contained in this Ownership Schedule and Declaration of Assets are true, correct, and complete to the best of my knowledge and belief as of the Effective Date.
+- 声称人认为正在采取极端手段侵犯其代码和专有作品。
+- 声称人认为可能存在敌对参与方。
+- 声称人认为其作品正被使用战争策略窃取。
 
-[Sections A–M as previously provided: Real Property; Bank Accounts; Stocks, ETFs; Bonds & Fixed Income; Retirement; Business Interests; Vehicles; Digital Assets; Intellectual Property; Liabilities; Software Provenance; Security & Emergency Custody; Financial Status]
+状态：未经证实 — 未附外部证据。这些是声称人的主张，
+与记录档案分开保存，以便在任何程序中两者不被混淆。
+---------------------------------------------------------------------
+第6节 — 认证（事实依据）
 
-Section N — Directed Ownership & Beneficiary Designation for Securities (Stocks, Bonds, Funds)
+本人 Morley Moses Apooch，居住于萨斯喀彻温省约克顿市
+Dominion 大道139号，声明第1至4节记录的是据本人所知的
+文件事实，待办事项均已如此标记，且本人的陈述信念已与
+经验证记录分开保存。
 
-1. Definitions
-   - "Securities" means all stocks, bonds, ETFs, mutual funds, and other financial instruments and their cash proceeds, dividends, interest, distributions, and any proceeds or replacements thereof, whether currently held by the Declarant or acquired or generated in the future.
-   - "Brand Entity" means the brand "CLEAN HANDS CLEAN MONEY FAM" and any legal entity (company, trust, or other vehicle) formed to represent or hold that brand.
+签名：____________________   日期：____________________
+         Morley Moses Apooch
+=====================================================================
 
-2. Direction of ownership
-   - I hereby declare and direct that all Securities owned by me now or which I may acquire, receive, or generate in the future (including, without limitation, dividends, interest, and proceeds from sale) shall be held, administered, and/or otherwise directed to:
-     a) Morley Moses Apooch (as individual owner); and
-     b) The Brand Entity "CLEAN HANDS CLEAN MONEY FAM" (as co‑owner, beneficiary, or the intended recipient entity).
-   - My intention is that such Securities and proceeds be owned, controlled, or otherwise directed for the benefit of Morley Moses Apooch and the Brand Entity, as described below, and transferred or re‑registered as necessary to effectuate that intention.
-
-3. Implementation / directive to Executor, Trustee, and Custodians
-   - I empower and direct my Executor, Trustee, and the Designated Emergency Custodians named in Section L to take all reasonable and lawful actions necessary to effectuate this direction, including but not limited to:
-     a) Registering or re‑registering Securities in the name(s) required to reflect the ownership direction (e.g., into the name of Morley Moses Apooch, into a Brand Entity, or into a trust holding for the Brand Entity), subject to account‑provider rules;
-     b) Completing and filing any required transfer‑on‑death (TOD), pay‑on‑death (POD), beneficiary designation, or transfer forms with brokers, custodians, transfer agents, and financial institutions;
-     c) Establishing and funding a legal entity (for example, an LLC, corporate entity, or trust) named CLEAN HANDS CLEAN MONEY FAM if none exists, and transferring Securities into that entity, or creating a trust for the Brand Entity and transferring Securities into the trust, as appropriate;
-     d) Using signed GPG tags, notarized documentation, and other provenance evidence preserved under Section K and L to substantiate ownership claims when presenting evidence to custodians or courts;
-     e) Executing any assignments, transfers, or other documents required by brokers, registrars, or transfer agents to effect the transfers.
-   - This direction is intended to operate as guidance and authority to my Executor/Trustee/Custodians to act immediately upon credible indication of need or upon my death/incapacity. Where required by law or institutional policy, the Executor/Trustee shall obtain the necessary consents and comply with applicable transfer procedures.
-
-4. Priority order of transfer (operational)
-   - Where immediate transfer is required, custodians should follow this priority:
-     1) If the Declarant is alive and authorizes a transfer, instruct the broker/custodian to re‑register or transfer the Security per this Section.
-     2) If the Declarant is incapacitated or deceased, the Executor/Trustee shall, after obtaining any required court or institutional approvals, transfer or cause transfer of Securities into the Brand Entity or trust designated for CLEAN HANDS CLEAN MONEY FAM and/or distribute to Morley Moses Apooch’s estate as directed by the Executor/Trustee per governing estate documents.
-     3) If direct transfer into a brand entity is delayed, custodians shall temporarily hold Securities in a secured, signed, and notarized escrow account or custodial account pending final transfer.
-
-5. Non‑exclusive remedies and financial instructions
-   - The Executor/Trustee/Custodians are authorized to take reasonable financial actions necessary to preserve the value of Securities (including selling a Security and re‑purchasing in the Brand Entity or using proceeds to fund the Brand Entity) provided that all actions are documented and recorded in the chain‑of‑custody log described in Section L.
-
-6. Legal and tax compliance
-   - The Executor/Trustee shall obtain legal and tax advice before effecting transfers that may have tax consequences, reporting obligations, or require formal filings. This Section is a directive of intent and authority, but actual transfers will be subject to applicable law, broker/custodian rules, and any required court orders.
-
-7. Recommendation — enforceability
-   - To make this direction binding and practical, the Declarant and Executor should at minimum:
-     a) Contact each brokerage/custodian to file and confirm beneficiary/TOD/POD or re‑registration forms.
-     b) Create or register the Brand Entity (LLC or trust) named CLEAN HANDS CLEAN MONEY FAM and obtain necessary tax IDs and bank accounts.
-     c) Transfer or assign holdings into the Brand Entity or establish trust accounts with explicit ownership language referencing this Schedule.
-     d) Incorporate this Section N into the Declarant’s will and any trust documents; obtain legal review and notarization.
-
-Section O — Practical Steps to Put Securities Direction on Record (summary)
-- Update account registrations at each broker/custodian; file TOD/POD/beneficiary forms naming CLEAN HANDS CLEAN MONEY FAM and/or Morley Moses Apooch as appropriate.
-- If the Brand is not a legal entity, form a legal entity (LLC/trust) with the Brand name; obtain tax ID; open brokerage accounts in entity name; transfer assets.
-- Provide custodians with notarized copy of this Ownership Schedule and supporting evidence (signed GPG tag, commit SHA, AI transcript).
-- Trustee/Executor to execute required transfer forms and maintain complete chain-of-custody logs.
-- Consult a securities attorney and tax advisor to address transfer mechanics, regulatory compliance, and tax reporting.
-
-Schedule of Supporting Documents
-- Proof of securities holdings: broker statements, transfer agent records, CUSIPs, account numbers (store full identifiers only in encrypted escrow).
-- Creation documents for the Brand Entity (if formed): Articles of Organization, EIN, bank account details.
-- Ownership evidence: signed tag, commit SHA, AI transcript: docs/claude_transcript_2026-04-07.txt.
-- Notarized copies of this Schedule.
-
-Attestation and Signature (Ownership & Securities Direction)
-I certify under penalty of perjury under the laws of [Jurisdiction] that the information above is accurate and that I direct the ownership/disposition of Securities as written in Sections N and O.
-
-Declarant signature: _MORLEY MOSES APOOCH *
-______________________________  
-Printed name: Morley Moses Apooch  
-Date: September 2, 2026
-
-Witness signature: _______________________________  
-Printed name: _______________________________  
-Date: ________________________
-
-Notarial Acknowledgement (sample)
-State/Province of: ____________________  
-County of: ___________________________
-
-On this ____ day of ______________, 20__, before me, the undersigned Notary Public, personally appeared Morley Moses Apooch, proved to me through satisfactory evidence of identity to be the person whose name is signed to the foregoing instrument and acknowledged that he executed the same for the purposes contained therein.
-
-Signature of Notary Public: ________________________  
-Printed name: ________________________  
-My commission expires: ___________________________  
-(Seal)
-
-License (MIT)
-Permission is hereby granted, free of charge, to any person obtaining a copy of this Ownership Schedule and Declaration of Assets (the “Document”) and associated materials (the “Work”), to deal in the Work without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Work, and to permit persons to whom the Work is furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Work.
-
-THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE COPYRIGHT HOLDER (MORLEY MOSES APOOCH) BE LIABLE FOR ANY CLAIMS OR DAMAGES ARISING FROM USE OF THE WORK.
-
-Legal disclaimer
-- This document is intended as a template and declaration of intent. For legally binding transfers of securities, consult a licensed attorney and your brokers/custodians.
-- Do NOT publish full account numbers or personal identifiers in public repositories or unsecured documents. Store full sensitive data only within encrypted escrow per Section L.
-
-Provenance / Master‑Lock / Emergency steps
-- Follow the scripts and instructions in docs/ and scripts/ to create signed snapshots, encrypted archives, Shamir shares, and to enforce all-systems lockdown in case of compromise.
