@@ -3914,3 +3914,4 @@ PORTFOLIO_MASTER = {
   }
 }
 also note I seen Roger pelly abusing Erica Sanderson please do welfare check on her just to be safe he was really violent with her 
+https://www.msn.com/en-ca/money/general/trump-targets-bombardier-canadian-dollar-in-truth-social-blitz-ahead-of-tariff-deadline/ar-AA2bKFXK?ocid=edgemobile what if it’s art of war against us 
