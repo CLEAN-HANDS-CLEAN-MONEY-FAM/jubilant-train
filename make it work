@@ -1,0 +1,21 @@
+{
+  "engine_name": "CLEAN HANDS CLEAN MONEY FAM - Sovereign Search",
+  "owner": "Morley Moses Apooch",
+  "indexing_rules": {
+    "priority_sources": [
+      "https://soloist.ai/cleanhandscleanmoneyfam",
+      "local://mesh-node/attestations/",
+      "github://moapooch121-droid/clean-hands-clean-money-fam"
+    ],
+    "blacklist": [
+      "device:Samsung-SM-A530W",
+      "device:FOXX-A55AM",
+      "vector:unauthorized-theft-attempts"
+    ]
+  },
+  "search_parameters": {
+    "zero_trust_mode": true,
+    "require_attestation": true,
+    "anchor_point": "3066211734"
+  }
+}

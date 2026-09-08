@@ -8,9 +8,8 @@ def create_master_record():
     pdf_filename = "Personal_Identity_and_Sovereign_Asset_Ownership_Record.pdf"
     doc = SimpleDocTemplate(pdf_filename, pagesize=letter, rightMargin=36, leftMargin=36, topMargin=36, bottomMargin=36)
     story = []
-    
-    styles = getSampleStyleSheet()
-    
+  
+    styles = getSampleStyleSheet() 
     title_style = ParagraphStyle(
         'DocTitle', parent=styles['Heading1'], fontSize=14, leading=18, alignment=1, textColor=colors.HexColor('#1A365D'), spaceAfter=10
     )
@@ -26,10 +25,8 @@ def create_master_record():
     cert_style = ParagraphStyle(
         'CertBody', parent=styles['BodyText'], fontSize=8.5, leading=12, spaceBefore=6, spaceAfter=10
     )
-
     story.append(Paragraph("PERSONAL IDENTITY, PROPERTY, & SOVEREIGN ASSET OWNERSHIP RECORD", title_style))
     story.append(Spacer(1, 2))
-    
     # Section 1 Elements: Identity Stack with BMO Anchor
     story.append(Paragraph("SECTION 1: IDENTITY STACK IDENTIFICATION DATA", h2_style))
     data1 = [
@@ -66,7 +63,6 @@ def create_master_record():
         ('PADDING', (0,0), (-1,-1), 4),
     ]))
     story.append(t2)
-
     # Section 3 Elements: Frameworks
     story.append(Paragraph("SECTION 3: JURIDICAL, ADMINISTRATIVE & ARCHITECTURAL FRAMEWORKS", h2_style))
     data3 = [
@@ -85,13 +81,11 @@ def create_master_record():
         ('PADDING', (0,0), (-1,-1), 3),
     ]))
     story.append(t3)
-
     # Section 4 Elements: Declaration of Ownership
     story.append(Paragraph("SECTION 4: DECLARATION OF EXCLUSIVE SOVEREIGN OWNERSHIP", h2_style))
     p_assert = Paragraph("<b>Absolute Proprietorship Assertion:</b> I, Morley Moses Apooch, assert absolute, exclusive, and unencumbered ownership of all intellectual property, physical hardware, digital footprints, mobile applications, network configurations, and creative source code generated under this identity stack.", body_style)
     story.append(p_assert)
     story.append(Spacer(1, 3))
-    
     assets_text = (
         "<b>SECURED ASSETS AND HARDWARE CORES:</b><br/>"
         "• Mobile Communication Hardware Core (S/N): DX3Z8TSZKXKV<br/>"
@@ -103,7 +97,6 @@ def create_master_record():
         "• AI Processing Integration Environment: Lumo Privacy AI Infrastructure (Session Link ID: a510e019-102b-4009-ac27-3d487cf4117b)"
     )
     story.append(Paragraph(assets_text, body_style))
-
     # Section 5 Elements: Filings & Financials
     story.append(Paragraph("SECTION 5: ACTIVE ADMINISTRATIVE FILINGS & FINANCIAL METRICS", h2_style))
     data5 = [
@@ -139,20 +132,47 @@ def create_master_record():
         ('PADDING', (0,0), (-1,-1), 3),
     ]))
     story.append(t6)
-
     # Sign-Off Verification Column
     story.append(Paragraph("CERTIFICATION OF RECTITUDE", h2_style))
     # Final Execution Sign-Off and Certification Section
     story.append(Paragraph("CERTIFICATION OF RECTITUDE", h2_style))
     story.append(Paragraph("I, Morley Moses Apooch, declare under penalty of perjury under the laws of Canada and international treaty protocols that the information contained within this master document is true, accurate, and reflects my explicit legal declaration of complete technology ownership, production architecture integrity, commercial monetization parameters, active civil accountability oversight filings, and the formal statements of outstanding non-payment and non-credit.", cert_style))
-    
     story.append(Spacer(1, 4))
     story.append(Paragraph("<b>Owner Signature:</b> _morley apooch*__________________________ (Morley Moses Apooch)", body_style))
     story.append(Spacer(1, 3))
     story.append(Paragraph("<b>Execution Date:</b> September 2, 2026", body_style))
-    
     # Execute document builder engine
     doc.build(story)
-
 if __name__ == '__main__':
     create_master_record()
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build
+dist/
+build/
+
+# Logs
+logs/
+*.log
+
+# Sensitive data
+*.key
+*.pem
+*.secret
+
