@@ -17,7 +17,7 @@ This tool implements the 4-step MoProtect Protocol:
 2. **Sanitization:** Filters out GPL/AGPL code and flagged dependencies.
 3. **Human Assertion:** Validates human review checkpoints and sign-offs.
 4. **Sealing:** Hashes final artifacts for timestamping and legal evidence.
-
+https://clinquant-beignet-49a9c0.netlify.app/
 See [mo_protect_protocol.md](docs/mo_protect_protocol.md) for full methodology details.
 ## Quick Start
 ### Installation
