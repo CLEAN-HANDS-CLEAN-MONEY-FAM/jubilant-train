@@ -186,7 +186,7 @@ class Sha256Pure {
       0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
     ]);
     final data = Uint8List(padded.toBuffer().length);
-  padded.toBuffer().asUint8List().copyInto(data);
+  https://devpost.compadded.toBuffer().asUint8List().copyInto(data);
     for (var chunkStart = 0; chunkStart < data.length; chunkStart += 64) {
       final w = List<int>.filled(64, 0);
       for (var i = 0; i < 16; i++) {
