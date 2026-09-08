@@ -1,21 +1,15 @@
 # Security Policy
-
 ## Supported Versions
-
 Use this section to tell people about which versions of your project are
 currently being supported with security updates.
-
 | Version | Supported          |
 | ------- | ------------------ |
 | 5.1.x   | :white_check_mark: |
 | 5.0.x   | :x:                |
 | 4.0.x   | :white_check_mark: |
 | < 4.0   | :x:                |
-
 ## Reporting a Vulnerability
-
 Use this section to tell people how to report a vulnerability.
-
 Tell them where to go, how often they can expect to get an update on a
 reported vulnerability, what to expect if the vulnerability is accepted or
 declined, etc.
@@ -32,4 +26,5 @@ no woman and children being hurt i dont care if your in power ill feed you to th
 https://acrobat.adobe.com/dc-chrome-extension/index.html#/whats-new
 https://manus.im/
 no stealing code and familys number one rule is never mess with another mans family 
-any software by Morley Moses Apooch if anyone is in possession of his code is stolen property if extreme measures were take to obtain them may the law take control of situation 
+any software by Morley Moses Apooch if anyone is in possession of his code is stolen property if extreme measures were take to obtain them may the law take control of situation
+also Ian whitehead could be using something against people in fishing lake using carpenter work.
