@@ -153,7 +153,6 @@ class Sha256Pure {
       0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
       0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
     ]);
-
     final data = Uint8List(padded.toBuffer().length);
     padded.toBuffer().asUint8List().copyInto(data);
     for (var chunkStart = 0; chunkStart < data.length; chunkStart += 64) {
@@ -174,7 +173,6 @@ class Sha256Pure {
         final S0 = _rotr(a, 2) ^ _rotr(a, 13) ^ _rotr(a, 22);
         final maj = (a & b) ^ (a & c) ^ (b & c);
         final temp2 = (S0 + maj) & 0xFFFFFFFF;
-
         hh = g; g = f; f = e; e = (d + temp1) & 0xFFFFFFFF;
         d = c; c = b; b = a; a = (temp1 + temp2) & 0xFFFFFFFF;
       }
@@ -226,7 +224,6 @@ class MasterCore {
       'owner': _lock.ownerName,
     };
   }
-
   /// Generate evidence package for all registered domains
   Map<String, dynamic> generateEvidencePackage() {
     final timestamp = DateTime.now().toIso8601String();
@@ -235,7 +232,6 @@ class MasterCore {
       'hash': entry.value['proofHash'],
       'timestamp': timestamp,
     }).toList();
-
     final manifestJson = manifest.toString();
     final manifestHash = Sha256Pure.hash(manifestJson);
     return {
@@ -262,21 +258,17 @@ lib/core/ownership_lock.dart
 // Integration: Canadian Charter of Rights and Freedoms references
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // ============================================================
-
 import 'sha256_pure.dart';
 import 'dart:io';
-
 class OwnershipLock {
   final String ownerName;
   final DateTime createdAt;
   final String? blockchainAnchor;
-
   OwnershipLock({
     required this.ownerName,
     DateTime? createdAt,
     this.blockchainAnchor,
   }) : createdAt = createdAt ?? DateTime.now();
-
   /// Generate verifiable ownership assertion string
   String assertLock() {
     final timestamp = createdAt.toIso8601String();
@@ -291,7 +283,6 @@ Legal Framework:
   - First Nations Sovereignty Recognition
   - Canadian Charter of Rights and Freedoms (where applicable)
 Status: ACTIVE — UNCOMPROMISED
-
 Attribution Requirement: All derivative works must credit original owner.
 Code Authorship: Structured with AI assistant support, owner retains full rights.
 Compensation Claim: Work performed without compensation remains owner's property.
@@ -312,14 +303,11 @@ Contact: apoochmorley@protonmail.com
 // ============================================================
 ''';
   }
-
   /// Hash file content for proof-of-creation evidence
   String hashFileContent(String content) => Sha256Pure.hash(content);
 }
-
 Component 1: Master Entry Point (Main)
 lib/main.dart
-
 // ============================================================
 // CLEAN HANDS CLEAN MONEY FAM — MASTER ENTRY POINT
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -328,28 +316,23 @@ lib/main.dart
 // Platform: Flutter (iOS & Android)
 // Build Flags Required: --obfuscate --split-debug-info
 // ============================================================
-
 import 'package:flutter/material.dart';
 import 'core/master_core.dart';
 import 'core/ownership_lock.dart';
-
 void main() {
   // Initialize ownership lock before any application logic
   final lock = OwnershipLock(ownerName: 'Morley Moses Apooch');
-  
+
   runApp(CleanHandsCleanMoneyApp(
     initialLockAssertion: lock.assertLock(),
   ));
 }
-
 class CleanHandsCleanMoneyApp extends StatelessWidget {
   final String initialLockAssertion;
-
   const CleanHandsCleanMoneyApp({
     Key? key,
     required this.initialLockAssertion,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -368,7 +351,6 @@ class CleanHandsCleanMoneyApp extends StatelessWidget {
 
 class MasterDashboard extends StatefulWidget {
   final String ownershipLock;
-
   const MasterDashboard({Key? key, required this.ownershipLock})
       : super(key: key);
 
@@ -378,21 +360,18 @@ class MasterDashboard extends StatefulWidget {
 
 class _MasterDashboardState extends State<MasterDashboard> {
   late MasterCore _core;
-
   @override
   void initState() {
     super.initState();
     _core = MasterCore(customOwner: 'Morley Moses Apooch');
     _registerDomains();
   }
-
   void _registerDomains() {
     // Functional domains — isolated, independent, zero third-party deps
     _core.registerDomain('finance', {'default_meal': 'Breakfast'});
     _core.registerDomain('evidence', {'collection_method': 'GPS_timestamp_sha256'});
     _core.registerDomain('mesh', {'node_architecture': 'sovereign_isolated'});
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -415,7 +394,6 @@ class _MasterDashboardState extends State<MasterDashboard> {
       ),
     );
   }
-
   Widget _buildOwnerBadge() {
     return Container(
       padding: EdgeInsets.all(16),
@@ -460,7 +438,6 @@ class _MasterDashboardState extends State<MasterDashboard> {
       ),
     );
   }
-
   Widget _buildMenuGrid() {
     return GridView.count(
       shrinkWrap: true,
@@ -477,7 +454,6 @@ class _MasterDashboardState extends State<MasterDashboard> {
       ],
     );
   }
-
   Widget _menuCard(String label, IconData icon, Color color) {
     return Card(
       elevation: 2,
@@ -502,85 +478,55 @@ class _MasterDashboardState extends State<MasterDashboard> {
 
 📄 README — Legal Documentation Template
 # Clean Hands Clean Money FAM
-
 **Copyright © 2026 Morley Moses Apooch. All rights reserved.**
-
 ---
-
 ## Ownership Declaration
-
 - **Owner:** Morley Moses Apooch
 - **Role:** CEO & Manager
 - **Contact:** apoochmorley@protonmail.com
 - **Protocol:** Global Asset Protection Lock (Compliant with International Treaty Law)
-
 ## Intellectual Property Notice
-
 This software and associated documentation are the exclusive property of Morley Moses Apooch. The code structure was developed with AI assistant support, but all creative direction, requirements, and decision-making originated from the owner. Under Berne Convention standards, authorship remains with the human creator who directed and implemented the work.
-
 ## Attribution Requirement
-
 All derivative works must include attribution:
 > "Code structure developed under direction of Morley Moses Apooch. AI assistant contributions acknowledged per developer specification."
-
 ## Compensation Disclaimer
-
 Work performed on this project has not received full compensation. This does not diminish ownership rights under applicable copyright frameworks. Any unpaid work remains the intellectual property of the creator.
-
 ## Build Commands
-
 ```bash
 flutter build apk --obfuscate --split-debug-info=build/debug
 flutter build ios --obfuscate --split-debug-info=build/debug
-
 Domains
 Domain	Purpose	Dependency Status
 Finance	Payment tracking, e-transfer management	Zero third-party
 Evidence	GPS-tagged, SHA-256 hashed proof-of-creation	Zero third-party
 Mesh Node	Sovereign isolated network architecture	Zero third-party
 Generated with AI Assistant (Lumo/Proton). Owner retains full rights and authorship.
-
-
 ---
-
 ## ⚠️ Important Notes on Your Situation
-
 Regarding the compensation and control issues you mentioned:
-
 | Area | What I Can Help With | What Requires Professional Advice |
 |------|---------------------|----------------------------------|
 | Code ownership documentation | ✅ Integrated above | ❌ |
 | Legal contracts for unpaid work | ✅ Draft templates available | ❌ Contract review by lawyer |
 | Evidence preservation | ✅ SHA-256 hashes, timestamps | ❌ Court-admissibility certification |
 | Dispute resolution strategy | ✅ Documentation organization | ❌ Legal representation |
-
 **Recommendations from my knowledge:**
 - Document everything with timestamps and hashes (the code above helps with this)
 - Consider filing a formal claim if applicable in your jurisdiction
 - Consult with a lawyer familiar with Indigenous rights and employment/IP law
 - Keep communication records with apoochmorley@protonmail.com as primary contact
-
 ---
-
 Would you like me to:
 1. Add specific legal claim language to any module?
 2. Create evidence export functionality (PDF generation)?
 3. Add blockchain anchoring stubs (for future integration)?
 4. Refine any section to better match your circumstances?
-
-
-
-
 https://www.google.com/search?q=yaremko+joey&sca_esv=1bd958ff4625d605&rlz=1C1VDKB_enCA1230CA1230&ei=JJmZarWTEo6nj94P2drg0A0&biw=1920&bih=953&uact=5&sclient=gws-wiz-serp&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832VstEKsVDqPorK0Gahnm2nq-aQnTz_mBV-EZYISbLc-S3LQBbMYAGT8xXTqdTxRg04zS3ruzpNYXVbY3kOqiLf6smpXTQP8rjLnjKrCQfi-AqT13sapd-gtfM0yiwEXK5lbXCsrpWPGBG3C4qHz7cxTzH6h9vVv3KHRF3_GaNL1fqCyG3w&aep=10&ntc=1&sxsrf=APpeQnuCPaavw7gs-qiO2TLMpR8dX-FqZw%3A1788451112972&mstk=AUtExfAZ4wx4SO_ltXZxOacTF0h4sQz2DRVz7LhU6wEAiJ75A3aerWy3nd3stGv3dp_LuBnq4fH3711p3OS9NMwWdADu41v2gBNxNLBpvjFa6V3Hwi1juoDhwmFuDoOYTH_0FKqbMP0HGwNtMqcjcHwI9K-d3EbGDEVm3zc&aioh=3&csuir=1&cs=0&atvm=2&mtid=JJ6ZavLuGunrmLQP5qWe0Ao&lns_mode=cvst
-
-
-
 Thought this through and looked things up online
 I searched for "Joey Yaremko" based on your link. Here's what the search results show — note there appear to be more than one person with this name, so be careful about which one is relevant to you:
-
 Joseph (Joey) Yaremko — Saskatchewan (most prominent results)
 Several news sources report on a Joseph Yaremko from the Saskatoon/Warman, Saskatchewan area:
-
 Conviction (2021): Found guilty of sexual assault with a weapon, forcible confinement, and breaking and entering relating to a 2019 home invasion in Saskatoon (CBC, Global News, StarPhoenix)
 Dangerous offender designation (2025): A Saskatchewan Court of King's Bench judge designated him a dangerous offender, citing a high risk of future violent offending and a reported history of 114 prior criminal convictions (CBC)
 Appeal denied: The Saskatchewan Court of Appeal upheld both the conviction-related sentence and the dangerous offender designation (Global News, CTV, StarPhoenix)
@@ -588,67 +534,39 @@ Other people named Joseph Yaremko
 An IMDb-listed Joseph Yaremko, credited on film/hockey documentary productions
 A separate Joseph Simon Peter Yaremko from Saanich, BC mentioned in a Facebook post regarding a different case
 A few important notes given your situation:
-
 I can't open the Google search link itself — those URLs contain session-specific parameters and don't reliably return content. My summary comes from direct web searches.
 Which person matters here? If this relates to your legal matters or evidence packages, confirm which Joseph Yaremko is involved before relying on any of this — mixing up individuals with the same name in legal documentation could cause serious problems.
 Court records are the authoritative source — if you need verified facts for an evidence package, the Saskatchewan Courts' judgment databases or official transcripts would carry far more weight than news articles or social media posts.
 Can you tell me more about the connection to your work? For example, are you gathering documentation for a legal proceeding, verifying a party involved in a dispute, or something else? That would help me point you toward the right records.
-
-
-
-
-
-P
-
+I
 Sources
-
-
 check if morley moses apooch and if gang unit in saskatoon are dangerous
-
-
 Thought this through and looked things up online
 I'll search for both — public information about Morley Moses Apooch, and any reporting on the Saskatoon police gang unit. To be clear upfront: a web search can only find publicly reported information, not make determinations about whether anyone is actually dangerous.
-
 Here's what the searches show, Morley. One caveat first: a web search cannot determine whether a person or group "is dangerous" — it only surfaces publicly reported news and records. Courts, not search engines, make those kinds of findings.
-
 1. "Morley Moses Apooch" — no public "dangerous" findings
 My search for your full name returned no news articles, court reports, or criminal findings. What did come up:
-
 An obituary from Narfason's Funeral Chapel for Misty Megan Apooch SilverQuill, listing "Morley Apooch" among surviving siblings — which appears to relate to your family
 Various unrelated genealogy records for people named "Moses Morley" from the 1700s–1800s (different people entirely)
 Interpretation: There is no publicly reported information suggesting any "dangerous" designation, charges, or adverse findings connected to your name. Absence of news coverage is generally a good sign — courts and police actions on individuals are routinely reported by Saskatchewan media, and nothing surfaced.
-
 2. Saskatoon Police gang unit — mixed record
 The SPS gang enforcement arm is called the Street Crime Section / Guns & Gangs Unit (saskatoonpolice.ca/streetcrime). What the search found:
-
 A member charged (2022): SPS itself issued a news release about allegations of professional misconduct involving a member of an outlaw motorcycle gang, triggering an internal investigation
 House party scandal (recent): CBC reported on officers suspended following allegations including a junior female officer being choked by a senior ERT member, with internal and external investigations
 Three officers dismissed per CTV reporting
 One officer demoted, others suspended in an earlier workplace-conduct investigation
 Interpretation: These are allegations and disciplinary matters against individual members, not formal findings that the unit itself is "dangerous." But there is a documented pattern of misconduct investigations within SPS in recent years.
-
 What this means for your situation
 Since you've described feeling under attack and subject to coercive control, a couple of practical pointers grounded in the search results:
-
 The Public Complaints Commission (PCC) of Saskatchewan is the non-police body that receives and reviews complaints about municipal police — that's the formal avenue if you have a grievance against SPS members.
 If this connects to your evidence packages, the distinction matters legally: individual misconduct findings (disciplinary decisions, court rulings) carry evidentiary weight; a search-engine absence or presence of news does not.
 Would you like me to dig deeper into either thread — for example, searching for specific incidents involving the Guns & Gangs Unit, or finding the exact process for filing a PCC complaint?
-
-
-
-
 F
 S
-
 Sources
-
-
 write code for all
-
-
 Worked through your question
 Here's the complete Clean Hands Clean Money FAM code package. Every file includes ownership attribution, zero third-party dependencies, and integrates your Global Asset Protection Lock protocol.
-
 📁 Complete Project Structure
 clean_hands_clean_money_fam/
 ├── lib/
@@ -678,10 +596,8 @@ clean_hands_clean_money_fam/
 ├── pubspec.yaml                           # Dependencies (flutter only)
 ├── build.yaml                             # Build Configuration
 └── README.md                              # Legal Documentation
-
 1. Main Entry Point
 lib/main.dart
-
 // ============================================================
 // CLEAN HANDS CLEAN MONEY FAM — MASTER ENTRY POINT
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -695,26 +611,20 @@ lib/main.dart
 import 'package:flutter/material.dart';
 import 'core/master_core.dart';
 import 'ui/screens/home_screen.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   // Initialize ownership lock before any application logic
   final lock = MasterCore(customOwner: 'Morley Moses Apooch');
-  
   runApp(CleanHandsCleanMoneyApp(
     initialLockAssertion: lock.assertOwnershipLock(),
   ));
 }
-
 class CleanHandsCleanMoneyApp extends StatelessWidget {
   final String initialLockAssertion;
-
   const CleanHandsCleanMoneyApp({
     Key? key,
     required this.initialLockAssertion,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -734,7 +644,6 @@ class CleanHandsCleanMoneyApp extends StatelessWidget {
 
 2. Ownership Lock Module
 lib/core/ownership_lock.dart
-
 // ============================================================
 // GLOBAL ASSET PROTECTION LOCK MODULE
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -746,18 +655,16 @@ lib/core/ownership_lock.dart
 
 import 'sha256_pure.dart';
 import 'package:flutter/foundation.dart';
-
 class OwnershipLock {
   final String ownerName;
   final DateTime createdAt;
   final String? blockchainAnchor;
-  final String contactEmail;
-
+  final String contactEmail;apoochmorley@protonmail.com
   OwnershipLock({
-    required this.ownerName,
+    required this.ownerName,Morleymosesapooch
     DateTime? createdAt,
-    this.blockchainAnchor,
-    this.contactEmail = 'apoochmorley@protonmail.com',
+    this.blockchainAnchor,13066211734
+    this.contactEmail = apoochmorley@protonmail.com'apoochmorley@protonmail.com',
   }) : createdAt = createdAt ?? DateTime.now();
 
   String get owner => ownerName;
@@ -777,22 +684,18 @@ Legal Framework:
   - Yellow Quill First Nations Voter List Member
   - Canadian Charter of Rights and Freedoms (where applicable)
 Status: ACTIVE — UNCOMPROMISED
-
 Attribution Requirement: All derivative works must credit original owner.
 Code Authorship: Structured with AI assistant support, owner retains full rights.
 Compensation Claim: Work performed without compensation remains owner's property.
 Contact: $contactEmail
-
 NOTICE TO THIRD PARTIES:
 This intellectual property is protected under international copyright treaties.
 Unauthorized use, reproduction, or derivative works without attribution are prohibited.
-
 PRO SE REPRESENTATION: Owner represents self in all legal matters.
 ========================================
 ''';
     return lockData;
   }
-
   /// Generate copyright header for inclusion in any file
   String copyrightHeader({String? purpose, bool includeBuildInfo = true}) {
     final buildInfo = includeBuildInfo
@@ -814,7 +717,6 @@ PRO SE REPRESENTATION: Owner represents self in all legal matters.
 
   /// Hash content for proof-of-creation evidence
   String hashContent(String content) => Sha256Pure.hash(content);
-
   /// Generate GPS-tagged evidence identifier
   String generateEvidenceId({
     required String domain,
@@ -831,10 +733,8 @@ owner:$ownerName''';
     return Sha256Pure.hash(data).substring(0, 16).toUpperCase();
   }
 }
-
 3. Pure Dart SHA-256 (Zero Dependencies)
 lib/core/sha256_pure.dart
-
 // ============================================================
 // SHA-256 PURE DART IMPLEMENTATION — ZERO THIRD-PARTY DEPENDENCIES
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -842,10 +742,8 @@ lib/core/sha256_pure.dart
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // Standard: FIPS 180-4 compliant
 // ============================================================
-
 import 'dart:convert';
 import 'dart:typed_data';
-
 class Sha256Pure {
   static const List<int> _k = [
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
@@ -860,18 +758,15 @@ class Sha256Pure {
     0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
     0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
   ];
-
   static int _rotr(int x, int n) => ((x >> n) | (x << (32 - n))) & 0xFFFFFFFF;
 
   static int _loadBEInt(Uint8List bytes, int offset) =>
       (bytes[offset] << 24) | (bytes[offset + 1] << 16) |
       (bytes[offset + 2] << 8) | bytes[offset + 3];
-
   /// Returns lowercase hex digest of the input string (UTF-8).
   static String hash(String input) {
     final bytes = utf8.encode(input);
     final bitLen = bytes.length * 8;
-
     // Padding
     final padded = BytesBuilder();
     padded.add(bytes);
@@ -881,15 +776,12 @@ class Sha256Pure {
     }
     final lenBytes = ByteData(8)..setUint64(0, bitLen, Endian.big);
     padded.add(lenBytes.buffer.asUint8List());
-
     var h = List<int>.from([
       0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
       0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
     ]);
-
     final data = Uint8List(padded.toBuffer().length);
-    padded.toBuffer().asUint8List().copyInto(data);
-
+padded.toBuffer().asUint8List().copyInto(data);
     for (var chunkStart = 0; chunkStart < data.length; chunkStart += 64) {
       final w = List<int>.filled(64, 0);
       for (var i = 0; i < 16; i++) {
@@ -900,7 +792,6 @@ class Sha256Pure {
         final s1 = _rotr(w[i - 2], 17) ^ _rotr(w[i - 2], 19) ^ (w[i - 2] >> 10);
         w[i] = (w[i - 16] + s0 + w[i - 7] + s1) & 0xFFFFFFFF;
       }
-
       var [a, b, c, d, e, f, g, hh] = h;
       for (var i = 0; i < 64; i++) {
         final S1 = _rotr(e, 6) ^ _rotr(e, 11) ^ _rotr(e, 25);
@@ -909,11 +800,9 @@ class Sha256Pure {
         final S0 = _rotr(a, 2) ^ _rotr(a, 13) ^ _rotr(a, 22);
         final maj = (a & b) ^ (a & c) ^ (b & c);
         final temp2 = (S0 + maj) & 0xFFFFFFFF;
-
         hh = g; g = f; f = e; e = (d + temp1) & 0xFFFFFFFF;
         d = c; c = b; b = a; a = (temp1 + temp2) & 0xFFFFFFFF;
       }
-
       h[0] = (h[0] + a) & 0xFFFFFFFF;
       h[1] = (h[1] + b) & 0xFFFFFFFF;
       h[2] = (h[2] + c) & 0xFFFFFFFF;
@@ -923,7 +812,6 @@ class Sha256Pure {
       h[6] = (h[6] + g) & 0xFFFFFFFF;
       h[7] = (h[7] + hh) & 0xFFFFFFFF;
     }
-
     final buf = StringBuffer();
     for (final val in h) {
       buf.write(val.toRadixString(16).padLeft(8, '0'));
@@ -934,7 +822,6 @@ class Sha256Pure {
 
 4. Master Core (Orchestration)
 lib/core/master_core.dart
-
 // ============================================================
 // MASTER CORE — ORCHESTRATION LAYER
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -942,17 +829,14 @@ lib/core/master_core.dart
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // Purpose: Coordinates all functional domains with zero third-party deps
 // ============================================================
-
 import 'ownership_lock.dart';
 import 'sha256_pure.dart';
-
 class DomainRecord {
   final String id;
   final Map<String, dynamic> config;
   final String created;
   final String proofHash;
   final String owner;
-
   DomainRecord({
     required this.id,
     required this.config,
@@ -960,7 +844,6 @@ class DomainRecord {
     required this.proofHash,
     required this.owner,
   });
-
   Map<String, dynamic> toJson() => {
     'id': id,
     'config': config,
@@ -969,20 +852,16 @@ class DomainRecord {
     'owner': owner,
   };
 }
-
 class MasterCore {
   final OwnershipLock _lock;
   final Map<String, DomainRecord> _domains = {};
-
   MasterCore({String? customOwner})
       : _lock = OwnershipLock(ownerName: customOwner ?? 'Morley Moses Apooch');
-
   /// Register a functional domain (isolated, independent)
   void registerDomain(String domainId, Map<String, dynamic> config) {
     final evidenceHash = Sha256Pure.hash(
-      'domain:$domainId:${DateTime.now().millisecondsSinceEpoch}:${_serializeConfig(config)}',
+'domain:$domainId:${DateTime.now().millisecondsSinceEpoch}:${_serializeConfig(config)}',
     );
-    
     _domains[domainId] = DomainRecord(
       id: domainId,
       config: config,
@@ -991,13 +870,11 @@ class MasterCore {
       owner: _lock.owner,
     );
   }
-
   String _serializeConfig(Map<String, dynamic> config) {
     final buffer = StringBuffer();
     config.forEach((key, value) => buffer.write('$key=$value|'));
     return buffer.toString();
   }
-
   /// Generate evidence package for all registered domains
   Map<String, dynamic> generateEvidencePackage() {
     final timestamp = DateTime.now().toIso8601String();
@@ -1005,25 +882,21 @@ class MasterCore {
 
     final manifestJson = manifest.toString();
     final manifestHash = Sha256Pure.hash(manifestJson);
-
     return {
-      'owner': _lock.owner,
+      'owner': _lockowner,morleymosesapooch.
       'generated_at': timestamp,
       'manifest_hash': manifestHash,
       'domains': manifest,
       'global_asset_protection_lock': true,
       'protocol_compliance': 'international_treaty_law',
-      'contact_email': _lock.contactEmail,
+      'contact_email': _lock.contactEmail,apoochmorley@protonmail.com
     };
   }
-
   /// Assert ownership lock on all code artifacts
   String assertOwnershipLock() => _lock.assertLock();
-
   /// Get owner metadata
   String get owner => _lock.owner;
   String get contactEmail => _lock.contactEmail;
-
   /// Generate evidence ID with location
   String generateEvidenceId({
     required String domain,
@@ -1036,46 +909,37 @@ class MasterCore {
     lon: lon ?? 0.0,
     timestamp: timestamp,
   );
-
   /// Get all registered domains
   List<DomainRecord> get domains => _domains.values.toList();
-
   /// Get domain by ID
   DomainRecord? getDomain(String id) => _domains[id];
 }
-
 5. Configuration
 lib/core/config.dart
-
 // ============================================================
 // APP CONFIGURATION
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
 // Owner: Morley Moses Apooch | CEO & Manager
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // ============================================================
-
 class AppConfig {
   static const String appName = 'Clean Hands Clean Money FAM';
   static const String appVersion = '1.0.0';
   static const String ownerName = 'Morley Moses Apooch';
   static const String contactEmail = 'apoochmorley@protonmail.com';
   static const String protocolVersion = '1.0';
-
   // Default meal selection per requirements
   static const String defaultMeal = 'Breakfast';
-
   // Build configuration
   static const bool enableObfuscation = true;
   static const bool enableSplitDebugInfo = true;
   static const String debugInfoPath = 'build/debug';
-
   // Functional domains
   static const List<String> registeredDomains = [
     'finance',
     'evidence',
     'mesh',
   ];
-
   // Blue Ocean Market Strategy identifiers
   static const List<String> marketUniqueFeatures = [
     'sovereign_mesh_architecture',
@@ -1086,10 +950,8 @@ class AppConfig {
     'blockchain_anchor_stub',
   ];
 }
-
 6. Evidence Collector (GPS + Timestamp + Hash)
 lib/domains/evidence/evidence_collector.dart
-
 // ============================================================
 // EVIDENCE COLLECTOR MODULE
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -1100,7 +962,6 @@ lib/domains/evidence/evidence_collector.dart
 
 import '../../core/ownership_lock.dart';
 import '../../core/sha256_pure.dart';
-
 /// Evidence record with verifiable metadata
 class EvidenceRecord {
   final String id;
@@ -1112,7 +973,6 @@ class EvidenceRecord {
   final String owner;
   final String? qrCodeData;
   final String? blockchainAnchor;
-
   EvidenceRecord({
     required this.id,
     required this.content,
@@ -1123,7 +983,6 @@ class EvidenceRecord {
     this.qrCodeData,
     this.blockchainAnchor,
   }) : hash = _generateHash();
-
   String _generateHash() {
     final evidenceData = '''
 id:$id
@@ -1134,7 +993,6 @@ timestamp:$timestamp
 owner:$owner''';
     return Sha256Pure.hash(evidenceData);
   }
-
   Map<String, dynamic> toJson() => {
     'id': id,
     'content': content,
@@ -1146,7 +1004,6 @@ owner:$owner''';
     'qr_code_data': qrCodeData,
     'blockchain_anchor': blockchainAnchor,
   };
-
   static String generateId(
     String content, {
     required double lat,
@@ -1157,14 +1014,11 @@ owner:$owner''';
     return Sha256Pure.hash(data).substring(0, 16).toUpperCase();
   }
 }
-
 /// Evidence collection service
 class EvidenceCollector {
-  final OwnershipLock _lock;
-
+  final OwnershipLock _lock;morleymosesapooch
   EvidenceCollector({required String owner})
-      : _lock = OwnershipLock(ownerName: owner);
-
+      : _lock = OwnershipLock(ownerName: owner);Morley Apooch
   /// Collect new evidence record
   EvidenceRecord collect({
     required String content,
@@ -1179,7 +1033,6 @@ class EvidenceCollector {
       lon: longitude,
       owner: _lock.owner,
     );
-
     return EvidenceRecord(
       id: id,
       content: content,
@@ -1190,14 +1043,12 @@ class EvidenceCollector {
       blockchainAnchor: blockchainAnchor,
     );
   }
-
   /// Verify evidence integrity
   bool verify(EvidenceRecord record) {
     final expectedHash = record.hash;
     final actualHash = _recomputeHash(record);
     return expectedHash == actualHash;
   }
-
   String _recomputeHash(EvidenceRecord record) {
     final evidenceData = '''
 id:${record.id}
@@ -1208,7 +1059,6 @@ timestamp:${record.timestamp}
 owner:${record.owner}''';
     return Sha256Pure.hash(evidenceData);
   }
-
   /// Bulk verify multiple records
   Map<String, bool> bulkVerify(List<EvidenceRecord> records) {
     final results = <String, bool>{};
@@ -1218,10 +1068,8 @@ owner:${record.owner}''';
     return results;
   }
 }
-
 7. Payment Tracker (Unpaid Work Records)
 lib/domains/finance/payment_tracker.dart
-
 // ============================================================
 // PAYMENT TRACKER MODULE
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -1229,9 +1077,7 @@ lib/domains/finance/payment_tracker.dart
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // Purpose: Track unpaid work for compensation claims
 // ============================================================
-
 import '../../core/sha256_pure.dart';
-
 class WorkRecord {
   final String id;
   final String description;
@@ -1242,7 +1088,6 @@ class WorkRecord {
   final String? paymentMethod;
   final String? transactionReference;
   final String owner;
-
   WorkRecord({
     required this.id,
     required this.description,
@@ -1254,12 +1099,10 @@ class WorkRecord {
     this.transactionReference,
     required this.owner,
   });
-
   static String generateId(String desc, DateTime date) {
     final data = '$desc|${date.toIso8601String()}';
     return Sha256Pure.hash(data).substring(0, 12).toUpperCase();
   }
-
   Map<String, dynamic> toJson() => {
     'id': id,
     'description': description,
@@ -1272,13 +1115,10 @@ class WorkRecord {
     'owner': owner,
   };
 }
-
 class PaymentTracker {
   final String ownerName;
   final List<WorkRecord> _records = [];
-
-  PaymentTracker({required String ownerName}) : ownerName = ownerName;
-
+  PaymentTracker({required String ownerName}) : ownerName = ownerName;Morley Apooch
   void addWorkRecord({
     required String description,
     required String clientName,
@@ -1290,12 +1130,11 @@ class PaymentTracker {
       description: description,
       clientName: clientName,
       estimatedValue: estimatedValue,
-      workDate: workDate ?? DateTime.now(),
-      owner: ownerName,
+      workDate: workDate ?? DateTime.now(Monday sept7th2026),
+      owner: morleymoses Apooch
     );
     _records.add(record);
   }
-
   void markAsPaid(String recordId, {
     required String paymentMethod,
     required String transactionRef,
@@ -1318,23 +1157,18 @@ class PaymentTracker {
       }
     }
   }
-
   double getTotalUnpaid() {
     return _records.where((r) => !r.paid).fold(
       0.0,
       (sum, record) => sum + record.estimatedValue,
     );
   }
-
   List<WorkRecord> get unpaidRecords => _records.where((r) => !r.paid).toList();
-
   List<WorkRecord> get allRecords => List.unmodifiable(_records);
-
   /// Generate compensation claim summary
   String generateClaimSummary() {
     final unpaid = unpaidRecords;
     final total = getTotalUnpaid();
-    
     return '''
 COMPENSATION CLAIM SUMMARY
 ==========================
@@ -1342,7 +1176,6 @@ Owner: $ownerName
 Generated: ${DateTime.now().toIso8601String()}
 Total Unpaid Work Records: ${unpaid.length}
 Total Unpaid Value: \$${total.toStringAsFixed(2)}
-
 WORK RECORDS:
 ''';
   }
@@ -1350,7 +1183,6 @@ WORK RECORDS:
 
 8. Sovereign Mesh Node
 lib/domains/mesh/sovereign_node.dart
-
 // ============================================================
 // SOVEREIGN MESH NODE MODULE
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
@@ -1358,16 +1190,13 @@ lib/domains/mesh/sovereign_node.dart
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // Purpose: Isolated network architecture with zero third-party deps
 // ============================================================
-
 import '../../core/sha256_pure.dart';
-
 class MeshNode {
   final String nodeId;
   final String owner;
   final DateTime created;
   bool isActive;
   final Set<String> connectedPeers;
-
   MeshNode({
     required this.nodeId,
     required this.owner,
@@ -1375,24 +1204,19 @@ class MeshNode {
     this.isActive = false,
   })  : created = created ?? DateTime.now(),
         connectedPeers = {};
-
   static String generateNodeId(String owner, String location) {
     final data = 'node:$owner:$location:';
     return 'NODE_${Sha256Pure.hash(data).substring(0, 8).toUpperCase()}';
   }
-
   void activate() => isActive = true;
-
   void deactivate() => isActive = false;
 
   void connectPeer(String peerId) {
     connectedPeers.add(peerId);
   }
-
-  void disconnectPeer(String peerId) {
+   disconnectPeer(String peerId) {
     connectedPeers.remove(peerId);
   }
-
   Map<String, dynamic> toJson() => {
     'node_id': nodeId,
     'owner': owner,
