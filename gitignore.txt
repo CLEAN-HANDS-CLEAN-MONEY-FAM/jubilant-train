@@ -1,8 +1,13 @@
 
 # === Clean Hands Clean Money FAM - Git Ignore Rules ===
+
 # 🔒 SECURITY & SECRETS (Never upload these!)
-config.jsonll
-credentials
+config.json
+*.env
+*.pem
+*.key
+credentials/
+
 # 🛠️ SYSTEM ENVIRONMENT & DEPENDENCIES
 __pycache__/
 *.pyc

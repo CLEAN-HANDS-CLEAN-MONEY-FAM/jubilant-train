@@ -1,0 +1,619 @@
+git clone https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train.git
+cd jubilant-train
+git fetch origin
+git checkout -b add-master-lock origin/main
+# create files below in repo root and .github/workflows
+git add multilingual_master_generator.py master_lock.py vault_cli.py notarize_helper.py generate_master_cli.py README_ADD.md README_MASTER_LOCK.md sensitive_payload_template.json evidence_hashes.txt .github/workflows/auto_generate_workflow.yml .github/workflows/vault_backup.yml
+git commit -m "Add Master Lock vault, multilingual generator, CLI, and workflows — MORLEYMOSESAPOOCH"
+git push origin add-master-lock
+# open PR from add-master-lock -> main
+Load all — full code package and instructions
+Below is the complete set of files you asked to load into the repository. Each file is provided as a copy‑paste block you can save into your working tree. None of these files include raw treaty numbers, provincial IDs, validation numbers, or any other sensitive identifiers. Use the Master Lock or environment variables to store those privately.
+
+Quick branch and commit steps
+bash
+git clone https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train.git
+cd jubilant-train
+git fetch origin
+git checkout -b add-master-lock origin/main
+# create files below in repo root and .github/workflows
+git add multilingual_master_generator.py master_lock.py vault_cli.py notarize_helper.py generate_master_cli.py README_ADD.md README_MASTER_LOCK.md sensitive_payload_template.json evidence_hashes.txt .github/workflows/auto_generate_workflow.yml .github/workflows/vault_backup.yml
+git commit -m "Add Master Lock vault, multilingual generator, CLI, and workflows — MORLEYMOSESAPOOCH"
+git push origin add-master-lock
+# open PR from add-master-lock -> main
+1) multilingual_master_generator.py
+python
+#!/usr/bin/env python3
+# multilingual_master_generator.py
+# Generates master JSON and Markdown in English, Russian, Chinese (Simplified)
+# Includes payment status and secure placeholders for sensitive identifiers.
+# Do NOT include raw sensitive identifiers in this file.
+
+from datetime import date
+import json
+from pathlib import Path
+import os
+import argparse
+
+TODAY = date.today().isoformat()
+
+TEMPLATES = {
+    "en": {
+        "title": "COPYRIGHT MASTER FILE",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Signed: MORLEYMOSESAPOOCH* — {date}",
+        "ai_heading": "April 7th, 2026 — Solo Claude Development",
+        "sensitive_heading": "Sensitive Identifiers (redacted)",
+        "licensing_heading": "Licensing",
+        "signed_declaration": (
+            "I, MORLEYMOSESAPOOCH*, declare that all works, code, assets, and "
+            "AI-directed outputs referenced in this master file are authored, "
+            "directed, and owned by me. I further declare that as of {date}, I have not "
+            "received any financial compensation for any of my development work. I represent "
+            "myself in all legal matters and manage my company CLEAN HANDS CLEAN MONEY FAM. "
+            "This record is anchored to GitHub Actions runs {runs}. "
+            "Note: GitHub currently prevents display of my personal photo in the repository UI; "
+            "the photo remains part of my evidence bundle but is not shown on GitHub."
+        )
+    },
+    "ru": {
+        "title": "МАСТЕР‑ЗАПИСЬ АВТОРСКИХ ПРАВ",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Подписано: MORLEYMOSESAPOOCH* — {date}",
+        "ai_heading": "7 апреля 2026 — Соло разработка с Claude",
+        "sensitive_heading": "Чувствительные идентификаторы (редактировано)",
+        "licensing_heading": "Лицензирование",
+        "signed_declaration": (
+            "Я, MORLEYMOSESAPOOCH*, заявляю, что все работы, код, материалы и результаты, "
+            "созданные с использованием AI, перечисленные в этом документе, являются моими. "
+            "По состоянию на {date} я не получал финансовой компенсации за указанную разработку. "
+            "Я представляю себя в юридических вопросах и управляю компанией CLEAN HANDS CLEAN MONEY FAM. "
+            "Запись привязана к GitHub Actions runs {runs}. "
+            "Примечание: GitHub не позволяет отображать мою личную фотографию в UI репозитория; "
+            "фото хранится в доказательной базе, но не показано на GitHub."
+        )
+    },
+    "zh": {
+        "title": "版权主记录",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "签署：MORLEYMOSESAPOOCH* — {date}",
+        "ai_heading": "2026年4月7日 — 单人 Claude 开发记录",
+        "sensitive_heading": "敏感标识（已编辑）",
+        "licensing_heading": "许可",
+        "signed_declaration": (
+            "我，MORLEYMOSESAPOOCH*，声明本主记录中列示的所有作品、代码、资产和由 AI 协助生成的输出均由我创作、指导并归我所有。"
+            "截至 {date}，我尚未就任何开发工作获得任何经济补偿。我在所有法律事务中代表自己，并管理我的公司 CLEAN HANDS CLEAN MONEY FAM。"
+            "本记录锚定于 GitHub Actions 运行 {runs}。"
+            "注意：GitHub 当前阻止在仓库界面显示我的个人照片；照片仍作为证据保留，但不在 GitHub 上显示。"
+        )
+    }
+}
+
+CORE_RECORD = {
+    "rights_holder": {
+        "legal_name": "Morley Moses Apooch",
+        "signature_name": "MORLEYMOSESAPOOCH*",
+        "aliases": ["CLEAN-HANDS-CLEAN-MONEY-FAM"],
+        "location": "Yorkton, Saskatchewan, Canada",
+        "role": "Solo developer, architect, AI-directed creator",
+        "legal_representation": "Represents self in all legal matters",
+        "company_management": "Sole manager and operator of CLEAN HANDS CLEAN MONEY FAM",
+        "date_signed": "2026-09-05",
+        "financial_status": "No compensation received for any development work as of 2026-09-05"
+    },
+    "repositories": {
+        "primary_repo": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train",
+        "branch_anchor": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/tree/3-morley-moses-apooch",
+        "compare_url": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/compare/morlzappoch-patch-5...morlzappoch-patch-7?quick_pull=1",
+        "github_actions_runs": ["33975584137", "33978583430"],
+        "note_photo_visibility": "GitHub currently prevents display of the author's personal photo in the repository UI; the photo is part of the evidence bundle but not shown on GitHub.",
+        "external_evidence_links": []
+    },
+    "ai_development": {
+        "april_7_2026": {
+            "solo_development": True,
+            "ai_tools_used": ["Claude", "Copilot"],
+            "authorship_status": "Full human authorship",
+            "statement": "On April 7th, 2026, all development work was performed by Morley Moses Apooch with AI systems acting solely as tools under Morley's creative direction.",
+            "approx_time_window_local": "Approximately 10:30 AM to 11:30 AM (local time) on April 7, 2026"
+        }
+    },
+    "sensitive_identifiers": {
+        "treaty_number_present": True,
+        "saskatchewan_id_present": True,
+        "validation_number_present": True,
+        "note": "Sensitive identifiers exist and are stored securely by the rights holder. They are not published in this repository. Treaty information may be verified via Indigenous Services Canada."
+    },
+    "licensing": {
+        "default_license": "Proprietary unless otherwise stated",
+        "attribution_required": True,
+        "prohibited_uses": [
+            "Unauthorized commercial redistribution",
+            "Removal of attribution",
+            "Misrepresentation of authorship"
+        ]
+    },
+    "payment_status": {
+        "status": None,
+        "as_of_date": None,
+        "note": None
+    },
+    "record_generated_on": TODAY
+}
+
+def set_unpaid(record, as_of_date=None, note=None):
+    if as_of_date is None:
+        as_of_date = date.today().isoformat()
+    record["payment_status"] = {"status": "No compensation received", "as_of_date": as_of_date, "note": note or "Declared by rights holder."}
+    record["record_generated_on"] = date.today().isoformat()
+    return record
+
+def build_record_for_lang(lang):
+    tpl = TEMPLATES[lang]
+    rec = {
+        "meta": {"language": lang, "generated_on": CORE_RECORD["record_generated_on"]},
+        "content": {"title": tpl["title"], "subtitle": tpl["subtitle"], "signed": tpl["signed"].format(date=CORE_RECORD["record_generated_on"])},
+        "rights_holder": CORE_RECORD["rights_holder"],
+        "repositories": CORE_RECORD["repositories"],
+        "ai_development": CORE_RECORD["ai_development"],
+        "sensitive_identifiers": CORE_RECORD["sensitive_identifiers"],
+        "licensing": CORE_RECORD["licensing"],
+        "payment_status": CORE_RECORD["payment_status"],
+        "signed_declaration": tpl["signed_declaration"].format(date=CORE_RECORD["record_generated_on"], runs=", ".join(CORE_RECORD["repositories"]["github_actions_runs"]))
+    }
+    return rec
+
+def export_json(record, path):
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(record, f, indent=4, ensure_ascii=False)
+    return path
+
+def export_markdown(lang, path):
+    tpl = TEMPLATES[lang]
+    rh = CORE_RECORD["rights_holder"]
+    repo = CORE_RECORD["repositories"]
+    ai = CORE_RECORD["ai_development"]["april_7_2026"]
+    lic = CORE_RECORD["licensing"]
+    sensitive = CORE_RECORD["sensitive_identifiers"]
+    payment = CORE_RECORD["payment_status"]
+    lines = []
+    lines.append(f"# {tpl['title']}")
+    lines.append(f"### {tpl['subtitle']}")
+    lines.append("")
+    lines.append(tpl["signed"].format(date=CORE_RECORD["record_generated_on"]))
+    lines.append("")
+    lines.append("## Rights Holder Information")
+    lines.append(f"- **Legal Name:** {rh['legal_name']}")
+    lines.append(f"- **Signature Name:** {rh['signature_name']}")
+    lines.append(f"- **Aliases:** {', '.join(rh['aliases'])}")
+    lines.append(f"- **Location:** {rh['location']}")
+    lines.append(f"- **Role:** {rh['role']}")
+    lines.append(f"- **Legal Representation:** {rh['legal_representation']}")
+    lines.append(f"- **Company Management:** {rh['company_management']}")
+    lines.append(f"- **Financial Status:** {rh['financial_status']}")
+    lines.append("")
+    lines.append("## Repository Anchors")
+    lines.append(f"- **Primary Repo:** {repo['primary_repo']}")
+    lines.append(f"- **Branch Anchor:** {repo['branch_anchor']}")
+    lines.append(f"- **Compare URL:** {repo['compare_url']}")
+    lines.append(f"- **GitHub Actions Runs:** {', '.join(repo['github_actions_runs'])}")
+    if repo.get("external_evidence_links"):
+        for link in repo["external_evidence_links"]:
+            lines.append(f"- **External Evidence:** {link}")
+    lines.append(f"- **Photo Visibility Note:** {repo['note_photo_visibility']}")
+    lines.append("")
+    lines.append(f"## {tpl['ai_heading']}")
+    lines.append(f"- **Solo Development:** {ai['solo_development']}")
+    lines.append(f"- **AI Tools Used:** {', '.join(ai['ai_tools_used'])}")
+    lines.append(f"- **Authorship Status:** {ai['authorship_status']}")
+    lines.append(f"- **Statement:** {ai['statement']}")
+    lines.append(f"- **Approx Time Window:** {ai['approx_time_window_local']}")
+    lines.append("")
+    lines.append(f"## {tpl['sensitive_heading']}")
+    lines.append(f"- Treaty Number Present: {sensitive['treaty_number_present']}")
+    lines.append(f"- Saskatchewan ID Present: {sensitive['saskatchewan_id_present']}")
+    lines.append(f"- Validation Number Present: {sensitive['validation_number_present']}")
+    lines.append(f"- Note: {sensitive['note']}")
+    lines.append("")
+    lines.append(f"## {tpl['licensing_heading']}")
+    lines.append(f"- Default License: {lic['default_license']}")
+    lines.append(f"- Attribution Required: {lic['attribution_required']}")
+    lines.append(f"- Prohibited Uses: {', '.join(lic['prohibited_uses'])}")
+    lines.append("")
+    lines.append("## Payment Status")
+    lines.append(f"- **Status:** {payment.get('status', 'Not specified')}")
+    lines.append(f"- **As of date:** {payment.get('as_of_date', 'Not specified')}")
+    if payment.get("note"):
+        lines.append(f"- **Note:** {payment.get('note')}")
+    lines.append("")
+    lines.append("## Signed Declaration")
+    lines.append("")
+    lines.append(tpl["signed_declaration"].format(date=CORE_RECORD["record_generated_on"], runs=", ".join(repo["github_actions_runs"])))
+    md = "\n".join(lines)
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(md)
+    return path
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate multilingual master records (en/ru/zh)")
+    parser.add_argument("--langs", nargs="+", choices=["en","ru","zh","all"], default=["all"])
+    parser.add_argument("--json-dir", default="multilingual_json")
+    parser.add_argument("--md-dir", default="multilingual_md")
+    parser.add_argument("--unpaid", action="store_true", help="Mark payment status as unpaid")
+    parser.add_argument("--date", help="Date for payment status (YYYY-MM-DD)")
+    parser.add_argument("--note", help="Optional note for payment status")
+    args = parser.parse_args()
+    if "all" in args.langs:
+        langs = ["en","ru","zh"]
+    else:
+        langs = args.langs
+    if args.unpaid:
+        set_unpaid(CORE_RECORD, as_of_date=args.date, note=args.note)
+    else:
+        # default to unpaid if not specified
+        set_unpaid(CORE_RECORD, as_of_date=args.date, note=args.note)
+    for lang in langs:
+        rec = build_record_for_lang(lang)
+        export_json(rec, f"{args.json_dir}/copyright_master_{lang}.json")
+        export_markdown(lang, f"{args.md_dir}/COPYRIGHT_MASTER_{lang}.md")
+        print(f"Generated for {lang}")
+    # bundle
+    bundle = {lang: build_record_for_lang(lang) for lang in langs}
+    export_json(bundle, f"{args.json_dir}/copyright_master_multilingual_bundle.json")
+    print("Bundle generated")
+
+if __name__ == "__main__":
+    main()
+2) generate_master_cli.py
+python
+#!/usr/bin/env python3
+# generate_master_cli.py
+from multilingual_master_generator import main as gen_main
+if __name__ == "__main__":
+    gen_main()
+3) master_lock.py
+python
+# master_lock.py
+# Secure local vault using AES-GCM (cryptography)
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import constant_time
+from pathlib import Path
+import base64, secrets, json
+from datetime import datetime
+
+VAULT_DIR = Path(".master_lock")
+VAULT_DIR.mkdir(exist_ok=True)
+VAULT_FILE = VAULT_DIR / "vault.bin"
+META_FILE = VAULT_DIR / "vault_meta.json"
+
+SCRYPT_N = 2**14
+SCRYPT_R = 8
+SCRYPT_P = 1
+KEY_LEN = 32
+NONCE_LEN = 12
+
+def _derive_key(passphrase: bytes, salt: bytes):
+    kdf = Scrypt(salt=salt, length=KEY_LEN, n=SCRYPT_N, r=SCRYPT_R, p=SCRYPT_P)
+    return kdf.derive(passphrase)
+
+def _encrypt(plaintext: bytes, key: bytes):
+    aesgcm = AESGCM(key)
+    nonce = secrets.token_bytes(NONCE_LEN)
+    ct = aesgcm.encrypt(nonce, plaintext, None)
+    return {"nonce": base64.b64encode(nonce).decode(), "ciphertext": base64.b64encode(ct).decode()}
+
+def _decrypt(nonce_b64, ct_b64, key):
+    aesgcm = AESGCM(key)
+    nonce = base64.b64decode(nonce_b64)
+    ct = base64.b64decode(ct_b64)
+    return aesgcm.decrypt(nonce, ct, None)
+
+def init_vault(passphrase: str):
+    if VAULT_FILE.exists():
+        raise FileExistsError("Vault already exists.")
+    salt = secrets.token_bytes(16)
+    key = _derive_key(passphrase.encode(), salt)
+    empty = json.dumps({"entries": [], "created_on": datetime.utcnow().isoformat()}).encode()
+    enc = _encrypt(empty, key)
+    with VAULT_FILE.open("wb") as f:
+        f.write(base64.b64encode(json.dumps(enc).encode()))
+    with META_FILE.open("w", encoding="utf-8") as f:
+        json.dump({"salt": base64.b64encode(salt).decode(), "created_on": datetime.utcnow().isoformat()}, f, indent=2)
+    return True
+
+def _load_key(passphrase: str):
+    if not META_FILE.exists():
+        raise FileNotFoundError("Vault metadata not found.")
+    meta = json.load(META_FILE.open("r", encoding="utf-8"))
+    salt = base64.b64decode(meta["salt"])
+    return _derive_key(passphrase.encode(), salt)
+
+def _read_blob():
+    if not VAULT_FILE.exists():
+        raise FileNotFoundError("Vault file not found.")
+    raw = base64.b64decode(VAULT_FILE.read_bytes())
+    return json.loads(raw.decode())
+
+def list_entries(passphrase: str):
+    key = _load_key(passphrase)
+    enc = _read_blob()
+    plaintext = _decrypt(enc["nonce"], enc["ciphertext"], key)
+    data = json.loads(plaintext.decode())
+    return [{"id": e["id"], "label": e.get("label"), "created_on": e.get("created_on")} for e in data["entries"]]
+
+def add_entry(passphrase: str, label: str, payload: dict):
+    key = _load_key(passphrase)
+    enc = _read_blob()
+    plaintext = _decrypt(enc["nonce"], enc["ciphertext"], key)
+    data = json.loads(plaintext.decode())
+    entry_id = secrets.token_hex(12)
+    entry = {"id": entry_id, "label": label, "payload": payload, "created_on": datetime.utcnow().isoformat()}
+    data["entries"].append(entry)
+    new_plain = json.dumps(data).encode()
+    new_enc = _encrypt(new_plain, key)
+    with VAULT_FILE.open("wb") as f:
+        f.write(base64.b64encode(json.dumps(new_enc).encode()))
+    return entry_id
+
+def get_entry(passphrase: str, entry_id: str):
+    key = _load_key(passphrase)
+    enc = _read_blob()
+    plaintext = _decrypt(enc["nonce"], enc["ciphertext"], key)
+    data = json.loads(plaintext.decode())
+    for e in data["entries"]:
+        if constant_time.bytes_eq(e["id"].encode(), entry_id.encode()):
+            return e
+    raise KeyError("Entry not found")
+
+def delete_entry(passphrase: str, entry_id: str):
+    key = _load_key(passphrase)
+    enc = _read_blob()
+    plaintext = _decrypt(enc["nonce"], enc["ciphertext"], key)
+    data = json.loads(plaintext.decode())
+    new_entries = [e for e in data["entries"] if not constant_time.bytes_eq(e["id"].encode(), entry_id.encode())]
+    if len(new_entries) == len(data["entries"]):
+        raise KeyError("Entry not found")
+    data["entries"] = new_entries
+    new_plain = json.dumps(data).encode()
+    new_enc = _encrypt(new_plain, key)
+    with VAULT_FILE.open("wb") as f:
+        f.write(base64.b64encode(json.dumps(new_enc).encode()))
+    return True
+
+def export_entry_hash(payload: dict):
+    digest = hashes.Hash(hashes.SHA256())
+    canonical = json.dumps(payload, separators=(",", ":"), sort_keys=True).encode()
+    digest.update(canonical)
+    return digest.finalize().hex()
+4) vault_cli.py
+python
+#!/usr/bin/env python3
+# vault_cli.py
+import argparse, getpass, json
+from master_lock import init_vault, add_entry, list_entries, get_entry, delete_entry, export_entry_hash
+
+def cmd_init(args):
+    passphrase = getpass.getpass("Enter new vault passphrase: ")
+    confirm = getpass.getpass("Confirm passphrase: ")
+    if passphrase != confirm:
+        print("Passphrases do not match.")
+        return
+    try:
+        init_vault(passphrase)
+        print("Vault initialized at .master_lock/")
+    except Exception as e:
+        print("Error:", e)
+
+def cmd_add(args):
+    passphrase = getpass.getpass("Vault passphrase: ")
+    label = args.label or input("Label for entry: ")
+    if args.file:
+        with open(args.file, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+    else:
+        raw = input("Paste JSON payload (single line): ")
+        payload = json.loads(raw)
+    entry_id = add_entry(passphrase, label, payload)
+    h = export_entry_hash(payload)
+    print(f"Added entry id: {entry_id}")
+    print(f"Public SHA-256 anchor: {h}")
+
+def cmd_list(args):
+    passphrase = getpass.getpass("Vault passphrase: ")
+    try:
+        entries = list_entries(passphrase)
+        for e in entries:
+            print(f"{e['id']}  | {e.get('label')}  | created: {e.get('created_on')}")
+    except Exception as ex:
+        print("Error:", ex)
+
+def cmd_get(args):
+    passphrase = getpass.getpass("Vault passphrase: ")
+    try:
+        e = get_entry(passphrase, args.id)
+        if args.out:
+            with open(args.out, "w", encoding="utf-8") as f:
+                json.dump(e, f, indent=2, ensure_ascii=False)
+            print(f"Wrote decrypted entry to {args.out} (remove file after use).")
+        else:
+            print("Entry metadata:")
+            print(f"id: {e['id']}")
+            print(f"label: {e.get('label')}")
+            print(f"created_on: {e.get('created_on')}")
+            print("Payload not printed. Use --out to write decrypted JSON locally.")
+    except Exception as ex:
+        print("Error:", ex)
+
+def cmd_delete(args):
+    passphrase = getpass.getpass("Vault passphrase: ")
+    try:
+        delete_entry(passphrase, args.id)
+        print("Deleted entry.")
+    except Exception as ex:
+        print("Error:", ex)
+
+def main():
+    parser = argparse.ArgumentParser(description="Master Lock CLI")
+    sub = parser.add_subparsers(dest="cmd")
+    p_init = sub.add_parser("init")
+    p_init.set_defaults(func=cmd_init)
+    p_add = sub.add_parser("add")
+    p_add.add_argument("--label", help="Label for entry")
+    p_add.add_argument("--file", help="JSON file containing payload")
+    p_add.set_defaults(func=cmd_add)
+    p_list = sub.add_parser("list")
+    p_list.set_defaults(func=cmd_list)
+    p_get = sub.add_parser("get")
+    p_get.add_argument("id", help="Entry id")
+    p_get.add_argument("--out", help="Write decrypted entry to file (local only)")
+    p_get.set_defaults(func=cmd_get)
+    p_del = sub.add_parser("delete")
+    p_del.add_argument("id", help="Entry id")
+    p_del.set_defaults(func=cmd_delete)
+    args = parser.parse_args()
+    if not hasattr(args, "func"):
+        parser.print_help()
+        return
+    args.func(args)
+
+if __name__ == "__main__":
+    main()
+5) notarize_helper.py
+python
+# notarize_helper.py
+import json
+from datetime import datetime
+from pathlib import Path
+from master_lock import export_entry_hash
+
+def build_notarization_bundle(entry_payload: dict, label: str, evidence_links: list = None):
+    h = export_entry_hash(entry_payload)
+    bundle = {
+        "label": label,
+        "hash": h,
+        "evidence_links": evidence_links or [],
+        "created_on": datetime.utcnow().isoformat(),
+        "affidavit": f"I, MORLEYMOSESAPOOCH*, declare that the sensitive identifiers associated with label '{label}' are held securely by me. The SHA-256 hash of the canonical payload is {h}. The raw identifiers are not published here."
+    }
+    return bundle
+
+def save_bundle(bundle: dict, path: str):
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("w", encoding="utf-8") as f:
+        json.dump(bundle, f, indent=2, ensure_ascii=False)
+    return str(p.resolve())
+6) .github/workflows/auto_generate_workflow.yml
+yaml
+name: Generate Multilingual Master
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "add-master-lock"
+      - "main"
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: python -m pip install --upgrade pip cryptography
+      - name: Generate multilingual master
+        run: |
+          python3 multilingual_master_generator.py --langs all --unpaid --date 2026-09-05
+      - name: Commit generated files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "MORLEYMOSESAPOOCH"
+          git config user.email "no-reply@example.com"
+          git add multilingual_json multilingual_md || true
+          git commit -m "Auto-generate multilingual master (signed MORLEYMOSESAPOOCH)" || echo "No changes"
+          git push origin HEAD:${{ github.ref_name }}
+7) .github/workflows/vault_backup.yml (optional)
+yaml
+name: Vault Backup (manual)
+on:
+  workflow_dispatch:
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Upload vault artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: master-lock-vault
+          path: .master_lock/*
+Warning: Do not enable automatic backups of .master_lock to public CI unless you understand the security implications. Prefer local encrypted backups.
+
+8) README_ADD.md
+markdown
+# How to add and use the Master Lock and Multilingual Generator
+
+## Files added
+- multilingual_master_generator.py
+- generate_master_cli.py
+- master_lock.py
+- vault_cli.py
+- notarize_helper.py
+- .github/workflows/auto_generate_workflow.yml
+- .github/workflows/vault_backup.yml (optional)
+- README_MASTER_LOCK.md
+- sensitive_payload_template.json
+- evidence_hashes.txt
+
+## Quick start
+1. Install dependencies:
+   python3 -m pip install cryptography
+
+2. Initialize local vault:
+   python3 vault_cli.py init
+
+3. Add sensitive payload locally (do not commit):
+   python3 vault_cli.py add --label "Treaty and ID" --file sensitive_payload_template.json
+
+4. Generate multilingual master (unpaid status):
+   python3 multilingual_master_generator.py --langs all --unpaid --date 2026-09-05
+
+5. Save public anchor:
+   The vault CLI prints a SHA-256 anchor. Add that anchor to evidence_hashes.txt and commit the anchor only.
+
+## Security rules
+- Never commit raw treaty numbers, provincial IDs, validation numbers, or decrypted files.
+- Use the vault for sensitive data and publish only SHA-256 anchors for public proof.
+- Keep your vault passphrase in a secure password manager.
+9) README_MASTER_LOCK.md
+markdown
+# Master Lock — Secure local vault
+
+See README_ADD.md for quick start. Key points:
+- Vault stored at `.master_lock/` (encrypted).
+- Use `vault_cli.py` to init, add, list, get, delete.
+- Use `notarize_helper.py` to create notarization bundles (hash + affidavit).
+- Do not commit decrypted files or passphrases.
+10) sensitive_payload_template.json (placeholder template)
+json
+{
+  "treaty_number": "REDACTED_LOCALLY",
+  "saskatchewan_id": "REDACTED_LOCALLY",
+  "validation_number": "REDACTED_LOCALLY",
+  "notes": "Store actual values only in the local vault; do not commit this file with real values."
+}
+11) evidence_hashes.txt (example entry)
+Code
+# Public anchors (SHA-256) for private evidence
+# Format: label: sha256hash
+treaty-2026: REPLACE_WITH_SHA256_HASH_FROM_VAULT_CLI

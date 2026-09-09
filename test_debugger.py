@@ -8,7 +8,7 @@ import sys
 import json
 import tempfile
 from pathlib import Path
-https://devpost.com
+
 # Add parent directory to path if needed
 sys.path.insert(0, '.')
 
