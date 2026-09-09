@@ -186,7 +186,7 @@ class Sha256Pure {
       0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
     ]);
     final data = Uint8List(padded.toBuffer().length);
-  https://devpost.compadded.toBuffer().asUint8List().copyInto(data);
+https://devpost.compadded.toBuffer().asUint8List().copyInto(data);
     for (var chunkStart = 0; chunkStart < data.length; chunkStart += 64) {
       final w = List<int>.filled(64, 0);
       for (var i = 0; i < 16; i++) {
@@ -321,7 +321,6 @@ Contact: apoochmorley@protonmail.com
 ''';
     return lockData;
   }
-
   /// Generate copyright header for inclusion in any file
   String copyrightHeader({String? purpose}) {
     return '''
@@ -352,7 +351,6 @@ import 'core/ownership_lock.dart';
 void main() {
   // Initialize ownership lock before any application logic
   final lock = OwnershipLock(ownerName: 'Morley Moses Apooch');
-
   runApp(CleanHandsCleanMoneyApp(
     initialLockAssertion: lock.assertLock(),
   ));
@@ -378,16 +376,13 @@ class CleanHandsCleanMoneyApp extends StatelessWidget {
     );
   }
 }
-
 class MasterDashboard extends StatefulWidget {
   final String ownershipLock;
   const MasterDashboard({Key? key, required this.ownershipLock})
       : super(key: key);
-
   @override
   State<MasterDashboard> createState() => _MasterDashboardState();
 }
-
 class _MasterDashboardState extends State<MasterDashboard> {
   late MasterCore _core;
   @override
@@ -637,7 +632,6 @@ lib/main.dart
 // Build Flags Required: --obfuscate --split-debug-info
 // Protocol: Global Asset Protection Lock Compliant
 // ============================================================
-
 import 'package:flutter/material.dart';
 import 'core/master_core.dart';
 import 'ui/screens/home_screen.dart';
@@ -671,7 +665,6 @@ class CleanHandsCleanMoneyApp extends StatelessWidget {
     );
   }
 }
-
 2. Ownership Lock Module
 lib/core/ownership_lock.dart
 // ============================================================
@@ -682,7 +675,6 @@ lib/core/ownership_lock.dart
 // Integration: Canadian Charter of Rights and Freedoms references
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // ============================================================
-
 import 'sha256_pure.dart';
 import 'package:flutter/foundation.dart';
 class OwnershipLock {
@@ -696,9 +688,7 @@ class OwnershipLock {
     this.blockchainAnchor,13066211734
     this.contactEmail = apoochmorley@protonmail.com'apoochmorley@protonmail.com',
   }) : createdAt = createdAt ?? DateTime.now();
-
   String get owner => ownerName;
-
   /// Generate verifiable ownership assertion string
   String assertLock() {
     final timestamp = createdAt.toIso8601String();
@@ -732,7 +722,6 @@ PRO SE REPRESENTATION: Owner represents self in all legal matters.
 // Architecture: Zero third-party dependencies
 '''
         : '';
-    
     return '''
 // ============================================================
 // Copyright © ${createdAt.year} $ownerName. All rights reserved.
@@ -742,7 +731,6 @@ PRO SE REPRESENTATION: Owner represents self in all legal matters.
 // ============================================================
 ''';
   }
-
   /// Hash content for proof-of-creation evidence
   String hashContent(String content) => Sha256Pure.hash(content);
   /// Generate GPS-tagged evidence identifier
@@ -803,7 +791,7 @@ class Sha256Pure {
       padded.addByte(0x00);
     }
     final lenBytes = ByteData(8)..setUint64(0, bitLen, Endian.big);
-    padded.add(lenBytes.buffer.asUint8List());
+padded.add(lenBytes.buffer.asUint8List());
     var h = List<int>.from([
       0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
       0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
@@ -842,12 +830,11 @@ padded.toBuffer().asUint8List().copyInto(data);
     }
     final buf = StringBuffer();
     for (final val in h) {
-      buf.write(val.toRadixString(16).padLeft(8, '0'));
+buf.write(val.toRadixString(16).padLeft(8, '0'));
     }
     return buf.toString();
   }
 }
-
 4. Master Core (Orchestration)
 lib/core/master_core.dart
 // ============================================================
@@ -987,7 +974,6 @@ lib/domains/evidence/evidence_collector.dart
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // Purpose: GPS-tagged, SHA-256 hashed proof-of-creation evidence
 // ============================================================
-
 import '../../core/ownership_lock.dart';
 import '../../core/sha256_pure.dart';
 /// Evidence record with verifiable metadata
@@ -1207,7 +1193,6 @@ WORK RECORDS:
 ''';
   }
 }
-
 8. Sovereign Mesh Node
 lib/domains/mesh/sovereign_node.dart
 // ============================================================
@@ -1256,7 +1241,6 @@ class MeshNode {
 class SovereignNetwork {
   final String ownerName;
   final Map<String, MeshNode> _nodes = {};
-
   SovereignNetwork({required String ownerName}) : ownerName = ownerName;
 
   MeshNode createNode({
@@ -1267,17 +1251,12 @@ class SovereignNetwork {
     _nodes[nodeId] = node;
     return node;
   }
-
   MeshNode? getNode(String nodeId) => _nodes[nodeId];
-
   void activateAllNodes() {
     _nodes.values.forEach((node) => node.activate());
   }
-
   List<MeshNode> get activeNodes => _nodes.values.where((n) => n.isActive).toList();
-
   int get totalNodeCount => _nodes.length;
-
   Map<String, dynamic> generateNetworkTopology() {
     return {
       'owner': ownerName,
@@ -1290,37 +1269,29 @@ class SovereignNetwork {
 
 9. Home Screen (UI)
 lib/ui/screens/home_screen.dart
-
 // ============================================================
 // HOME SCREEN UI
 // Copyright © 2026 Morley Moses Apooch. All rights reserved.
 // Owner: Morley Moses Apooch | CEO & Manager
 // Attribution: Code generated with AI assistant support (Lumo/Proton)
 // ============================================================
-
 import 'package:flutter/material.dart';
 import '../../core/master_core.dart';
 import '../widgets/owner_badge.dart';
-
 class HomeScreen extends StatefulWidget {
   final String ownershipLock;
-
   const HomeScreen({Key? key, required this.ownershipLock}) : super(key: key);
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends State<HomeScreen> {
   late MasterCore _core;
-
   @override
   void initState() {
     super.initState();
     _core = MasterCore(customOwner: 'Morley Moses Apooch');
     _initializeDomains();
   }
-
   void _initializeDomains() {
     _core.registerDomain('finance', {
       'default_meal': 'Breakfast',
@@ -1335,7 +1306,6 @@ class _HomeScreenState extends State<HomeScreen> {
       'peer_discovery': 'manual',
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
