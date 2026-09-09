@@ -1,0 +1,124 @@
+================================================================================
+                        PROPRIETARY LICENSE AGREEMENT
+================================================================================
+
+  APPLICATION:    Morley Moses Apooch — Personal Resume & CV App
+  OWNER:          Morley Moses Apooch
+  CONTACT:        moapooch121@gmail.com  |  +1 (639) 766-1738
+  DATE:           April 10, 2026
+  DEVELOPED WITH: Claude AI (Anthropic)
+
+================================================================================
+                           COPYRIGHT NOTICE
+================================================================================
+
+  Copyright © 2026 Morley Moses Apooch. All Rights Reserved.
+
+  This software application, including but not limited to its source code,
+  design, layout, branding, content, graphics, and all associated intellectual
+  property, is the sole and exclusive property of MORLEY MOSES APOOCH.
+
+================================================================================
+                        TRADEMARK NOTICE
+================================================================================
+
+  The following are trademarks and brand identifiers of Morley Moses Apooch:
+
+    (TM)  MORLEY MOSES APOOCH
+    (TM)  APOOCH
+    (TM)  "Clean Hands. Clean Money. Fam."
+    (TM)  MMA (as used in this application)
+
+  All marks are pending registration. Unauthorized use is strictly prohibited.
+
+================================================================================
+                    PRE-COPYRIGHT DECLARATION OF MATERIALS
+================================================================================
+
+  All tools, technologies, frameworks, and resources utilized in the
+  development of this application — including but not limited to open-source
+  code libraries, AI-generated content via Claude AI (Anthropic), fonts,
+  design patterns, and development utilities — were FREE, NON-COPYRIGHTED,
+  and NON-LICENSED at the time of use.
+
+  No proprietary, restricted, or licensed third-party intellectual property
+  was incorporated into this work prior to the copyright and license being
+  applied by Morley Moses Apooch.
+
+  All such freely available materials were transformed, arranged, authored,
+  and finalized into this original work by MORLEY MOSES APOOCH, at which
+  point full copyright and proprietary license were applied.
+
+================================================================================
+                    OFFICIAL COPYRIGHT & LICENSE TIMESTAMP
+================================================================================
+
+  This copyright and license were officially applied by Morley Moses Apooch
+  on the following dates and times, hereby placed permanently on record:
+
+    DATE:      April 10, 2026
+    TIME 1:    10:35 AM  —  LICENSE applied
+    TIME 2:    11:00 AM  —  COPYRIGHT confirmed
+    TOOL:      Claude AI by Anthropic
+    METHOD:    AI-assisted application development session
+    OWNER:     Morley Moses Apooch
+
+  From the moment of application at 10:35 AM on April 10, 2026, all content,
+  code, design, branding, and associated intellectual property became the
+  exclusive proprietary property of MORLEY MOSES APOOCH under full copyright
+  protection.
+
+================================================================================
+                         LICENSE TERMS
+================================================================================
+
+  1. PROPRIETARY SOFTWARE
+     This is proprietary software. No license is granted to any third party
+     to use, copy, modify, merge, publish, distribute, sublicense, or sell
+     copies of this software or any portion thereof.
+
+  2. RESTRICTIONS
+     You may NOT:
+     - Copy or reproduce this application or its contents in whole or in part
+     - Distribute or publish this application to any third party
+     - Modify, adapt, or create derivative works based on this app
+     - Reverse engineer or decompile this application
+     - Use the name "Morley Moses Apooch" or marks without permission
+     - Use this application for commercial purposes without written consent
+
+  3. PERMITTED USE
+     Only Morley Moses Apooch or explicitly authorized representatives may
+     access, use, modify, or distribute this application.
+
+  4. INTELLECTUAL PROPERTY
+     All intellectual property rights are and shall remain the exclusive
+     property of Morley Moses Apooch. No rights are transferred to any party.
+
+  5. NO WARRANTY
+     Provided "as is" without warranty. Morley Moses Apooch is not liable
+     for any damages arising from use.
+
+  6. GOVERNING LAW
+     This agreement is governed by applicable intellectual property and
+     copyright law. All rights not expressly granted are reserved.
+
+================================================================================
+                         ON THE RECORD
+================================================================================
+
+  This license is hereby placed on record as of April 10, 2026 at 10:35 AM.
+
+  Owner:              Morley Moses Apooch
+  Email:              moapooch121@gmail.com
+  Phone:              +1 (639) 766-1738
+  Application:        Personal Resume & CV App
+  Copyright Applied:  April 10, 2026 at 10:35 AM and 11:00 AM
+  Developed With:     Claude AI (Anthropic)
+  All Rights:         Reserved from April 10, 2026 at 10:35 AM onward
+
+  "Clean Hands. Clean Money. Fam."
+
+================================================================================
+              (C) 2026 MORLEY MOSES APOOCH - ALL RIGHTS RESERVED
+          COPYRIGHTED APRIL 10, 2026 AT 10:35 AM USING CLAUDE AI
+================================================================================
