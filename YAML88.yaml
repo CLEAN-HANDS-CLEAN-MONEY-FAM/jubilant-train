@@ -1,9 +1,7 @@
 name: Code coverage AI findings
-
 on:
   pull_request:
   - # Trigger configuration
-
 jobs:
   code-coverage-agent:
     runs-on: ubuntu-latest
