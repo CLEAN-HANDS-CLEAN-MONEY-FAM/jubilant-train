@@ -319,13 +319,11 @@ def main():
     parser.add_argument("--use-env", action="store_true", help="Attempt to load sensitive IDs from environment (no printing)")
     parser.add_argument("--use-decrypted-file", metavar="PATH", help="Attempt to load sensitive IDs from decrypted local file (no printing)")
     args = parser.parse_args()
-
     # Attempt secure loads (values are not printed or committed)
     if args.use_env:
         _ = load_sensitive_from_env()
     if args.use_decrypted_file:
         _ = load_sensitive_from_decrypted_file(args.use_decrypted_file)
-
     # Update payment status
     if args.unpaid:
         set_unpaid_status(CORE_RECORD, as_of_date=args.date, note=args.note)
