@@ -1,0 +1,14 @@
+The assets for Morley Moses Apooch (morlzappoch) associated with the jubilant-train project are summarized as follows:
+
+1. Code & Project Structure
+Source Files: The repository structure is defined by the main project tree and specialized components like the .devcontainer configuration.
+Metadata: Project organization is managed via _sidebar (_sidebar) and manifest.json (manifest.json).
+2. User & Session Assets
+Service Worker: A personalized service worker (service-worker-60309ddfc7d00525.js?current_user=morlzappoch&errors_url=https%3A%2F%2Fapi.github.com…) handles background tasks and analytics for the morlzappoch account.
+Profile Data: User-specific interface elements are served through user.json (user.json).
+Visuals: Personal avatars are cached at multiple sizes (40px, 64px, 96px) for the UI.
+3. Operational Assets
+Activity Logs: Real-time tracking of "recently touched branches" (recently-touched-branches) and "latest commits" (latest-commit).
+Deployment: Active upload manifests (commit_upload_manifest_432417095) represent current file transfer operations.
+4. Extensions & Tooling
+Browser Integration: Assets from a PDF-related extension (Adobe Acrobat) are active, including local storage utilities and floating UI components.

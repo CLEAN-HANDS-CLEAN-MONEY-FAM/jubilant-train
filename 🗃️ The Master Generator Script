@@ -1,0 +1,129 @@
+# ============================================================
+# MASTER BUNDLE COMPILATION ENGINE
+# Copyright © 2026 Morley Moses Apooch. All rights reserved.
+# Owner: Morley Moses Apooch | CEO & Manager
+# Architecture: Zero Third-Party Dependencies
+# Protocol: Global Asset Protection Lock Compliant
+# ============================================================
+
+import os
+import json
+import hashlib
+import datetime
+
+# Configuration mapping aligning with the Blue Ocean Market Strategy
+TARGET_EXTENSIONS = ('.dart', '.py', '.json', '.yaml', '.xml', '.md', '.txt')
+EXCLUDE_DIRS = {'.git', 'build', '.dart_tool', 'node_modules', '__pycache__'}
+
+def compute_sha256_of_data(data: bytes) -> str:
+    """Computes pure FIPS 180-4 compliant SHA-256 hex digest of raw data."""
+    return hashlib.sha256(data).hexdigest()
+
+def generate_master_bundle():
+    print("=============================================================")
+    print("STARTING GLOBAL ASSET PROTECTION LOCK MASTER BUNDLING WORKFLOW")
+    print("=============================================================")
+    
+    timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    bundle_manifest = {
+        "master_metadata": {
+            "owner": "Morley Moses Apooch",
+            "role": "CEO & Manager",
+            "contact": "apoochmorley@protonmail.com",
+            "compiled_at_utc": timestamp,
+            "legal_framework": [
+                "Berne Convention for Copyright Protection",
+                "Copyright Act of Canada",
+                "Canadian Charter of Rights and Freedoms",
+                "Yellow Quill First Nations Voter List Status Recognized"
+            ],
+            "wipo_tracking": {
+                "active_case_id": "CAS-2026000305653",
+                "status": "Escalated to Department - Review Pending"
+            }
+        },
+        "file_system_inventory": []
+    }
+    
+    project_root = os.path.dirname(os.path.abspath(__file__))
+    all_compiled_hashes = []
+
+    # Crawling local file modules independently to avoid coupling
+    for root, dirs, files in os.walk(project_root):
+        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
+        
+        for file in files:
+            if file.endswith(TARGET_EXTENSIONS) and file != 'master_bundle.json' and file != 'build_master_file.py':
+                full_path = os.path.join(root, file)
+                relative_path = os.path.relpath(full_path, project_root)
+                
+                try:
+                    with open(full_path, 'rb') as f:
+                        raw_content = f.read()
+                    
+                    file_sha256 = compute_sha256_of_data(raw_content)
+                    all_compiled_hashes.append(file_sha256)
+                    
+                    # Read text string representation safely
+                    text_content = raw_content.decode('utf-8', errors='replace')
+                    
+                    file_record = {
+                        "relative_path": relative_path.replace(os.sep, '/'),
+                        "size_bytes": len(raw_content),
+                        "sha256_hash": file_sha256,
+                        "raw_source_content": text_content
+                    }
+                    
+                    bundle_manifest["file_system_inventory"].append(file_record)
+                    print(f"🔒 Safely locked and hashed artifact: {relative_path}")
+                    
+                except Exception as e:
+                    print(f"⚠️ Warning: Could not process {relative_path}. Error: {str(e)}")
+
+    # Computing structural chained manifest digest over all accumulated assets
+    all_compiled_hashes.sort()
+    chained_data = "".join(all_compiled_hashes).encode('utf-8')
+    master_integrity_hash = compute_sha256_of_data(chained_data)
+    
+    bundle_manifest["master_metadata"]["master_integrity_hash"] = master_integrity_hash
+    
+    output_bundle_path = os.path.join(project_root, 'master_bundle.json')
+    with open(output_bundle_path, 'w', encoding='utf-8') as out_f:
+        json.dump(bundle_manifest, out_f, indent=2, ensure_ascii=False)
+        
+    print("=============================================================")
+    print("MASTER COMPILATION FILE GENERATION COMPLETION VERIFIED")
+    print(f"Target Output Path: {output_bundle_path}")
+    print(f"Master Structural Integrity Hash: {master_integrity_hash}")
+    print("=============================================================")
+
+if __name__ == "__main__":
+    generate_master_bundle()
+{
+  "master_metadata": {
+    "owner": "Morley Moses Apooch",
+    "role": "CEO & Manager",
+    "contact": "apoochmorley@protonmail.com",
+    "compiled_at_utc": "2026-09-04T22:44:00Z",
+    "legal_framework": [
+      "Berne Convention for Copyright Protection",
+      "Copyright Act of Canada",
+      "Canadian Charter of Rights and Freedoms",
+      "Yellow Quill First Nations Voter List Status Recognized"
+    ],
+    "wipo_tracking": {
+      "active_case_id": "CAS-2026000305653",
+      "status": "Escalated to Department - Review Pending"
+    },
+    "master_integrity_hash": "d3ae45b768c9213f..." 
+  },
+  "file_system_inventory": [
+    {
+      "relative_path": "lib/core/ownership_lock.dart",
+      "size_bytes": 1845,
+      "sha256_hash": "7a8b9c2d...",
+      "raw_source_content": "// Core Asset Lock Logic..."
+    }
+  ]
+}
+python3 build_master_file.py

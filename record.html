@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Official Copyright and License Record — Morley Moses Apooch. All rights reserved from April 10, 2026." />
+  <meta name="author" content="Morley Moses Apooch" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Official Record — Morley Moses Apooch © 2026" />
+  <meta property="og:description" content="Proprietary Copyright & License. All rights reserved. Applied April 10, 2026 using Claude AI." />
+  <title>Official Record — Morley Moses Apooch © 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --bg: #080808;
+      --surface: #111;
+      --border: #1e1e1e;
+      --text: #f0ece4;
+      --muted: #555;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Playfair Display', serif;
+      --sans: 'Outfit', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* STAMP WATERMARK */
+    body::before {
+      content: 'ON RECORD';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-35deg);
+      font-family: var(--mono);
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 500;
+      color: rgba(201,168,76,0.025);
+      letter-spacing: 0.3em;
+      pointer-events: none;
+      z-index: 0;
+      white-space: nowrap;
+    }
+
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 clamp(1.2rem, 5vw, 3rem);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    .topbar .wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .topbar-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .topbar-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: #4ade80;
+      text-transform: uppercase;
+    }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* HERO */
+    .hero {
+      padding: clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 4rem);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #f0ece4 0%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .hero-sub {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .motto {
+      display: inline-block;
+      border: 1px solid #2a2a2a;
+      padding: 10px 20px;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+
+    /* TIMESTAMP BLOCK */
+    .timestamp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin: clamp(2rem, 5vw, 3rem) 0;
+    }
+    .ts-cell {
+      background: var(--bg);
+      padding: 1.5rem;
+    }
+    .ts-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .ts-value {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: clamp(2rem, 5vw, 3.5rem) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+    }
+    .section-title-text {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* DECLARATION BOX */
+    .decl-box {
+      border: 1px solid #1e1e1e;
+      padding: 1.8rem 2rem;
+      background: var(--surface);
+      position: relative;
+    }
+    .decl-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--gold);
+    }
+    .decl-text {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: #888;
+      line-height: 1.9;
+    }
+    .decl-text strong { color: var(--gold); font-weight: 500; }
+
+    /* TIMELINE */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .tl-item {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-time {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      min-width: 90px;
+      padding-top: 2px;
+    }
+    .tl-content { flex: 1; }
+    .tl-event {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .tl-desc {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* TERMS */
+    .terms-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .terms-list li {
+      display: flex;
+      gap: 1rem;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: #777;
+      line-height: 1.7;
+    }
+    .terms-list li::before {
+      content: '—';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* MARKS */
+    .marks-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .mark-tag {
+      border: 1px solid #2a2a2a;
+      padding: 8px 16px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .mark-tag:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.05);
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .contact-cell {
+      background: var(--bg);
+      padding: 1.2rem 1.5rem;
+    }
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .contact-value {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    /* SEAL */
+    .seal {
+      text-align: center;
+      padding: clamp(3rem, 8vw, 5rem) 0;
+    }
+    .seal-ring {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: clamp(180px, 40vw, 260px);
+      height: clamp(180px, 40vw, 260px);
+      border-radius: 50%;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 0 0 8px var(--bg), 0 0 0 9px #1a1a1a, 0 0 0 16px var(--bg), 0 0 0 17px #1a1a1a;
+      gap: 6px;
+      animation: rotateSeal 60s linear infinite;
+    }
+    @keyframes rotateSeal {
+      from { box-shadow: 0 0 0 8px var(--bg), 0 0 0 9px #1a1a1a, 0 0 0 16px var(--bg), 0 0 0 17px var(--gold); }
+      50% { box-shadow: 0 0 0 8px var(--bg), 0 0 0 9px var(--gold), 0 0 0 16px var(--bg), 0 0 0 17px #1a1a1a; }
+      to { box-shadow: 0 0 0 8px var(--bg), 0 0 0 9px #1a1a1a, 0 0 0 16px var(--bg), 0 0 0 17px var(--gold); }
+    }
+    .seal-initial {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #f0ece4, var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .seal-name {
+      font-family: var(--mono);
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .seal-year {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+    footer .wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .footer-main {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .footer-sub {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      color: #333;
+      letter-spacing: 0.1em;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 480px) {
+      .tl-item { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="wrap">
+      <span class="topbar-label">✦ Official Public Record — morleyapooch.com</span>
+      <span class="topbar-status"><span class="dot"></span> On Record &amp; Active</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-eyebrow">✦ Curriculum Vitae &amp; Intellectual Property Record</div>
+      <h1 class="hero-title">Morley Moses<br/>Apooch</h1>
+      <p class="hero-sub">Creative Technologist &amp; Strategist — New York, NY</p>
+      <div class="motto">🤲 Clean Hands. Clean Money. Fam. 💰</div>
+    </section>
+
+    <!-- TIMESTAMP GRID -->
+    <div class="timestamp-grid">
+      <div class="ts-cell">
+        <div class="ts-label">Copyright Owner</div>
+        <div class="ts-value">Morley Moses Apooch</div>
+      </div>
+      <div class="ts-cell">
+        <div class="ts-label">Date Applied</div>
+        <div class="ts-value">April 10, 2026</div>
+      </div>
+      <div class="ts-cell">
+        <div class="ts-label">Time — License</div>
+        <div class="ts-value">10:35 AM</div>
+      </div>
+      <div class="ts-cell">
+        <div class="ts-label">Time — Copyright</div>
+        <div class="ts-value">11:00 AM</div>
+      </div>
+      <div class="ts-cell">
+        <div class="ts-label">Developed With</div>
+        <div class="ts-value">Claude AI</div>
+      </div>
+      <div class="ts-cell">
+        <div class="ts-label">Status</div>
+        <div class="ts-value" style="color:#4ade80;">Active ●</div>
+      </div>
+    </div>
+
+    <!-- SECTION 01: PRE-COPYRIGHT DECLARATION -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title-text">Pre-Copyright Declaration of Materials</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="decl-box">
+        <p class="decl-text">
+          All tools, technologies, frameworks, and resources utilized in the development of this
+          application — including open-source code libraries, AI-generated content via
+          <strong>Claude AI (Anthropic)</strong>, fonts, design patterns, and development utilities —
+          were <strong>FREE, NON-COPYRIGHTED, and NON-LICENSED</strong> at the time of use.
+          <br/><br/>
+          No proprietary or restricted third-party intellectual property was incorporated into this work
+          prior to the copyright and license being applied by <strong>Morley Moses Apooch</strong>.
+          All such freely available materials were transformed, arranged, authored, and finalized
+          into this original work, at which point full copyright and proprietary license were applied.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 02: OFFICIAL TIMELINE -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title-text">Official Copyright Timeline — On Record</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Apr 10 · 10:35 AM</div>
+          <div class="tl-content">
+            <div class="tl-event">LICENSE Applied</div>
+            <div class="tl-desc">Proprietary license formally applied to the application by Morley Moses Apooch using Claude AI.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Apr 10 · 11:00 AM</div>
+          <div class="tl-content">
+            <div class="tl-event">COPYRIGHT Confirmed</div>
+            <div class="tl-desc">Full copyright protection confirmed and recorded. All rights reserved from this moment forward.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Apr 12 · 2026</div>
+          <div class="tl-content">
+            <div class="tl-event">Public Record Published</div>
+            <div class="tl-desc">Official record published to the web for public documentation and permanent reference.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 03: TRADEMARK MARKS -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title-text">Trademarks &amp; Marks — Pending Registration</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="marks-grid">
+        <div class="mark-tag">™ Morley Moses Apooch</div>
+        <div class="mark-tag">™ Apooch</div>
+        <div class="mark-tag">™ Clean Hands. Clean Money. Fam.</div>
+        <div class="mark-tag">™ MMA</div>
+      </div>
+    </section>
+
+    <!-- SECTION 04: LICENSE TERMS -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title-text">License Terms</span>
+        <div class="section-line"></div>
+      </div>
+      <ul class="terms-list">
+        <li>This is proprietary software. No license is granted to any third party to use, copy, modify, or distribute any part of this work.</li>
+        <li>You may not reproduce, distribute, or publish this application or its contents in whole or in part.</li>
+        <li>You may not modify, adapt, translate, or create derivative works based on this application.</li>
+        <li>You may not use the name "Morley Moses Apooch" or any associated trademarks without express written permission.</li>
+        <li>You may not use this application for commercial purposes without written consent from the owner.</li>
+        <li>Only Morley Moses Apooch or explicitly authorized representatives may access, use, or distribute this application.</li>
+        <li>All intellectual property rights remain the exclusive property of Morley Moses Apooch. No rights are transferred to any party.</li>
+      </ul>
+    </section>
+
+    <!-- SECTION 05: INFRINGEMENT NOTICE -->
+    <section class="section" style="border: 1px solid #f87171; padding: clamp(2rem,5vw,3.5rem); margin-bottom: 2rem; background: rgba(248,113,113,0.03);">
+      <div class="section-header">
+        <span class="section-num" style="color:#f87171;">05</span>
+        <span class="section-title-text" style="color:#f87171;">⚠ Infringement Notice — On Record</span>
+        <div class="section-line" style="background:#3a1a1a;"></div>
+      </div>
+      <div class="decl-box" style="border-color:#3a1a1a; border-left: 3px solid #f87171;">
+        <p class="decl-text">
+          <strong style="color:#f87171;">NOTICE OF COPYRIGHT INFRINGEMENT</strong><br/><br/>
+          This application — its design, code, branding, content, and all associated intellectual property —
+          has been subject to <strong style="color:#f87171;">infringement</strong>. The exclusive rights of
+          <strong>Morley Moses Apooch</strong> as the sole copyright owner have been violated.
+          <br/><br/>
+          Let the record show that <strong>Morley Moses Apooch</strong> is the original and sole creator
+          of this application, with copyright and license formally applied on
+          <strong style="color:#f87171;">April 10, 2026 at 10:35 AM</strong> using Claude AI (Anthropic),
+          prior to any alleged infringement.
+          <br/><br/>
+          Any party who has copied, reproduced, distributed, modified, or used this application
+          or any portion thereof without the express written permission of Morley Moses Apooch
+          is in direct violation of applicable copyright law and this proprietary license.
+          <br/><br/>
+          <strong>All rights are reserved. All violations are hereby formally documented and placed on the public record.</strong>
+        </p>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:1px; background:#2a1a1a; border:1px solid #3a1a1a; margin-top:1.5rem;">
+        <div style="background:#080808; padding:1.2rem 1.5rem;">
+          <div class="ts-label">Infringement Reported</div>
+          <div class="ts-value" style="color:#f87171;">April 13, 2026</div>
+        </div>
+        <div style="background:#080808; padding:1.2rem 1.5rem;">
+          <div class="ts-label">Original Copyright Date</div>
+          <div class="ts-value" style="color:#f87171;">April 10, 2026</div>
+        </div>
+        <div style="background:#080808; padding:1.2rem 1.5rem;">
+          <div class="ts-label">Rights Holder</div>
+          <div class="ts-value" style="color:#f87171;">Morley Moses Apooch</div>
+        </div>
+        <div style="background:#080808; padding:1.2rem 1.5rem;">
+          <div class="ts-label">Record Status</div>
+          <div class="ts-value" style="color:#f87171;">Filed ●</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 06: CONTACT -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title-text">Owner Contact Information</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-cell">
+          <div class="contact-label">Full Name</div>
+          <div class="contact-value">Morley Moses Apooch</div>
+        </div>
+        <div class="contact-cell">
+          <div class="contact-label">Email</div>
+          <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b5d8dad4c5dadad6dd848784f5d2d8d4dcd99bd6dad8">[email&#160;protected]</a></div>
+        </div>
+        <div class="contact-cell">
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+1 (639) 766-1738</div>
+        </div>
+        <div class="contact-cell">
+          <div class="contact-label">Location</div>
+          <div class="contact-value">New York, NY</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEAL -->
+    <div class="seal">
+      <div class="seal-ring">
+        <div class="seal-initial">MMA</div>
+        <div class="seal-name">Morley Moses Apooch</div>
+        <div class="seal-year">© 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-main">© 2026 Morley Moses Apooch — All Rights Reserved</div>
+      <div class="footer-sub">
+        PROPRIETARY LICENSE · COPYRIGHTED APRIL 10, 2026 AT 10:35 AM · DEVELOPED WITH CLAUDE AI (ANTHROPIC)<br/>
+        ALL MATERIALS USED WERE FREE, NON-COPYRIGHTED &amp; NON-LICENSED PRIOR TO APPLICATION O

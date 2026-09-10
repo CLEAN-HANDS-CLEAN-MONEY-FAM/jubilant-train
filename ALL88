@@ -1,0 +1,372 @@
+#!/usr/bin/env python3
+# © 2026 Morley Moses Apooch. All rights reserved.
+# CLEAN HANDS CLEAN MONEY FAM
+# Multilingual Master Record Generator with Payment Status
+# Languages: English (en), Russian (ru), Chinese Simplified (zh)
+# This script intentionally does NOT include raw sensitive identifiers.
+# Store treaty/ID/validation numbers securely (env vars or encrypted local file).
+
+from datetime import date
+import json
+import os
+from pathlib import Path
+import argparse
+import sys
+
+TODAY = date.today().isoformat()
+
+# -------------------------
+# Multilingual templates (English, Russian, Chinese Simplified)
+# -------------------------
+TEMPLATES = {
+    "en": {
+        "title": "COPYRIGHT MASTER FILE",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Signed: MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "Legal Name",
+            "signature_name": "Signature Name",
+            "aliases": "Aliases",
+            "location": "Location",
+            "role": "Role",
+            "legal_representation": "Legal Representation",
+            "company_management": "Company Management",
+            "financial_status": "Financial Status"
+        },
+        "ai_development_heading": "April 7th, 2026 — Solo Claude Development",
+        "sensitive_heading": "Sensitive Identifiers (redacted)",
+        "licensing_heading": "Licensing",
+        "signed_declaration": (
+            "I, MORLEYMOSESAPOOCH*, declare that all works, code, assets, and "
+            "AI-directed outputs referenced in this master file are authored, "
+            "directed, and owned by me. I further declare that as of {date}, I have not "
+            "received any financial compensation for any of my development work. I represent "
+            "myself in all legal matters and manage my company CLEAN HANDS CLEAN MONEY FAM. "
+            "This record is anchored to GitHub Actions runs {runs}. "
+            "Note: GitHub currently prevents display of my personal photo in the repository UI; "
+            "the photo remains part of my evidence bundle but is not shown on GitHub."
+        )
+    },
+
+    "ru": {
+        "title": "МАСТЕР‑ЗАПИСЬ АВТОРСКИХ ПРАВ",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "Подписано: MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "Юридическое имя",
+            "signature_name": "Имя подписи",
+            "aliases": "Псевдонимы",
+            "location": "Местоположение",
+            "role": "Роль",
+            "legal_representation": "Юридическое представление",
+            "company_management": "Управление компанией",
+            "financial_status": "Финансовый статус"
+        },
+        "ai_development_heading": "7 апреля 2026 — Соло разработка с Claude",
+        "sensitive_heading": "Чувствительные идентификаторы (редактировано)",
+        "licensing_heading": "Лицензирование",
+        "signed_declaration": (
+            "Я, MORLEYMOSESAPOOCH*, заявляю, что все работы, код, материалы и результаты, "
+            "созданные с использованием AI, перечисленные в этом документе, являются моими. "
+            "По состоянию на {date} я не получал финансовой компенсации за указанную разработку. "
+            "Я представляю себя в юридических вопросах и управляю компанией CLEAN HANDS CLEAN MONEY FAM. "
+            "Запись привязана к GitHub Actions runs {runs}. "
+            "Примечание: GitHub не позволяет отображать мою личную фотографию в UI репозитория; "
+            "фото хранится в доказательной базе, но не показано на GitHub."
+        )
+    },
+
+    "zh": {
+        "title": "版权主记录",
+        "subtitle": "Morley Moses Apooch — CLEAN HANDS CLEAN MONEY FAM",
+        "signed": "签署：MORLEYMOSESAPOOCH* — {date}",
+        "rights_holder": {
+            "legal_name": "法定姓名",
+            "signature_name": "签名名称",
+            "aliases": "别名",
+            "location": "所在地",
+            "role": "角色",
+            "legal_representation": "法律代表",
+            "company_management": "公司管理",
+            "financial_status": "财务状况"
+        },
+        "ai_development_heading": "2026年4月7日 — 单人 Claude 开发记录",
+        "sensitive_heading": "敏感标识（已编辑）",
+        "licensing_heading": "许可",
+        "signed_declaration": (
+            "我，MORLEYMOSESAPOOCH*，声明本主记录中列示的所有作品、代码、资产和由 AI 协助生成的输出均由我创作、指导并归我所有。"
+            "截至 {date}，我尚未就任何开发工作获得任何经济补偿。我在所有法律事务中代表自己，并管理我的公司 CLEAN HANDS CLEAN MONEY FAM。"
+            "本记录锚定于 GitHub Actions 运行 {runs}。"
+            "注意：GitHub 当前阻止在仓库界面显示我的个人照片；照片仍作为证据保留，但不在 GitHub 上显示。"
+        )
+    }
+}
+
+# -------------------------
+# Core structured record (language-neutral fields)
+# -------------------------
+CORE_RECORD = {
+    "rights_holder": {
+        "legal_name": "Morley Moses Apooch",
+        "signature_name": "MORLEYMOSESAPOOCH*",
+        "aliases": ["CLEAN-HANDS-CLEAN-MONEY-FAM"],
+        "location": "Yorkton, Saskatchewan, Canada",
+        "role": "Solo developer, architect, AI-directed creator",
+        "legal_representation": "Represents self in all legal matters",
+        "company_management": "Sole manager and operator of CLEAN HANDS CLEAN MONEY FAM",
+        "date_signed": "2026-09-05",
+        "financial_status": "No compensation received for any development work as of 2026-09-05"
+    },
+    "repositories": {
+        "primary_repo": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train",
+        "branch_anchor": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/tree/3-morley-moses-apooch",
+        "compare_url": "https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train/compare/morlzappoch-patch-5...morlzappoch-patch-7?quick_pull=1",
+        "github_actions_runs": ["33975584137", "33978583430"],
+        "note_photo_visibility": "GitHub currently prevents display of the author's personal photo in the repository UI; the photo is part of the evidence bundle but not shown on GitHub.",
+        "external_evidence_links": []
+    },
+    "ai_development": {
+        "april_7_2026": {
+            "solo_development": True,
+            "ai_tools_used": ["Claude", "Copilot"],
+            "authorship_status": "Full human authorship",
+            "statement": "On April 7th, 2026, all development work was performed by Morley Moses Apooch with AI systems acting solely as tools under Morley's creative direction.",
+            "approx_time_window_local": "Approximately 10:30 AM to 11:30 AM (local time) on April 7, 2026"
+        }
+    },
+    "sensitive_identifiers": {
+        "treaty_number_present": True,
+        "saskatchewan_id_present": True,
+        "validation_number_present": True,
+        "note": "Sensitive identifiers exist and are stored securely by the rights holder. They are not published in this repository. Treaty information may be verified via Indigenous Services Canada."
+    },
+    "licensing": {
+        "default_license": "Proprietary unless otherwise stated",
+        "attribution_required": True,
+        "prohibited_uses": [
+            "Unauthorized commercial redistribution",
+            "Removal of attribution",
+            "Misrepresentation of authorship"
+        ]
+    },
+    "payment_status": {
+        # default placeholder; will be set by CLI or function
+        "status": None,
+        "as_of_date": None,
+        "note": None
+    },
+    "record_generated_on": TODAY
+}
+
+# -------------------------
+# Secure loaders (do NOT print or commit sensitive values)
+# -------------------------
+def load_sensitive_from_env():
+    treaty = os.getenv("MORLEY_TREATY_NUMBER")
+    sask = os.getenv("MORLEY_SASK_ID")
+    val = os.getenv("MORLEY_VALIDATION_NUMBER")
+    if not any([treaty, sask, val]):
+        return None
+    return {"treaty_number": treaty, "saskatchewan_id": sask, "validation_number": val}
+
+def load_sensitive_from_decrypted_file(path: str = "sensitive_ids.json"):
+    p = Path(path)
+    if not p.exists():
+        return None
+    try:
+        with p.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        return {
+            "treaty_number": data.get("treaty_number"),
+            "saskatchewan_id": data.get("saskatchewan_id"),
+            "validation_number": data.get("validation_number")
+        }
+    except Exception:
+        return None
+
+# -------------------------
+# Payment status helpers
+# -------------------------
+def set_unpaid_status(record: dict, as_of_date: str = None, note: str = None):
+    if as_of_date is None:
+        as_of_date = date.today().isoformat()
+    record["payment_status"] = {
+        "status": "No compensation received",
+        "as_of_date": as_of_date,
+        "note": note or "Declared by rights holder."
+    }
+    record["record_generated_on"] = date.today().isoformat()
+    return record
+
+def set_paid_status(record: dict, as_of_date: str = None, amount: str = None, note: str = None):
+    if as_of_date is None:
+        as_of_date = date.today().isoformat()
+    record["payment_status"] = {
+        "status": "Compensation received",
+        "as_of_date": as_of_date,
+        "amount": amount,
+        "note": note or ""
+    }
+    record["record_generated_on"] = date.today().isoformat()
+    return record
+
+# -------------------------
+# Generation helpers
+# -------------------------
+def build_language_record(lang: str):
+    tpl = TEMPLATES.get(lang)
+    if not tpl:
+        raise ValueError("Unsupported language")
+    rec = {
+        "meta": {
+            "language": lang,
+            "generated_on": CORE_RECORD["record_generated_on"]
+        },
+        "content": {
+            "title": tpl["title"],
+            "subtitle": tpl["subtitle"],
+            "signed": tpl["signed"].format(date=CORE_RECORD["record_generated_on"])
+        },
+        "rights_holder": CORE_RECORD["rights_holder"],
+        "repositories": CORE_RECORD["repositories"],
+        "ai_development": CORE_RECORD["ai_development"],
+        "sensitive_identifiers": CORE_RECORD["sensitive_identifiers"],
+        "licensing": CORE_RECORD["licensing"],
+        "payment_status": CORE_RECORD["payment_status"],
+        "signed_declaration": tpl["signed_declaration"].format(
+            date=CORE_RECORD["record_generated_on"],
+            runs=", ".join(CORE_RECORD["repositories"]["github_actions_runs"])
+        )
+    }
+    return rec
+
+def export_json(record: dict, path: str):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(record, f, indent=4, ensure_ascii=False)
+    return path
+
+def export_markdown_lang(lang: str, path: str):
+    tpl = TEMPLATES[lang]
+    rh = CORE_RECORD["rights_holder"]
+    repo = CORE_RECORD["repositories"]
+    ai = CORE_RECORD["ai_development"]["april_7_2026"]
+    lic = CORE_RECORD["licensing"]
+    sensitive = CORE_RECORD["sensitive_identifiers"]
+    payment = CORE_RECORD["payment_status"]
+    md_lines = []
+    md_lines.append(f"# {tpl['title']}")
+    md_lines.append(f"### {tpl['subtitle']}")
+    md_lines.append("")
+    md_lines.append(tpl["signed"].format(date=CORE_RECORD["record_generated_on"]))
+    md_lines.append("")
+    md_lines.append("## Rights Holder Information")
+    md_lines.append(f"- **{tpl['rights_holder'].get('legal_name','Legal Name')}:** {rh['legal_name']}")
+    md_lines.append(f"- **{tpl['rights_holder'].get('signature_name','Signature Name')}:** {rh['signature_name']}")
+    md_lines.append(f"- **{tpl['rights_holder'].get('aliases','Aliases')}:** {', '.join(rh['aliases'])}")
+    md_lines.append(f"- **{tpl['rights_holder'].get('location','Location')}:** {rh['location']}")
+    md_lines.append(f"- **{tpl['rights_holder'].get('role','Role')}:** {rh['role']}")
+    md_lines.append(f"- **{tpl['rights_holder'].get('legal_representation','Legal Representation')}:** {rh['legal_representation']}")
+    md_lines.append(f"- **{tpl['rights_holder'].get('company_management','Company Management')}:** {rh['company_management']}")
+    md_lines.append(f"- **{tpl['rights_holder'].get('financial_status','Financial Status')}:** {rh['financial_status']}")
+    md_lines.append("")
+    md_lines.append("## Repository Anchors")
+    md_lines.append(f"- **Primary Repo:** {repo['primary_repo']}")
+    md_lines.append(f"- **Branch Anchor:** {repo['branch_anchor']}")
+    md_lines.append(f"- **Compare URL:** {repo['compare_url']}")
+    md_lines.append(f"- **GitHub Actions Runs:** {', '.join(repo['github_actions_runs'])}")
+    if repo.get("external_evidence_links"):
+        for link in repo["external_evidence_links"]:
+            md_lines.append(f"- **External Evidence:** {link}")
+    md_lines.append(f"- **Photo Visibility Note:** {repo['note_photo_visibility']}")
+    md_lines.append("")
+    md_lines.append(f"## {tpl['ai_development_heading']}")
+    md_lines.append(f"- **Solo Development:** {ai['solo_development']}")
+    md_lines.append(f"- **AI Tools Used:** {', '.join(ai['ai_tools_used'])}")
+    md_lines.append(f"- **Authorship Status:** {ai['authorship_status']}")
+    md_lines.append(f"- **Statement:** {ai['statement']}")
+    md_lines.append(f"- **Approximate Local Time Window:** {ai['approx_time_window_local']}")
+    md_lines.append("")
+    md_lines.append(f"## {tpl['sensitive_heading']}")
+    md_lines.append(f"- Treaty Number Present: {sensitive['treaty_number_present']}")
+    md_lines.append(f"- Saskatchewan ID Present: {sensitive['saskatchewan_id_present']}")
+    md_lines.append(f"- Validation Number Present: {sensitive['validation_number_present']}")
+    md_lines.append(f"- Note: {sensitive['note']}")
+    md_lines.append("")
+    md_lines.append(f"## {tpl['licensing_heading']}")
+    md_lines.append(f"- Default License: {lic['default_license']}")
+    md_lines.append(f"- Attribution Required: {lic['attribution_required']}")
+    md_lines.append(f"- Prohibited Uses: {', '.join(lic['prohibited_uses'])}")
+    md_lines.append("")
+    md_lines.append("## Payment Status")
+    md_lines.append(f"- **Status:** {payment.get('status', 'Not specified')}")
+    md_lines.append(f"- **As of date:** {payment.get('as_of_date', 'Not specified')}")
+    if payment.get("note"):
+        md_lines.append(f"- **Note:** {payment.get('note')}")
+    md_lines.append("")
+    md_lines.append("## Signed Declaration")
+    md_lines.append("")
+    md_lines.append(tpl["signed_declaration"].format(
+        date=CORE_RECORD["record_generated_on"],
+        runs=", ".join(repo["github_actions_runs"])
+    ))
+    md_text = "\n".join(md_lines)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(md_text)
+    return path
+
+# -------------------------
+# CLI
+# -------------------------
+def main():
+    parser = argparse.ArgumentParser(description="Generate multilingual master record with payment status (en/ru/zh)")
+    parser.add_argument("--langs", nargs="+", choices=["en", "ru", "zh", "all"], default=["all"], help="Languages to generate")
+    parser.add_argument("--json-dir", default="multilingual_json", help="Directory to write JSON files")
+    parser.add_argument("--md-dir", default="multilingual_md", help="Directory to write Markdown files")
+    parser.add_argument("--unpaid", action="store_true", help="Set payment status to unpaid as of today (or --date)")
+    parser.add_argument("--paid", action="store_true", help="Set payment status to paid as of today (or --date)")
+    parser.add_argument("--date", metavar="YYYY-MM-DD", help="Date for the payment status (default: today)")
+    parser.add_argument("--note", metavar="TEXT", help="Optional note to include with payment status")
+    parser.add_argument("--amount", metavar="AMOUNT", help="Amount received (for --paid)")
+    parser.add_argument("--use-env", action="store_true", help="Attempt to load sensitive IDs from environment (no printing)")
+    parser.add_argument("--use-decrypted-file", metavar="PATH", help="Attempt to load sensitive IDs from decrypted local file (no printing)")
+    args = parser.parse_args()
+
+    # Attempt secure loads (values are not printed or committed)
+    if args.use_env:
+        _ = load_sensitive_from_env()
+    if args.use_decrypted_file:
+        _ = load_sensitive_from_decrypted_file(args.use_decrypted_file)
+
+    # Update payment status
+    if args.unpaid:
+        set_unpaid_status(CORE_RECORD, as_of_date=args.date, note=args.note)
+    elif args.paid:
+        set_paid_status(CORE_RECORD, as_of_date=args.date, amount=args.amount, note=args.note)
+    else:
+        # default: set unpaid as of today
+        set_unpaid_status(CORE_RECORD, as_of_date=args.date, note=args.note)
+
+    langs = ["en", "ru", "zh"] if "all" in args.langs else args.langs
+
+    json_dir = Path(args.json_dir)
+    md_dir = Path(args.md_dir)
+    json_dir.mkdir(parents=True, exist_ok=True)
+    md_dir.mkdir(parents=True, exist_ok=True)
+
+    for lang in langs:
+        rec = build_language_record(lang)
+        json_path = json_dir / f"copyright_master_{lang}.json"
+        md_path = md_dir / f"COPYRIGHT_MASTER_{lang}.md"
+        export_json(rec, str(json_path))
+        export_markdown_lang(lang, str(md_path))
+        print(f"Generated: {json_path}  {md_path}")
+
+    # Combined multilingual bundle
+    bundle = {lang: build_language_record(lang) for lang in langs}
+    bundle_path = json_dir / "copyright_master_multilingual_bundle.json"
+    export_json(bundle, str(bundle_path))
+    print(f"Generated multilingual bundle: {bundle_path}")
+
+if __name__ == "__main__":
+    main()
+

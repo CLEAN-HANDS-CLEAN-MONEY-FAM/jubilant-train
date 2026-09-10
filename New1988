@@ -1,0 +1,125 @@
+# ==============================================================================
+# LEGAL NOTICE & OFFICIAL RECORD DECLARATION
+# 
+# Debugger - Security Anomaly Detection System
+# Copyright (c) 2026 Morley Moses Apooch. All Rights Reserved.
+#
+# AUTHOR / DEVELOPER: Morley Moses Apooch
+# RESIDENCE: 139 Dominion Avenue / Bruno's Shelter, Yorkton, Saskatchewan
+# PRIMARY CONTACT: 1-306-621-1734 (SaskTel) | apoochmorley@protonmail.com
+# REPOSITORIES: 
+#   - https://github.com/moapooch121-droid/Debugger-
+#   - https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train
+#
+# DECLARATION OF RIGHTS:
+# 1. Morley Moses Apooch holds sole authority and copyright over all code, 
+#    schematics, and architectural designs for this software.
+# 2. No authorization, power of attorney, or management rights have been 
+#    granted to any third party, individual, or external entity over any funds, 
+#    assets, or intellectual property for the past 20 years.
+# 3. Status: Single (separated over one year; never legally married).
+# 4. LAW ENFORCEMENT NOTICE: This repository is configured with strict READ-ONLY 
+#    inspection privileges for authorized law enforcement agents. No write, 
+#    modification, or administrative control rights are transferred.
+# ==============================================================================
+import hashlib
+import hmac
+from datetime import datetime
+class MasterLockAccessControl:
+    """
+    Master Lock Security System: Requires verified passkey authentication 
+    to execute core system routines and prevents unauthorized code modification.
+    """
+    def __init__(self, master_passkey: str):
+        self.owner = "Morley Moses Apooch"
+        self._lock_hash = hashlib.sha256(master_passkey.encode('utf-8')).hexdigest()
+        self.is_unlocked = False
+    def verify_owner_key(self, provided_key: str) -> bool:
+        """Verifies owner passkey using constant-time comparison."""
+        attempt_hash = hashlib.sha256(provided_key.encode('utf-8')).hexdigest()
+        if hmac.compare_digest(self._lock_hash, attempt_hash):
+            self.is_unlocked = True
+            return True
+        self.is_unlocked = False
+        return False
+class LawEnforcementReadOnlyPortal:
+    """
+    Read-Only Inspection Module: Grants verified law enforcement agents 
+    view-only privileges to audit trail logs without operational write access.
+    """
+    def __init__(self, agent_badge_id: str, law_enforcement_key: str):
+        self.owner = "Morley Moses Apooch"
+        self.agent_badge_id = agent_badge_id
+        self._access_hash = hashlib.sha256(law_enforcement_key.encode('utf-8')).hexdigest()
+    def authenticate_agent(self, provided_key: str) -> bool:
+        """Verifies agent credentials for read-only log access."""
+        attempt_hash = hashlib.sha256(provided_key.encode('utf-8')).hexdigest()
+        return hmac.compare_digest(self._access_hash, attempt_hash)
+class DebuggerMasterEngine:
+    """
+    Core Security Anomaly Engine governed by Master Lock authentication 
+    and Law Enforcement Read-Only access rules.
+    """
+    def __init__(self, master_passkey: str, risk_threshold: float = 0.75):
+        self.owner = "Morley Moses Apooch"
+        self.system_title = "Debugger - Security Anomaly Detection System"
+        self.master_lock = MasterLockAccessControl(master_passkey)
+        self.risk_threshold = risk_threshold
+        self._audit_records = []
+    def log_anomaly_event(self, pid: int, process_name: str, risk_score: float, master_key: str):
+        """Executes process analysis and containment (Owner Master Lock required)."""
+        if not self.master_lock.verify_owner_key(master_key):
+            return {
+                "status": "ACCESS_DENIED",
+                "message": "Execution blocked by Master Lock. Unauthorized access attempt."
+            }
+        is_contained = risk_score >= self.risk_threshold
+        event = {
+            "copyright": f"Copyright (c) 2026 {self.owner}",
+            "timestamp": datetime.utcnow().isoformat(),
+            "pid": pid,
+            "process_name": process_name,
+            "risk_score": risk_score,
+            "contained": is_contained,
+            "signature": hashlib.sha256(f"{pid}:{risk_score}:{self.owner}".encode('utf-8')).hexdigest()
+        }
+        self._audit_records.append(event)
+        self.master_lock.is_unlocked = False  # Auto-relock after execution
+        return {"status": "SUCCESS", "event": event}
+    def inspect_records_law_enforcement(self, portal: LawEnforcementReadOnlyPortal, agent_key: str):
+        """Read-only view of audit records for law enforcement agents."""
+        if not portal.authenticate_agent(agent_key):
+            return {
+                "status": "ACCESS_DENIED",
+                "message": "Invalid agent credentials. Read-only access rejected."
+            }
+        return {
+            "access_type": "READ_ONLY_AUDIT",
+            "copyright_holder": self.owner,
+            "inspected_by_badge": portal.agent_badge_id,
+            "total_records": len(self._audit_records),
+            "records": list(self._audit_records)
+        }
+# ==============================================================================
+# SYSTEM INITIALIZATION & TESTING
+# ==============================================================================
+if __name__ == "__main__":
+    print("=== Debugger Engine & Anchor Record Initialized ===")
+    MASTER_KEY = "MorleyApooch2026!MasterLock"
+    AGENT_KEY = "LE_Inspection_2026!"
+    # Initialize Engine
+    engine = DebuggerMasterEngine(master_passkey=MASTER_KEY)
+    # 1. Log an anomaly event using Owner Master Lock
+    log_result = engine.log_anomaly_event(
+        pid=4092, 
+        process_name="unauthorized_process.elf", 
+        risk_score=0.89, 
+        master_key=MASTER_KEY
+    )
+    print("\n[OWNER EXECUTION RESULT]:", log_result["status"])
+    # 2. Law Enforcement Read-Only Inspection
+    police_portal = LawEnforcementReadOnlyPortal(agent_badge_id="POLICE-774", law_enforcement_key=AGENT_KEY)
+    audit_view = engine.inspect_records_law_enforcement(portal=police_portal, agent_key=AGENT_KEY)
+    print("\n[LAW ENFORCEMENT READ-ONLY VIEW]:")
+    import json
+    print(json.dumps(audit_view, indent=2))
