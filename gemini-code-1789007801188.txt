@@ -1,0 +1,4 @@
+clean-hands-app/
+├── server.js
+└── public/
+    └── index.html
