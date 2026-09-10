@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CleanHands Asset Portal</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+    .card { background: #1e293b; padding: 2rem; border-radius: 12px; width: 100%; max-width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #334155; }
+    h2 { margin-top: 0; color: #38bdf8; }
+    .asset-info { background: #0f172a; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #334155; }
+    .asset-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .asset-row:last-child { margin-bottom: 0; }
+    .balance { font-size: 1.25rem; font-weight: bold; color: #4ade80; }
+    input { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; box-sizing: border-box; }
+    button { width: 100%; padding: 0.75rem; background: #0284c7; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    button:hover { background: #0369a1; }
+    .status { margin-top: 1rem; padding: 0.75rem; border-radius: 6px; font-size: 0.9rem; display: none; }
+    .status.success { background: #064e3b; color: #6ee7b7; display: block; }
+    .status.error { background: #7f1d1d; color: #fca5a5; display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Asset Payment Suite</h2>
+    
+    <div class="asset-info">
+      <div class="asset-row"><span>Account Holder:</span> <strong id="holder">Loading...</strong></div>
+      <div class="asset-row"><span>Institution:</span> <strong id="institution">Loading...</strong></div>
+      <div class="asset-row"><span>Account:</span> <strong id="account">Loading...</strong></div>
+      <hr style="border-color: #334155; margin: 0.75rem 0;">
+      <div class="asset-row"><span>Available Assets:</span> <span class="balance" id="balance">$0.00 CAD</span></div>
+    </div>
+
+    <label for="amount">Payment Amount ($ CAD)</label>
+    <input type="number" id="amount" placeholder="25.00" step="0.01">
+
+    <label for="desc">Description</label>
+    <input type="text" id="desc" placeholder="Asset Authorization">
+
+    <button id="pay-btn">Process Asset Payment</button>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    async function fetchAssets() {
+      const res = await fetch('/api/assets');
+      const data = await res.json();
+      document.getElementById('holder').textContent = data.accountHolder;
+      document.getElementById('institution').textContent = data.institution;
+      document.getElementById('account').textContent = data.accountNumber;
+      document.getElementById('balance').textContent = `$${data.availableBalance.toFixed(2)} ${data.currency}`;
+    }
+
+    document.getElementById('pay-btn').addEventListener('click', async () => {
+      const amount = document.getElementById('amount').value;
+      const description = document.getElementById('desc').value;
+      const statusDiv = document.getElementById('status');
+
+      const res = await fetch('/api/pay', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount, description })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        statusDiv.className = 'status success';
+        statusDiv.textContent = `${data.message} (Ref: ${data.transaction.id})`;
+        fetchAssets();
+      } else {
+        statusDiv.className = 'status error';
+        statusDiv.textContent = data.message;
+      }
+    });
+
+    fetchAssets();
+  </script>
+</body>
+</html>
