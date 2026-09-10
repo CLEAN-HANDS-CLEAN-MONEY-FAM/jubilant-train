@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Morley Search Engine & Cloud Database Platform</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; background: #f9f9f9; }
+        h1 { font-size: 1.8rem; color: #111; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+        input[type="text"], textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+        button { padding: 10px 20px; background: #0066cc; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0052a3; }
+        .card { background: #fff; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .card h3 { margin: 0 0 8px 0; color: #0066cc; }
+        .admin-panel { background: #fff; padding: 20px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-top: 40px; }
+        footer { margin-top: 40px; text-align: center; font-size: 0.85rem; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>Morley Search Engine</h1>
+    <p>Embedded Full-Text Search & Document Database Platform</p>
+
+    <div class="search-box">
+        <input type="text" id="query" placeholder="Search indexed documents..." oninput="performSearch()">
+    </div>
+
+    <div id="results"></div>
+
+    <div class="admin-panel">
+        <h3>Add a Document</h3>
+        <input type="text" id="docTitle" placeholder="Document Title" style="margin-bottom: 10px;"><br>
+        <textarea id="docContent" placeholder="Document Content..." rows="4" style="margin-bottom: 10px;"></textarea><br>
+        <button onclick="addDocument()">Index Document</button>
+    </div>
+
+    <footer>
+        © 2026 Morley Moses Apooch. All Rights Reserved.
+    </footer>
+
+    <script>
+        async function performSearch() {
+            const q = document.getElementById('query').value;
+            const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+            const docs = await res.json();
+            const container = document.getElementById('results');
+            container.innerHTML = docs.length === 0 ? '<p>No results found.</p>' : '';
+            docs.forEach(doc => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `<h3>${doc.title}</h3><p>${doc.content}</p><small>ID: ${doc.id}</small>`;
+                container.appendChild(div);
+            });
+        }
+
+        async function addDocument() {
+            const title = document.getElementById('docTitle').value;
+            const content = document.getElementById('docContent').value;
+            if (!title || !content) return alert('Please fill in both fields');
+
+            const res = await fetch('/api/documents', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, content })
+            });
+
+            if (res.ok) {
+                document.getElementById('docTitle').value = '';
+                document.getElementById('docContent').value = '';
+                performSearch();
+                alert('Document successfully indexed!');
+            }
+        }
+
+        performSearch();
+    </script>
+</body>
+</html>
