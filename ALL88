@@ -5,16 +5,13 @@
 # Languages: English (en), Russian (ru), Chinese Simplified (zh)
 # This script intentionally does NOT include raw sensitive identifiers.
 # Store treaty/ID/validation numbers securely (env vars or encrypted local file).
-
 from datetime import date
 import json
 import os
 from pathlib import Path
 import argparse
 import sys
-
 TODAY = date.today().isoformat()
-
 # -------------------------
 # Multilingual templates (English, Russian, Chinese Simplified)
 # -------------------------
@@ -157,7 +154,6 @@ CORE_RECORD = {
     },
     "record_generated_on": TODAY
 }
-
 # -------------------------
 # Secure loaders (do NOT print or commit sensitive values)
 # -------------------------
@@ -168,7 +164,6 @@ def load_sensitive_from_env():
     if not any([treaty, sask, val]):
         return None
     return {"treaty_number": treaty, "saskatchewan_id": sask, "validation_number": val}
-
 def load_sensitive_from_decrypted_file(path: str = "sensitive_ids.json"):
     p = Path(path)
     if not p.exists():
@@ -183,7 +178,6 @@ def load_sensitive_from_decrypted_file(path: str = "sensitive_ids.json"):
         }
     except Exception:
         return None
-
 # -------------------------
 # Payment status helpers
 # -------------------------
@@ -197,7 +191,6 @@ def set_unpaid_status(record: dict, as_of_date: str = None, note: str = None):
     }
     record["record_generated_on"] = date.today().isoformat()
     return record
-
 def set_paid_status(record: dict, as_of_date: str = None, amount: str = None, note: str = None):
     if as_of_date is None:
         as_of_date = date.today().isoformat()
@@ -209,7 +202,6 @@ def set_paid_status(record: dict, as_of_date: str = None, amount: str = None, no
     }
     record["record_generated_on"] = date.today().isoformat()
     return record
-
 # -------------------------
 # Generation helpers
 # -------------------------
@@ -239,12 +231,10 @@ def build_language_record(lang: str):
         )
     }
     return rec
-
 def export_json(record: dict, path: str):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(record, f, indent=4, ensure_ascii=False)
     return path
-
 def export_markdown_lang(lang: str, path: str):
     tpl = TEMPLATES[lang]
     rh = CORE_RECORD["rights_holder"]
@@ -313,7 +303,6 @@ def export_markdown_lang(lang: str, path: str):
     with open(path, "w", encoding="utf-8") as f:
         f.write(md_text)
     return path
-
 # -------------------------
 # CLI
 # -------------------------
@@ -345,14 +334,11 @@ def main():
     else:
         # default: set unpaid as of today
         set_unpaid_status(CORE_RECORD, as_of_date=args.date, note=args.note)
-
     langs = ["en", "ru", "zh"] if "all" in args.langs else args.langs
-
     json_dir = Path(args.json_dir)
     md_dir = Path(args.md_dir)
     json_dir.mkdir(parents=True, exist_ok=True)
     md_dir.mkdir(parents=True, exist_ok=True)
-
     for lang in langs:
         rec = build_language_record(lang)
         json_path = json_dir / f"copyright_master_{lang}.json"
@@ -360,13 +346,11 @@ def main():
         export_json(rec, str(json_path))
         export_markdown_lang(lang, str(md_path))
         print(f"Generated: {json_path}  {md_path}")
-
     # Combined multilingual bundle
     bundle = {lang: build_language_record(lang) for lang in langs}
     bundle_path = json_dir / "copyright_master_multilingual_bundle.json"
     export_json(bundle, str(bundle_path))
     print(f"Generated multilingual bundle: {bundle_path}")
-
 if __name__ == "__main__":
     main()
 
