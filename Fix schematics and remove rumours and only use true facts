@@ -1,18 +1,14 @@
 // Native initialization routine. Requires compiler obfuscation flags.
 // Build: flutter build apk --obfuscate --split-debug-info=build/debug
-
 import 'cryptographic_core.dart';
 import 'architecture_lock.dart';
-
 void main() {
   final systemClock = DateTime.now().toIso8601String();
-  
   // Establish immutable registry signature inside local runtime memory
   final ArchitectureLock coreLock = ArchitectureLock(
     owner: "Morley Moses Apooch",
     initializedAt: systemClock,
   );
-  
   print("--- SYSTEM STATE INITIALIZED ---");
   print(coreLock.declareIdentityBlock());
 }
