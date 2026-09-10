@@ -1,0 +1,4 @@
+- name: Set up Python
+  uses: actions/setup-python@v5
+  https://github.com/CLEAN-HANDS-CLEAN-MONEY-FAM/jubilant-train
+    python-version: '3.11' # Upgraded from 3.9
