@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morley Search Engine — Sovereign Asset Search</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; background: #0f172a; color: #e2e8f0; }
+    h1 { color: #38bdf8; }
+    input, textarea, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; }
+    button { background: #0284c7; cursor: pointer; font-weight: bold; }
+    button:hover { background: #0369a1; }
+    .result { background: #1e293b; padding: 16px; margin: 12px 0; border-radius: 8px; border-left: 4px solid #38bdf8; }
+    .score { color: #94a3b8; font-size: 0.85em; }
+    footer { margin-top: 60px; text-align: center; color: #64748b; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Morley Search Engine</h1>
+  <p>Sovereign full-text search & asset database — Owned by Morley Moses Apooch</p>
+
+  <input type="text" id="q" placeholder="Search your assets..." onkeyup="if(event.key==='Enter') doSearch()">
+  <button onclick="doSearch()">Search</button>
+
+  <div id="results"></div>
+
+  <h2 style="margin-top:40px">Add Document / Asset</h2>
+  <input type="text" id="title" placeholder="Title">
+  <textarea id="content" rows="4" placeholder="Content / description of asset"></textarea>
+  <button onclick="addDoc()">Index Asset</button>
+
+  <footer>
+    © 2026 Morley Moses Apooch. All Rights Reserved.<br>
+    Clean Hands • Clean Money • Sovereign Technology
+  </footer>
+
+  <script>
+    async function doSearch() {
+      const q = document.getElementById('q').value;
+      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      const el = document.getElementById('results');
+      el.innerHTML = data.length ? data.map(d => `
+        <div class="result">
+          <strong>${d.title}</strong>
+          <div class="score">Score: ${d.score?.toFixed(3) || '—'}</div>
+          <p>${d.content?.substring(0, 300) || ''}...</p>
+        </div>
+      `).join('') : '<p>No results</p>';
+    }
+
+    async function addDoc() {
+      const title = document.getElementById('title').value;
+      const content = document.getElementById('content').value;
+      await fetch('/api/documents', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content })
+      });
+      alert('Asset indexed');
+      document.getElementById('title').value = '';
+      document.getElementById('content').value = '';
+    }
+  </script>
+</body>
+</html>
