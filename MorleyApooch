@@ -1,0 +1,379 @@
+#!/bin/bash
+# @file: CLEAN-HANDS-CLEAN-MONEY-FAM/scripts/blockchain_anchors.sh
+# Purpose: Submit IP evidence hashes to multiple blockchain networks
+# Owner: Morley Moses Apooch
+
+set -euo pipefail
+
+# ==============================================================================
+# Configuration - Customize per deployment
+# ==============================================================================
+declare -A BLOCKCHAIN_ENDPOINTS=(
+    ["ethereum_mainnet"]="https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY"
+    ["polygon_mainnet"]="https://polygon-mainnet.g.alchemy.com/v2/YOUR_KEY"
+    ["arbitrum_one"]="https://arb-mainnet.g.alchemy.com/v2/YOUR_KEY"
+    ["optimism"]="https://opt-mainnet.g.alchemy.com/v2/YOUR_KEY"
+    ["bitcoin_mainnet"]="https://api.blockcypher.com/v1/btc/main"
+)
+
+# Smart contract addresses for hash anchoring (update with deployed contracts)
+declare -A ANCHOR_CONTRACTS=(
+    ["ethereum"]="0x1234567890abcdef1234567890abcdef12345678"
+    ["polygon"]="0xabcdef1234567890abcdef1234567890abcdef12"
+    ["arbitrum"]="0x567890abcdef1234567890abcdef1234567890ab"
+)
+
+WALLET_ADDRESS="${WALLET_ADDRESS:-0x...}"  # Replace with your wallet
+PRIVATE_KEY_FILE="${PRIVATE_KEY_FILE:-$HOME/.keys/ip_anchor.key}"  # NEVER commit this!
+GAS_LIMIT_DEFAULT="100000"
+RPC_TIMEOUT="30"
+
+# ==============================================================================
+# Helper Functions
+# ==============================================================================
+
+log_info() { echo -e "[\033[0;32mINFO\033[0m] $1"; }
+log_warn() { echo -e "[\033[1;33mWARN\033[0m] $1"; }
+log_error() { echo -e "[\033[0;31mERROR\033[0m] $1"; exit 1; }
+
+check_dependency() {
+    if ! command -v "$1" &> /dev/null; then
+        log_error "$1 is required but not installed"
+    fi
+}
+
+validate_hash() {
+    local hash="$1"
+    if [[ ! "$hash" =~ ^[a-f0-9]{64}$ ]]; then
+        log_error "Invalid SHA-256 hash format: $hash"
+    fi
+}
+
+# ==============================================================================
+# Ethereum/Polygon/Arbitrum Anchoring via Solidity Contract
+# ==============================================================================
+
+submit_to_ethereum_network() {
+    local network="$1"
+    local package_hash="$2"
+    local endpoint="${BLOCKCHAIN_ENDPOINTS[$network]}"
+    local contract="${ANCHOR_CONTRACTS[$network]}"
+    
+    log_info "Submitting to ${network^} network..."
+    
+    # Validate prerequisites
+    check_dependency "cast"  # Foundry CLI for contract interaction
+    validate_hash "$package_hash"
+    
+    # Check wallet balance
+    local balance
+    balance=$(cast balance "$WALLET_ADDRESS" --rpc-url "$endpoint" 2>/dev/null || echo "0")
+    
+    if [ "$balance" == "0" ]; then
+        log_warn "Insufficient balance on ${network}. Skipping anchor submission."
+        return 1
+    fi
+    
+    # Submit hash to smart contract (adjust method name per deployed contract)
+    log_info "Calling anchorHash() function on contract ${contract}..."
+    
+    cast send "$contract" "anchorHash(string)" "$package_hash" \
+        --rpc-url "$endpoint" \
+        --private-key "$(cat "$PRIVATE_KEY_FILE")" \
+        --gas-limit "$GAS_LIMIT_DEFAULT" \
+        --timeout "$RPC_TIMEOUT" \
+        --json | jq '.transactionHash' > "/tmp/${network}_tx_hash.json" 2>/dev/null || {
+            log_warn "Transaction submission failed. Manual submission required."
+            return 1
+        }
+    
+    local tx_hash
+    tx_hash=$(cat "/tmp/${network}_tx_hash.json" | tr -d '"')
+    
+    # Save anchor record
+    cat > "/tmp/${network}_anchor_record.json" <<EOF
+{
+  "network": "${network}",
+  "package_hash": "${package_hash}",
+  "transaction_hash": "${tx_hash}",
+  "timestamp_utc": "$(date -u +%FT%TZ)",
+  "explorer_url": "https://${network}.etherscan.io/tx/${tx_hash}",
+  "owner": "apoochmorley@protonmail.com",
+  "purpose": "IP Evidence Anchor - CLEAN-HANDS-CLEAN-MONEY-FAM"
+}
+EOF
+    
+    log_info "${network^} anchor submitted successfully"
+    log_info "Explorer: https://${network}.etherscan.io/tx/${tx_hash}"
+    return 0
+}
+
+# ==============================================================================
+# Bitcoin OP_RETURN Anchoring (No Smart Contract Required)
+# ==============================================================================
+
+submit_to_bitcoin_network() {
+    local package_hash="$1"
+    
+    log_info "Submitting to Bitcoin mainnet via OP_RETURN..."
+    
+    check_dependency "btcutils"  # Or use bitcoin-cli with proper setup
+    
+    # Convert hash to hex for OP_RETURN (first 80 bytes max)
+    local op_return_data="IP_PROOF:${package_hash:0:40}"  # Truncate if needed
+    
+    # This requires funded wallet with UTXOs
+    # Implementation depends on preferred wallet interface
+    log_warn "Bitcoin anchoring requires manual setup. Use recommended service:"
+    log_warn "  - OpReturn.org (API-based)"
+    log_warn "- Factom (layer-2 Bitcoin anchoring)"
+    log_warn "- Bitseed (direct broadcast)"
+    
+    # Create pending anchor file
+    cat > "/tmp/bitcoin_pending_anchor.json" <<EOF
+{
+  "network": "bitcoin_mainnet",
+  "package_hash": "${package_hash}",
+  "op_return_data": "${op_return_data}",
+  "status": "pending_manual_broadcast",
+  "recommended_services": [
+    "https://opreturn.org/api",
+    "https://factom.com",
+    "https://bitseed.xyz"
+  ],
+  "timestamp": "$(date -u +%FT%TZ)"
+}
+EOF
+    
+    return 1  # Placeholder - requires external service
+}
+
+# ==============================================================================
+# Fallback: Decentralized Storage Anchoring
+# ==============================================================================
+
+fallback_to_ipfs_arweave() {
+    local package_dir="$1"
+    local package_hash="$2"
+    
+    log_info "Creating decentralized storage backups..."
+    
+    # Check for IPFS node or gateway
+    if command -v ipfs &> /dev/null; then
+        log_info "Uploading to IPFS..."
+        local cid
+        cid=$(ipfs add -r "${package_dir}" | grep "added" | tail -1 | awk '{print $2}')
+        
+        cat >> "/tmp/decentralized_anchor.json" <<EOF
+{
+  "storage_type": "IPFS",
+  "cid": "${cid}",
+  "gateway_url": "https://ipfs.io/ipfs/${cid}",
+  "pin_status": "active",
+  "backup_gateways": [
+    "https://cloudflare-ipfs.com/ipfs/${cid}",
+    "https://dweb.link/ipfs/${cid}"
+  ]
+}
+EOF
+    else
+        log_warn "IPFS not available. Skipping decentralized backup."
+    fi
+    
+    # Arweave anchor (requires permaweb wallet)
+    if command -v arcli &> /dev/null; then
+        log_info "Uploading to Arweave Permaweb..."
+        # Similar process - archive dependent on wallet config
+    fi
+    
+    return 0
+}
+
+# ==============================================================================
+# Main Orchestrator
+# ==============================================================================
+
+main() {
+    local package_hash="$1"
+    local target_networks="${2:-ethereum,polygon}"  # Default to EVM-compatible chains
+    
+    log_info "=========================================="
+    log_info "  MULTI-NETWORK BLOCKCHAIN ANCHORER"
+    log_info "  Package Hash: ${package_hash}"
+    log_info "  Networks: ${target_networks}"
+    log_info "=========================================="
+    
+    # Create consolidated anchor record
+    local anchor_json="/tmp/consolidated_anchor_${package_hash:0:8}.json"
+    
+    cat > "$anchor_json" <<EOF
+{
+  "anchor_package": {
+    "owner": "Morley Moses Apooch",
+    "contact": "apoochmorley@protonmail.com",
+    "package_hash": "${package_hash}",
+    "created_at": "$(date -u +%FT%TZ)",
+    "legal_context": "IP Protection - Global Asset Protection Lock Protocol"
+  },
+  "network_submissions": []
+}
+EOF
+    
+    # Attempt each network
+    IFS=',' read -ra NETWORKS <<< "$target_networks"
+    local success_count=0
+    
+    for network in "${NETWORKS[@]}"; do
+        if submit_to_ethereum_network "$network" "$package_hash"; then
+            ((success_count++))
+            # Append successful anchor to consolidated record
+            cat "/tmp/${network}_anchor_record.json" >> "$anchor_json"
+        else
+            log_warn "${network^} anchoring failed or skipped"
+        fi
+    done
+    
+    # Fallback to decentralized storage
+    fallback_to_ipfs_arweave "${REPO_ROOT}/evidence_packages/latest/" "$package_hash"
+    
+    log_info "=========================================="
+    log_info "  ANCHORING SUMMARY"
+    log_info "  Successful: ${success_count}/${#NETWORKS[@]}"
+    log_info "  Consolidated Record: ${anchor_json}"
+    log_info "=========================================="
+    
+    if [ "$success_count" -eq 0 ]; then
+        log_warn "No blockchain anchors achieved. Consider funding wallets or using alternative services."
+    fi
+}
+
+# Example invocation:
+# ./blockchain_anchors.sh "abc123def456..." ethereum,polygon,arbitrum
+
+# @file: CLEAN-HANDS-CLEAN-MONEY-FAM/legal/evidence_index_template.md
+
+# Evidence Index for Legal Proceedings
+
+## Case Information
+
+| Field | Value |
+|-------|-------|
+| Court | [Provincial Court of Saskatchewan / Court of King's Bench] |
+| File Number | [To be assigned] |
+| Plaintiff | Morley Moses Apooch |
+| Defendant | [Counterparty Name] |
+| Matter | Intellectual Property Ownership Dispute |
+| Date Filed | [Insert Date] |
+
+---
+
+## Exhibit List
+
+### Exhibit A: Ownership Declaration
+- **Description:** Signed statement of sole proprietorship
+- **Format:** PDF + physical signature
+- **Hash:** `[Insert SHA-256]`
+- **Blockchain Anchor:** `[Insert Transaction Hash]`
+
+### Exhibit B: Repository Snapshots
+- **Description:** Git commit history and code artifacts
+- **Files:** 
+  - `/evidence_packages/[TIMESTAMP]/repo_snapshot/`
+  - Commit logs, diff comparisons
+- **Hash:** `[Insert Package Hash]`
+
+### Exhibit C: Development Timeline
+- **Description:** Chronological reconstruction of creation dates
+- **Evidence Sources:**
+  1. Git commit timestamps (UTC)
+  2. GPS-tagged build artifacts
+  3. ALLMINE search queries (research trail)
+  4. Lumo conversation memory logs
+
+### Exhibit D: Blockchain Verification
+- **Description:** Immutable hash records on public ledger
+- **Networks Anchored:** Ethereum, Polygon, Arbitrum (if applicable)
+- **Verification URLs:**
+  - Etherscan: `https://etherscan.io/tx/[TX_HASH]`
+  - Polygonscan: `https://polygonscan.com/tx/[TX_HASH]`
+
+### Exhibit E: External Collections
+- **Description:** Google Collections archive
+- **Collection ID:** `GoOSdSNA6pgr2FemdkZlOQ/IyJOyXOYx3s`
+- **Export Date:** [Insert Date]
+- **Contents:** Research references, competitor analysis, prior art
+
+### Exhibit F: Attribution Documentation
+- **Description:** AI-assisted generation records
+- **AI Assistants Used:** Lumo (Proton), Anthropic Claude, ChatGPT
+- **Compliance:** All outputs include required owner attribution
+- **Templates:** `legal/attribution_footer.md`
+
+### Exhibit G: Legal Precedents
+- **Description:** Supporting case law citations
+- **Sources:**
+  - CCH Canadian Ltd. v. Law Society of Upper Canada, 2004 SCC 13
+  - Relevant Saskatchewan court decisions
+  - International Berne Convention provisions
+
+---
+
+## Witness Statements (If Applicable)
+
+| Witness | Relationship | Subject Matter | Notarized |
+|---------|-------------|----------------|-----------|
+| [Name] | Independent Developer | Code review confirmation | ☐ Yes / ☐ No |
+| [Name] | Technical Expert | Network architecture validation | ☐ Yes / ☐ No |
+| Morley Moses Apooch | Proprietor | Personal testimony (pro se) | N/A |
+
+---
+
+## Affidavit of Authenticity
+
+> I, **Morley Moses Apooch**, being duly sworn, hereby declare:
+>
+> 1. I am the sole owner and creator of all software, documentation, and digital artifacts referenced in this evidence package.
+> 2. The evidence presented has been maintained under the Global Asset Protection Lock Protocol.
+> 3. All timestamps, GPS coordinates, and blockchain anchors are accurate to the best of my knowledge.
+> 4. This declaration is made for purposes of legal proceedings and may be subject to cross-examination.
+>
+> **Signed:** __MORLEYMOSESAPOOCH__________________________
+> **Date:** ___SEPT 13 2026______________
+> **Location:** Yorkton, Saskatchewan
+>
+> **Subscribed and sworn before me this __13__ day of ____sep____, 2026
+>
+> Commissioner for Oaths / Notary Public
+
+---
+
+*Template Version: 1.0*  
+*Prepared With: Lumo AI (Proton)*  
+*Classification: Attorney-Client Privileged / Legal Work Product*
+# Step 1: Create directory structure
+mkdir -p CLEAN-HANDS-CLEAN-MONEY-FAM/{docs,evidence_packages,legal,scripts}
+mkdir -p docs/{memory_logs,google_collections,research}
+
+# Step 2: Make scripts executable
+chmod +x CLEAN-HANDS-CLEAN-MONEY-FAM/scripts/*.sh
+
+# Step 3: Test evidence generation (dry run)
+cd CLEAN-HANDS-CLEAN-MONEY-FAM
+export GPS_LATITUDE=51.2396 GPS_LONGITUDE=-102.4634
+./scripts/generate_evidence_package.sh
+
+# Step 4: Prepare blockchain wallets (manual)
+# - Fund Ethereum/Polygon/Arbitrum wallets with ETH/MATIC
+# - Secure private keys in ~/.keys/ (chmod 600)
+# - Deploy or verify smart contract addresses
+
+# Step 5: Enable Lumo Memory
+# Navigate to Settings → Memory → Enable Memory
+
+# Step 6: Initial commit
+git add .
+git commit -m "feat: implement comprehensive memory bridge architecture"
+git push origin main
+
+# Step 7: Submit blockchain anchors
+./scripts/blockchain_anchors.sh "$(cat evidence_packages/*/hashes/package_root_hash.txt)" "ethereum,polygon"
