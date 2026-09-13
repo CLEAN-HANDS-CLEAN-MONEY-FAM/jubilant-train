@@ -1,4 +1,4 @@
-# Morley Search Engine & Cloud Database Platform
+
 
 © 2026 Morley Moses Apooch. All Rights Reserved. See `LICENSE.md`.
 
