@@ -1,0 +1,600 @@
+import { useState } from "react";
+
+// ── Design tokens ──────────────────────────────────────────────
+// Black / deep-ink base, refined gold, slate-blue accent for financial trust,
+// IBM Plex Mono for numbers (legibility over decoration), Playfair for identity.
+// Avoids the generic near-black + acid-green fintech default.
+
+const ASSETS = [
+  { id: "MMA-001", name: "morley-cv.jsx",               fee: 299,  term: "Annual Lease" },
+  { id: "MMA-004", name: "trademark-app.jsx",            fee: 499,  term: "Annual Lease" },
+  { id: "MMA-006", name: "BLUE OCEAN Website",           fee: 199,  term: "Annual Lease" },
+  { id: "MMA-007", name: "MorleySearch Engine & DB",     fee: 999,  term: "Annual Lease" },
+];
+
+const HISTORY = [
+  { id: "TXN-0091", date: "2026-09-01", asset: "MMA-007", lessee: "Redwood Data Inc.",      amount: 999,  status: "Settled"  },
+  { id: "TXN-0090", date: "2026-08-19", asset: "MMA-001", lessee: "Vantara Solutions",      amount: 299,  status: "Settled"  },
+  { id: "TXN-0089", date: "2026-08-04", asset: "MMA-006", lessee: "Tidal Agency Ltd.",      amount: 199,  status: "Settled"  },
+  { id: "TXN-0088", date: "2026-07-22", asset: "MMA-004", lessee: "Ironmark Corp.",         amount: 499,  status: "Settled"  },
+  { id: "TXN-0087", date: "2026-07-08", asset: "MMA-007", lessee: "Redwood Data Inc.",      amount: 999,  status: "Settled"  },
+];
+
+const PENDING = [
+  { id: "INV-0012", due: "2026-09-20", asset: "MMA-001", lessee: "Northgate Media",        amount: 299  },
+  { id: "INV-0011", due: "2026-09-15", asset: "MMA-006", lessee: "Clearwater Digital",     amount: 199  },
+];
+
+const fmt = (n) => new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD" }).format(n);
+const today = () => new Date().toISOString().slice(0, 10);
+let invoiceCounter = 13;
+
+// ── Styles ─────────────────────────────────────────────────────
+const S = {
+  app: {
+    minHeight: "100vh",
+    background: "#080808",
+    color: "#ece8dc",
+    fontFamily: "'IBM Plex Mono', 'Courier New', monospace",
+    fontSize: 14,
+  },
+  // nav
+  nav: {
+    background: "#0d0d0d",
+    borderBottom: "1px solid #2a2218",
+    padding: "0 2rem",
+    display: "flex",
+    alignItems: "center",
+    gap: "2rem",
+    height: 56,
+  },
+  navBrand: {
+    fontFamily: "'Playfair Display', Georgia, serif",
+    fontSize: 17,
+    fontWeight: 700,
+    color: "#c9a84c",
+    letterSpacing: "0.02em",
+    marginRight: "auto",
+    whiteSpace: "nowrap",
+  },
+  navTab: (active) => ({
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    fontSize: 12,
+    letterSpacing: "0.08em",
+    padding: "0 0 4px",
+    borderBottom: active ? "2px solid #c9a84c" : "2px solid transparent",
+    color: active ? "#c9a84c" : "#777",
+    transition: "color 0.15s",
+    whiteSpace: "nowrap",
+  }),
+  // layout
+  page: { maxWidth: 940, margin: "0 auto", padding: "2.5rem 1.5rem" },
+  heading: {
+    fontFamily: "'Playfair Display', Georgia, serif",
+    fontSize: 26,
+    fontWeight: 700,
+    color: "#ece8dc",
+    marginBottom: 6,
+  },
+  sub: { fontSize: 12, color: "#666", marginBottom: "2rem", lineHeight: 1.6 },
+  // stat row
+  statRow: { display: "flex", gap: "1rem", marginBottom: "2.5rem", flexWrap: "wrap" },
+  stat: {
+    flex: "1 1 160px",
+    background: "#111",
+    border: "1px solid #1e1e1e",
+    padding: "1.25rem 1.5rem",
+  },
+  statLabel: { fontSize: 10, color: "#555", letterSpacing: "0.12em", marginBottom: 6 },
+  statValue: { fontSize: 22, color: "#c9a84c", fontWeight: 600, letterSpacing: "-0.02em" },
+  statNote: { fontSize: 10, color: "#444", marginTop: 4 },
+  // table
+  table: { width: "100%", borderCollapse: "collapse", fontSize: 13 },
+  th: {
+    textAlign: "left", fontSize: 10, letterSpacing: "0.1em", color: "#555",
+    padding: "0.5rem 0.75rem", borderBottom: "1px solid #1e1e1e",
+  },
+  td: { padding: "0.9rem 0.75rem", borderBottom: "1px solid #141414", verticalAlign: "top" },
+  // badges
+  badge: (color) => ({
+    display: "inline-block", fontSize: 9, letterSpacing: "0.08em",
+    padding: "2px 7px", border: `1px solid ${color}`,
+    color, background: color + "18",
+  }),
+  // form
+  label: { fontSize: 11, color: "#666", display: "block", marginBottom: 5, marginTop: 16 },
+  input: {
+    width: "100%", background: "#111", border: "1px solid #222", color: "#ece8dc",
+    padding: "0.6rem 0.75rem", fontSize: 13, fontFamily: "inherit", outline: "none",
+    boxSizing: "border-box",
+  },
+  select: {
+    width: "100%", background: "#111", border: "1px solid #222", color: "#ece8dc",
+    padding: "0.6rem 0.75rem", fontSize: 13, fontFamily: "inherit", outline: "none",
+    boxSizing: "border-box", appearance: "none",
+  },
+  btn: (variant = "primary") => ({
+    cursor: "pointer", border: "none", padding: "0.7rem 1.5rem",
+    fontSize: 12, letterSpacing: "0.08em", fontFamily: "inherit",
+    background: variant === "primary" ? "#c9a84c" : "#1a1a1a",
+    color: variant === "primary" ? "#080808" : "#888",
+    border: variant === "secondary" ? "1px solid #222" : "none",
+    marginTop: 8,
+    transition: "opacity 0.15s",
+  }),
+  card: {
+    background: "#0f0f0f", border: "1px solid #1e1e1e",
+    padding: "1.5rem", marginBottom: "1rem",
+  },
+  // invoice preview
+  invoiceBox: {
+    background: "#0a0a0a", border: "1px solid #2a2218",
+    borderTop: "3px solid #c9a84c", padding: "2rem",
+    fontFamily: "inherit", fontSize: 13,
+  },
+  // toast
+  toast: {
+    position: "fixed", bottom: 24, right: 24,
+    background: "#1a2a1a", border: "1px solid #2a5a2a",
+    color: "#6abf6a", padding: "0.75rem 1.25rem",
+    fontSize: 12, letterSpacing: "0.06em", zIndex: 999,
+  },
+  // send form
+  grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" },
+};
+
+// ── Components ─────────────────────────────────────────────────
+
+function StatRow({ history, pending }) {
+  const settled = history.reduce((s, t) => s + t.amount, 0);
+  const outstanding = pending.reduce((s, t) => s + t.amount, 0);
+  const ytd = settled + outstanding;
+  return (
+    <div style={S.statRow}>
+      <div style={S.stat}>
+        <div style={S.statLabel}>TOTAL SETTLED (YTD)</div>
+        <div style={S.statValue}>{fmt(settled)}</div>
+        <div style={S.statNote}>{history.length} transactions</div>
+      </div>
+      <div style={S.stat}>
+        <div style={S.statLabel}>OUTSTANDING</div>
+        <div style={S.statValue}>{fmt(outstanding)}</div>
+        <div style={S.statNote}>{pending.length} invoices pending</div>
+      </div>
+      <div style={S.stat}>
+        <div style={S.statLabel}>ACTIVE ASSETS</div>
+        <div style={S.statValue}>{ASSETS.length}</div>
+        <div style={S.statNote}>Licensed globally</div>
+      </div>
+      <div style={S.stat}>
+        <div style={S.statLabel}>CLEARING AGENT</div>
+        <div style={S.statValue} style={{ fontSize: 13, color: "#c9a84c", fontWeight: 500 }}>
+          Peoples Trust Co.
+        </div>
+        <div style={S.statNote}>via secure gateway</div>
+      </div>
+    </div>
+  );
+}
+
+function Dashboard({ history, pending }) {
+  return (
+    <div style={S.page}>
+      <div style={S.heading}>MMA Global Payment Platform</div>
+      <div style={S.sub}>
+        © MORLEY MOSES APOOCH — Yorkton, Saskatchewan, Canada &nbsp;|&nbsp;
+        All transactions settled via encrypted gateway &nbsp;|&nbsp; apoochmorley@protonmail.com
+      </div>
+      <StatRow history={history} pending={pending} />
+
+      <div style={{ marginBottom: "2rem" }}>
+        <div style={{ fontSize: 11, color: "#555", letterSpacing: "0.1em", marginBottom: 12 }}>
+          PENDING INVOICES
+        </div>
+        <table style={S.table}>
+          <thead>
+            <tr>
+              {["Invoice", "Due", "Asset", "Lessee", "Amount", "Status"].map(h => (
+                <th key={h} style={S.th}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {pending.map(t => (
+              <tr key={t.id}>
+                <td style={{ ...S.td, color: "#c9a84c" }}>{t.id}</td>
+                <td style={S.td}>{t.due}</td>
+                <td style={{ ...S.td, color: "#888" }}>{t.asset}</td>
+                <td style={S.td}>{t.lessee}</td>
+                <td style={{ ...S.td, color: "#ece8dc", fontWeight: 500 }}>{fmt(t.amount)}</td>
+                <td style={S.td}><span style={S.badge("#c9a84c")}>AWAITING</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div style={{ fontSize: 11, color: "#555", letterSpacing: "0.1em", marginBottom: 12 }}>
+        RECENT SETTLEMENTS
+      </div>
+      <table style={S.table}>
+        <thead>
+          <tr>
+            {["Transaction", "Date", "Asset", "Lessee", "Amount", "Status"].map(h => (
+              <th key={h} style={S.th}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {history.slice(0, 5).map(t => (
+            <tr key={t.id}>
+              <td style={{ ...S.td, color: "#c9a84c" }}>{t.id}</td>
+              <td style={S.td}>{t.date}</td>
+              <td style={{ ...S.td, color: "#888" }}>{t.asset}</td>
+              <td style={S.td}>{t.lessee}</td>
+              <td style={{ ...S.td, color: "#ece8dc", fontWeight: 500 }}>{fmt(t.amount)}</td>
+              <td style={S.td}><span style={S.badge("#4a9a4a")}>SETTLED</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function InvoiceGenerator({ onGenerate, toast }) {
+  const [form, setForm] = useState({
+    lessee: "", email: "", country: "", asset: ASSETS[0].id, customFee: "", note: "",
+  });
+  const [preview, setPreview] = useState(null);
+
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const selectedAsset = ASSETS.find(a => a.id === form.asset);
+  const fee = form.customFee ? parseFloat(form.customFee) : selectedAsset.fee;
+  const invoiceId = `INV-${String(invoiceCounter).padStart(4, "0")}`;
+  const dueDate = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10);
+
+  const generate = () => {
+    if (!form.lessee || !form.email) { alert("Lessee name and email are required."); return; }
+    const inv = {
+      id: invoiceId, date: today(), due: dueDate,
+      asset: form.asset, assetName: selectedAsset.name,
+      lessee: form.lessee, email: form.email,
+      country: form.country, amount: fee,
+      note: form.note, term: selectedAsset.term,
+    };
+    setPreview(inv);
+  };
+
+  const confirm = () => {
+    onGenerate(preview);
+    invoiceCounter++;
+    setPreview(null);
+    setForm({ lessee: "", email: "", country: "", asset: ASSETS[0].id, customFee: "", note: "" });
+    toast("Invoice " + preview.id + " issued.");
+  };
+
+  return (
+    <div style={S.page}>
+      <div style={S.heading}>Generate Invoice</div>
+      <div style={S.sub}>
+        Issue a lease invoice to a client. All payment routing goes through the secure gateway —
+        no banking credentials are shared with the lessee.
+      </div>
+
+      {!preview ? (
+        <div style={S.card}>
+          <div style={S.grid2}>
+            <div>
+              <label style={S.label}>Lessee / Company Name</label>
+              <input style={S.input} value={form.lessee}
+                onChange={e => set("lessee", e.target.value)} placeholder="e.g. Northgate Media Inc." />
+            </div>
+            <div>
+              <label style={S.label}>Lessee Email</label>
+              <input style={S.input} value={form.email} type="email"
+                onChange={e => set("email", e.target.value)} placeholder="billing@company.com" />
+            </div>
+          </div>
+          <div style={S.grid2}>
+            <div>
+              <label style={S.label}>Country / Jurisdiction</label>
+              <input style={S.input} value={form.country}
+                onChange={e => set("country", e.target.value)} placeholder="e.g. United States" />
+            </div>
+            <div>
+              <label style={S.label}>Software Asset</label>
+              <select style={S.select} value={form.asset}
+                onChange={e => set("asset", e.target.value)}>
+                {ASSETS.map(a => (
+                  <option key={a.id} value={a.id}>{a.id} — {a.name} ({fmt(a.fee)})</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div style={S.grid2}>
+            <div>
+              <label style={S.label}>Custom Fee (CAD) — leave blank to use standard</label>
+              <input style={S.input} value={form.customFee} type="number"
+                onChange={e => set("customFee", e.target.value)} placeholder={selectedAsset.fee} />
+            </div>
+            <div>
+              <label style={S.label}>Note / Special Terms</label>
+              <input style={S.input} value={form.note}
+                onChange={e => set("note", e.target.value)} placeholder="Optional" />
+            </div>
+          </div>
+          <button style={S.btn("primary")} onClick={generate}>Preview Invoice</button>
+        </div>
+      ) : (
+        <div>
+          <div style={S.invoiceBox}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" }}>
+              <div>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: "#c9a84c" }}>
+                  MORLEY MOSES APOOCH
+                </div>
+                <div style={{ fontSize: 10, color: "#555", marginTop: 4, lineHeight: 1.8 }}>
+                  Manager / CEO &nbsp;|&nbsp; Yorkton, SK, Canada<br />
+                  apoochmorley@protonmail.com &nbsp;|&nbsp; 1-639-766-1738
+                </div>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 10, color: "#555" }}>INVOICE</div>
+                <div style={{ fontSize: 18, color: "#c9a84c", fontWeight: 600 }}>{preview.id}</div>
+                <div style={{ fontSize: 10, color: "#555", marginTop: 4, lineHeight: 1.8 }}>
+                  Issued: {preview.date}<br />Due: {preview.due}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ borderTop: "1px solid #1e1e1e", borderBottom: "1px solid #1e1e1e", padding: "1rem 0", marginBottom: "1.5rem" }}>
+              <div style={{ fontSize: 10, color: "#555", marginBottom: 6 }}>BILL TO</div>
+              <div style={{ color: "#ece8dc" }}>{preview.lessee}</div>
+              <div style={{ color: "#666", fontSize: 12 }}>{preview.email}</div>
+              {preview.country && <div style={{ color: "#555", fontSize: 12 }}>{preview.country}</div>}
+            </div>
+
+            <table style={{ ...S.table, marginBottom: "1.5rem" }}>
+              <thead>
+                <tr>
+                  {["Asset ID", "Description", "Term", "Amount (CAD)"].map(h => (
+                    <th key={h} style={S.th}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ ...S.td, color: "#c9a84c" }}>{preview.asset}</td>
+                  <td style={S.td}>{preview.assetName}</td>
+                  <td style={S.td}>{preview.term}</td>
+                  <td style={{ ...S.td, color: "#ece8dc", fontWeight: 600 }}>{fmt(preview.amount)}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style={{ display: "flex", justifyContent: "flex-end", borderTop: "1px solid #1e1e1e", paddingTop: "1rem", marginBottom: "1.5rem" }}>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 10, color: "#555" }}>TOTAL DUE</div>
+                <div style={{ fontSize: 24, color: "#c9a84c", fontWeight: 700 }}>{fmt(preview.amount)}</div>
+              </div>
+            </div>
+
+            <div style={{ fontSize: 10, color: "#444", lineHeight: 1.9, borderTop: "1px solid #141414", paddingTop: "1rem" }}>
+              Payment is accepted exclusively through the authorized merchant gateway. No direct bank transfers.
+              This lease is governed by the Morley Moses Apooch Proprietary License. Unauthorized use constitutes a breach.
+              © MORLEY MOSES APOOCH — All Rights Reserved — moapooch121@gmail.com
+              {preview.note && <div style={{ marginTop: 8, color: "#555" }}>Note: {preview.note}</div>}
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
+            <button style={S.btn("primary")} onClick={confirm}>Confirm & Issue</button>
+            <button style={S.btn("secondary")} onClick={() => setPreview(null)}>Edit</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SendPayment({ toast }) {
+  const [form, setForm] = useState({ recipient: "", email: "", country: "", amount: "", ref: "", method: "Gateway" });
+  const [sent, setSent] = useState(null);
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  const send = () => {
+    if (!form.recipient || !form.amount) { alert("Recipient and amount are required."); return; }
+    const ref = `OUT-${Date.now().toString().slice(-6)}`;
+    setSent({ ...form, ref, date: today() });
+    toast("Transfer " + ref + " submitted via gateway.");
+  };
+
+  if (sent) return (
+    <div style={S.page}>
+      <div style={S.heading}>Transfer Submitted</div>
+      <div style={S.card}>
+        <div style={{ fontSize: 11, color: "#555", marginBottom: 12 }}>TRANSFER CONFIRMATION</div>
+        <div style={{ lineHeight: 2.2 }}>
+          <div><span style={{ color: "#555" }}>Ref:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style={{ color: "#c9a84c" }}>{sent.ref}</span></div>
+          <div><span style={{ color: "#555" }}>Date:&nbsp;&nbsp;&nbsp;&nbsp;</span>{sent.date}</div>
+          <div><span style={{ color: "#555" }}>To:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{sent.recipient} ({sent.email})</div>
+          <div><span style={{ color: "#555" }}>Country:&nbsp;</span>{sent.country || "—"}</div>
+          <div><span style={{ color: "#555" }}>Amount:&nbsp;&nbsp;</span><span style={{ color: "#ece8dc", fontWeight: 600 }}>{fmt(parseFloat(sent.amount))}</span> CAD</div>
+          <div><span style={{ color: "#555" }}>Via:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{sent.method}</div>
+          {sent.ref && <div><span style={{ color: "#555" }}>Note:&nbsp;&nbsp;&nbsp;&nbsp;</span>{sent.ref}</div>}
+        </div>
+        <div style={{ marginTop: 16, fontSize: 10, color: "#444" }}>
+          Routed through Peoples Trust Company / KOHO Financial Inc. via encrypted backend settlement.
+        </div>
+        <button style={{ ...S.btn("secondary"), marginTop: 16 }} onClick={() => setSent(null)}>New Transfer</button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={S.page}>
+      <div style={S.heading}>Send Payment</div>
+      <div style={S.sub}>
+        Initiate a global transfer. All outgoing payments are routed through the secure payment
+        gateway — never direct from your bank account.
+      </div>
+      <div style={S.card}>
+        <div style={S.grid2}>
+          <div>
+            <label style={S.label}>Recipient Name</label>
+            <input style={S.input} value={form.recipient} onChange={e => set("recipient", e.target.value)} placeholder="Person or company" />
+          </div>
+          <div>
+            <label style={S.label}>Recipient Email</label>
+            <input style={S.input} value={form.email} type="email" onChange={e => set("email", e.target.value)} placeholder="email@example.com" />
+          </div>
+        </div>
+        <div style={S.grid2}>
+          <div>
+            <label style={S.label}>Country</label>
+            <input style={S.input} value={form.country} onChange={e => set("country", e.target.value)} placeholder="e.g. United Kingdom" />
+          </div>
+          <div>
+            <label style={S.label}>Amount (CAD)</label>
+            <input style={S.input} value={form.amount} type="number" onChange={e => set("amount", e.target.value)} placeholder="0.00" />
+          </div>
+        </div>
+        <div style={S.grid2}>
+          <div>
+            <label style={S.label}>Payment Method</label>
+            <select style={S.select} value={form.method} onChange={e => set("method", e.target.value)}>
+              <option>Gateway</option>
+              <option>Stripe</option>
+              <option>PayPal</option>
+              <option>Wire (via gateway)</option>
+            </select>
+          </div>
+          <div>
+            <label style={S.label}>Reference / Note</label>
+            <input style={S.input} value={form.ref} onChange={e => set("ref", e.target.value)} placeholder="Optional" />
+          </div>
+        </div>
+        <button style={S.btn("primary")} onClick={send}>Submit Transfer</button>
+      </div>
+    </div>
+  );
+}
+
+function Transactions({ history }) {
+  const total = history.reduce((s, t) => s + t.amount, 0);
+  return (
+    <div style={S.page}>
+      <div style={S.heading}>Transaction History</div>
+      <div style={S.sub}>
+        Full ledger of settled licensing payments. All amounts in CAD.
+        Cleared via Peoples Trust Company / KOHO Financial Inc.
+      </div>
+      <div style={{ ...S.stat, marginBottom: "2rem", display: "inline-block", minWidth: 220 }}>
+        <div style={S.statLabel}>TOTAL SETTLED</div>
+        <div style={S.statValue}>{fmt(total)}</div>
+        <div style={S.statNote}>{history.length} transactions on record</div>
+      </div>
+      <table style={S.table}>
+        <thead>
+          <tr>
+            {["Transaction ID", "Date", "Asset", "Lessee", "Amount (CAD)", "Status"].map(h => (
+              <th key={h} style={S.th}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {history.map(t => (
+            <tr key={t.id}>
+              <td style={{ ...S.td, color: "#c9a84c" }}>{t.id}</td>
+              <td style={S.td}>{t.date}</td>
+              <td style={{ ...S.td, color: "#888" }}>{t.asset}</td>
+              <td style={S.td}>{t.lessee}</td>
+              <td style={{ ...S.td, color: "#ece8dc", fontWeight: 500 }}>{fmt(t.amount)}</td>
+              <td style={S.td}><span style={S.badge("#4a9a4a")}>SETTLED</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function Assets() {
+  return (
+    <div style={S.page}>
+      <div style={S.heading}>Licensed Assets</div>
+      <div style={S.sub}>
+        All software assets registered under © MORLEY MOSES APOOCH.
+        Standard annual lease fees shown. Custom pricing available on request.
+      </div>
+      {ASSETS.map(a => (
+        <div key={a.id} style={{ ...S.card, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+          <div>
+            <div style={{ color: "#c9a84c", fontSize: 11, marginBottom: 4 }}>{a.id}</div>
+            <div style={{ color: "#ece8dc", fontSize: 15, marginBottom: 4 }}>{a.name}</div>
+            <div style={{ color: "#555", fontSize: 11 }}>{a.term} &nbsp;|&nbsp; CAD</div>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontSize: 24, color: "#c9a84c", fontWeight: 600 }}>{fmt(a.fee)}</div>
+            <div style={{ fontSize: 10, color: "#444", marginTop: 2 }}>per year</div>
+          </div>
+        </div>
+      ))}
+      <div style={{ marginTop: "1.5rem", fontSize: 10, color: "#333", lineHeight: 1.9 }}>
+        © MORLEY MOSES APOOCH — All assets protected under the Morley Moses Apooch Proprietary License.<br />
+        Payment accepted exclusively via authorized merchant gateway. No unauthorized direct transfers.<br />
+        Contact: apoochmorley@protonmail.com &nbsp;|&nbsp; 1-639-766-1738
+      </div>
+    </div>
+  );
+}
+
+// ── Main App ───────────────────────────────────────────────────
+export default function App() {
+  const [tab, setTab] = useState("dashboard");
+  const [history, setHistory] = useState(HISTORY);
+  const [pending, setPending] = useState(PENDING);
+  const [toastMsg, setToastMsg] = useState(null);
+
+  const toast = (msg) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(null), 3500);
+  };
+
+  const handleGenerate = (inv) => {
+    setPending(p => [...p, { id: inv.id, due: inv.due, asset: inv.asset, lessee: inv.lessee, amount: inv.amount }]);
+  };
+
+  const tabs = [
+    { id: "dashboard",    label: "Dashboard"    },
+    { id: "invoice",      label: "Invoice"      },
+    { id: "send",         label: "Send"         },
+    { id: "transactions", label: "Transactions" },
+    { id: "assets",       label: "Assets"       },
+  ];
+
+  return (
+    <div style={S.app}>
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+      <nav style={S.nav}>
+        <span style={S.navBrand}>MMA &nbsp;Global</span>
+        {tabs.map(t => (
+          <button key={t.id} style={S.navTab(tab === t.id)} onClick={() => setTab(t.id)}>
+            {t.label}
+          </button>
+        ))}
+      </nav>
+
+      {tab === "dashboard"    && <Dashboard history={history} pending={pending} />}
+      {tab === "invoice"      && <InvoiceGenerator onGenerate={handleGenerate} toast={toast} />}
+      {tab === "send"         && <SendPayment toast={toast} />}
+      {tab === "transactions" && <Transactions history={history} />}
+      {tab === "assets"       && <Assets />}
+
+      {toastMsg && <div style={S.toast}>{toastMsg}</div>}
+    </div>
+  );
+}
