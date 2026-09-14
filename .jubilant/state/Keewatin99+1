@@ -1,0 +1,70 @@
+const fs = require('fs');
+const path = require('path');
+
+class MorleySearch {
+    constructor() {
+        this.index = {}; // Maps terms to document IDs and frequencies
+        this.documents = {}; // Maps document IDs to structural metadata
+        this.systemMetadata = {
+            owner: "Morley Moses Apooch",
+            company: "KEEWATIN 99+1",
+            brand: "Clean Keewatin",
+            block_type: "INODE_MAPPING"
+        };
+    }
+
+    // Tokenizer: Cleans and standardizes raw input data strings
+    tokenize(text) {
+        if (!text) return [];
+        return text
+            .toLowerCase()
+            .replace(/[^\w\s]/g, '') // Strips punctuation
+            .split(/\s+/)            // Splits into structural terms
+            .filter(word => word.length > 1); // Discards empty/single tokens
+    }
+
+    // Indexer: Registers new data payloads into the inverted inode index table
+    addDocument(docId, title, content) {
+        this.documents[docId] = { title, length: content.length };
+        const tokens = this.tokenize(content);
+        
+        tokens.forEach(token => {
+            if (!this.index[token]) {
+                this.index[token] = {};
+            }
+            if (!this.index[token][docId]) {
+                this.index[token][docId] = 0;
+            }
+            this.index[token][docId]++; // Increments term frequency (TF) tracking
+        });
+        
+        return true;
+    }
+
+    // Search Query Processor: Ranks documents based on matching structural terms
+    search(queryStr) {
+        const queryTokens = this.tokenize(queryStr);
+        const scores = {};
+
+        queryTokens.forEach(token => {
+            if (this.index[token]) {
+                Object.keys(this.index[token]).forEach(docId => {
+                    if (!scores[docId]) scores[docId] = 0;
+                    // Computes structural relevance score for the matching tokens
+                    scores[docId] += this.index[token][docId];
+                });
+            }
+        });
+
+        // Returns a sorted structural array ranking highest relevancy first
+        return Object.keys(scores)
+            .map(docId => ({
+                docId: docId,
+                title: this.documents[docId].title,
+                score: scores[docId]
+            }))
+            .sort((a, b) => b.score - a.score);
+    }
+}
+
+module.exports = { MorleySearch };
