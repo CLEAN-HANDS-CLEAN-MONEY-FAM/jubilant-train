@@ -1,0 +1,31 @@
+# 1. Create the new Keewatin directory structure
+mkdir -p keewatin/boot
+mkdir -p keewatin/block_groups/group_0/bitmaps
+mkdir -p keewatin/block_groups/group_0/inode_table
+mkdir -p keewatin/block_groups/group_0/data_blocks/data
+
+# 2. Move files to the Boot Block (System Entry)
+mv backend/server.js keewatin/boot/ 2>/dev/null || cp server.js keewatin/boot/
+
+# 3. Create Super-Block metadata config
+cat << 'EOF' > keewatin/block_groups/group_0/super_block.json
+{
+  "system_name": "KEEWATIN 99+1",
+  "owner": "Morley Moses Apooch",
+  "license": "Copyright 2026. All Rights Reserved.",
+  "block_size_bytes": 4096,
+  "status": "ACTIVE"
+}
+EOF
+
+# 4. Move Inode Table maps (The Search Engine indexer)
+mv backend/search-engine.js keewatin/block_groups/group_0/inode_table/ 2>/dev/null || cp search-engine.js keewatin/block_groups/group_0/inode_table/
+
+# 5. Move Data Blocks (Storage layer and Frontend UI)
+mv backend/db.js keewatin/block_groups/group_0/data_blocks/ 2>/dev/null || cp db.js keewatin/block_groups/group_0/data_blocks/
+mv frontend/index.html keewatin/block_groups/group_0/data_blocks/ 2>/dev/null || cp index.html keewatin/block_groups/group_0/data_blocks/
+
+# 6. Migrate existing JSON database shards if present
+mv data/*.json keewatin/block_groups/group_0/data_blocks/data/ 2>/dev/null
+
+echo "Keewatin filesystem structure successfully compiled."
