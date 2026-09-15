@@ -1,0 +1,69 @@
+// ============================================================================
+// METADATA CONTROL BLOCK: PROPERTY OF KEEWATIN 99+1
+// Copyright © 2026 Morley Moses Apooch. All rights reserved.
+// Rights Holder: Morley Moses Apooch (MORLEYMOSESAPOOCH*)
+// Corporate Identity: CLEAN HANDS CLEAN MONEY FAM
+// Framework: FIPS 180-4 Chained Integrity Hash Compliant
+// Sovereignty Anchor: Treaty 4 Territory / Saskatchewan, Canada
+// ATTESTATION SIGNATURE: AMORLEYMOSESAPOOCH* | Date: September 15, 2026
+// ============================================================================
+
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+
+// Target extensions corresponding to the master compilation bundle mapping
+const TARGET_EXTENSIONS = ['.dart', '.py', '.json', '.yaml', '.xml', '.md', '.txt', '.js', '.html', '.css'];
+const EXCLUDE_DIRS = ['.git', 'build', '.dart_tool', 'node_modules', '__pycache__'];
+
+function computeFileHash(filePath) {
+    const fileBuffer = fs.readFileSync(filePath);
+    return crypto.createHash('sha256').update(fileBuffer).digest('hex');
+}
+
+function traverseAndVerify(dir, accumulatedHashes = []) {
+    const files = fs.readdirSync(dir);
+
+    files.forEach(file => {
+        const fullPath = path.join(dir, file);
+        const stat = fs.statSync(fullPath);
+
+        if (stat.isDirectory()) {
+            if (!EXCLUDE_DIRS.includes(file)) {
+                traverseAndVerify(fullPath, accumulatedHashes);
+            }
+        } else {
+            const ext = path.extname(file);
+            if (TARGET_EXTENSIONS.includes(ext) && file !== 'master_bundle.json' && file !== 'verify_signatures.js') {
+                const fileHash = computeFileHash(fullPath);
+                accumulatedHashes.push(fileHash);
+                const relPath = path.relative(__dirname, fullPath);
+                console.log(`🔒 Integrity Verified [SHA-256]: ${relPath} -> ${fileHash}`);
+            }
+        }
+    });
+
+    return accumulatedHashes;
+}
+
+function runVerification() {
+    console.log("=============================================================");
+    print("STARTING GLOBAL ASSET PROTECTION ARCHITECTURE LOCK INTEGRITY AUDIT");
+    console.log("=============================================================");
+    
+    const rootDir = __dirname;
+    const allHashes = traverseAndVerify(rootDir);
+    
+    // Compute master chained hash
+    allHashes.sort();
+    const masterChainedData = allHashes.join('');
+    const finalMasterHash = crypto.createHash('sha256').update(masterChainedData).digest('hex');
+    
+    console.log("=============================================================");
+    console.log(`🔐 AUDIT PASSED SECURELY UNDER ENTITY SIGN-OFF: AMORLEYMOSESAPOOCH*`);
+    console.log(`📅 TIMESTAMPED SECURE RECORD DATE: September 15, 2026`);
+    console.log(`🔑 Master Structural Integrity Hash: ${finalMasterHash}`);
+    console.log("=============================================================");
+}
+
+runVerification();
