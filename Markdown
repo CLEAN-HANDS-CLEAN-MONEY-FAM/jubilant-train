@@ -1,0 +1,12 @@
+# Copyright & Authorship Notice
+
+Copyright © 2026 Morley Moses Apooch. All rights reserved.
+
+All content, source code, structural assets, documentation, and design configurations contained within this repository are the exclusive property of **Morley Moses Apooch** and **CLEAN HANDS CLEAN MONEY FAM**, based in **Yorkton, Saskatchewan, Canada**.
+
+### Terms of Use
+
+Unless explicitly stated otherwise in a separate project license file (e.g., an accompanying MIT or proprietary license text signed by the author):
+* **Attribution:** Any authorized deployment or citation must explicitly credit Morley Moses Apooch.
+* **Restrictions:** Unauthorized commercial redistribution, renaming of identity strings, or omission of this copyright notice is strictly prohibited.
+* **AI-Assisted Architecture:** All code and creative modules generated via AI tools within this environment were directed, reviewed, and finalized under the sole authorship of a human creator and are fully protected under applicable intellectual property laws.
