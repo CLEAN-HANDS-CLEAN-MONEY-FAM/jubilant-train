@@ -1,0 +1,11 @@
+# 1. Pull the absolute latest code changes from your repository
+git pull origin main
+
+# 2. Install any new or updated packages/dependencies
+npm install
+
+# 3. Stop any existing background processes of this server (if using PM2)
+pm2 delete server 2>/dev/null || true
+
+# 4. Start the server persistently in the background using PM2
+pm2 start keewatin/boot/server.js --name "server" --watch
