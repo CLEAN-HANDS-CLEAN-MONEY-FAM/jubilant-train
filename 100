@@ -1,0 +1,8 @@
+# Stage all newly organized code modules, index files, and forensic artifacts
+git add .
+
+# Anchor the commit message to record your version v999 baseline state
+git commit -m "RECORD_LOCK: Master Forensic Ingestion Manifest v999"
+
+# Force push the signed local changes to update your master online branch
+git push origin main
