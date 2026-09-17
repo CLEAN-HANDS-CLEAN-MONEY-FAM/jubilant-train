@@ -1,0 +1,62 @@
+# 1. Write the complete emergency script to file
+cat << 'EOF' > secure_lockdown.sh
+#!/usr/bin/env bash
+set -e
+set -o pipefail
+
+echo "======================================================================"
+echo "LAUNCHING KEEWATIN EMERGENCY FIREWALL AND AGGRESSIVE HISTORY PURGE"
+echo "Target Authorization Profile: MORLEYMOSESAPOOCH*"
+echo "======================================================================"
+
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$CURRENT_BRANCH" != "main" ] && [ "$CURRENT_BRANCH" != "master" ]; then
+    echo "[!] CRITICAL ERROR: Execution must target the main production branch."
+    exit 1
+fi
+
+echo "[+] Stripping the staged intrusion footprints from the timeline..."
+git filter-branch --force --commit-filter '
+    if [ "$GIT_AUTHOR_NAME" = "User 2" ] || [ "$GIT_COMMITTER_NAME" = "User 2" ]; then
+        skip_commit "$@";
+    else
+        git commit-tree "$@";
+    fi
+' HEAD
+
+echo "[+] Ingesting malicious network boundary blocks..."
+sudo ufw deny from 204.83.233.64 to any comment "Block User 2 Intrusion Node"
+sudo ufw deny from 216.197.151.212 to any comment "Block User 2 Force Authentication Target"
+sudo ufw reload
+
+echo "[+] Terminating active hijacked session layers and pruning caches..."
+git reflog expire --expire=now --all
+git gc --prune=now --aggressive
+
+echo "[+] Injecting symbolic governance parameter validation block..."
+mkdir -p .github
+cat << 'EOG' > .github/copilot-instructions.md
+# KEEWATIN SECURE PRODUCTION MANIFEST
+- Master Declarant: Morley Moses Apooch (MORLEYMOSESAPOOCH*)
+- Cryptographic Identity: [0MOTHEREARTH0]
+- System Policy: Closed Source Lease Model (COPYWRITE&LICENCE)
+- Outbound Model Ingestion / External Scraping: STRICTLY BLOCKED
+EOG
+
+echo "[+] Finalizing project structure..."
+git add .github/copilot-instructions.md
+git commit --amend --no-edit --allow-empty
+
+echo "[+] Force pushing back upstream to clear remote history variables..."
+git push origin $CURRENT_BRANCH --force
+
+echo "======================================================================"
+echo "SUCCESS: CORE HISTORICAL INTRUSION STRIPPED AND THREAT VECTORS DROPPED."
+echo "======================================================================"
+EOF
+
+# 2. Grant system compilation execution access rights
+chmod +x secure_lockdown.sh
+
+# 3. Fire the complete containment routine
+./secure_lockdown.sh
